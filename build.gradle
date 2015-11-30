@@ -1,0 +1,76 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    lintOptions {
+        abortOnError false
+    }
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        testApplicationId "fr.bouyguestelecom.tv.bboxiot.test"
+        testInstrumentationRunner "fr.bouyguestelecom.tv.bboxiot.test.TestRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("../cert/bmartel.ilab.jks")
+            storePassword "123456"
+            keyAlias "bmartel.ilab"
+            keyPassword "123456"
+        }
+
+        dev {
+            storeFile file("../cert/dev-keys.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+
+        prod {
+            storeFile file("../cert/partners.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.dev
+        }
+    }
+
+    libraryVariants.all { variant ->
+
+        variant.outputs.each { output ->
+            def file = output.outputFile
+            output.outputFile = new File(file.parent, file.name.replace(".aar", "-bboxiot-" + defaultConfig.versionName + "-" + getDateTime() + ".aar"))
+        }
+
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
+def getDateTime() {
+    DateFormat df = new SimpleDateFormat("ddMMYYYY");
+
+    return df.format(new Date());
+}
