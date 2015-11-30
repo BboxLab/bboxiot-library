@@ -1,4 +1,4 @@
-# Bbox IoT library v0.7
+# Bbox IoT library
 
 Bbox IoT is an Android service aiming at controlling and monitoring connected devices through high-level APIs
 
@@ -11,16 +11,16 @@ Specific features are :
 * high level APIs for for controlling bluetooth workflow and devices
 * flexible architecture and datamodel for multi-protocol implementation
 
-## Version History
+# Version History
 
-Current release : <a href="#">0.7</a>
+Current release : <a href="#">verstion 0.7</a>
 
 | version                                                                |    comment                 |
 |------------------------------------------------------------------------|----------------------------|
 | 0.7                                                                    | API refactoring            |
 | 0.6                                                                    | witti devices support      |
 
-## Scope
+# Scope
 
 * Bluetooth discovery
   * scanning
@@ -32,13 +32,15 @@ Current release : <a href="#">0.7</a>
 * Device database
   * store associated devices 
 
-## Architecture
+# Architecture
 
-### Global 
+## Global 
 
 ![architecture](architecture.png)
 
-### Supported devices
+The project you are watching is only the wrapper between your client and Bboxiot Service (in the middle)
+
+## Supported devices
 
 List of currently supported devices : 
 
@@ -53,3 +55,7 @@ List of currently supported devices :
 |   NIU   |     Altyor          |     button single push (advertizing)         |
 
 This list may not be exhaustive, please go to https://dev.bouyguestelecom.fr/forum/viewforum.php?f=36 to get a fully updated list of supported device
+
+# License
+
+The MIT License (MIT) Copyright (c) 2015 InnovationLab BboxLab
