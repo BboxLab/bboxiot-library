@@ -8,9 +8,9 @@ At this moment, this library is concentrating on Bluetooth Low Energy devices. <
 
 Specific features are :
 
-* bluetooth Low Energy devices control
-* bluetooth connection workflow management
-* high level APIs for for controlling bluetooth workflow and devices
+* BLE devices control
+* BLE connection workflow management
+* high level APIs for for controlling BLE workflow and devices
 * flexible architecture and datamodel for multi-protocol implementation
 
 # Version History
@@ -30,9 +30,9 @@ To be able to use this library, you must have a Miami Box Android TV with BboxIo
 
 # Scope
 
-* Bluetooth discovery
+* BLE discovery
   * scanning
-* Bluetooth device control
+* BLE device control
   * association
   * connection
   * write/read characteristics
