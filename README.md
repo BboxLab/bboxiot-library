@@ -2,7 +2,9 @@
 
 Bbox IoT is an Android service aiming at controlling and monitoring connected devices through high-level APIs
 
-At this moment, this library is concentrating on Bluetooth Low Energy devices. Further Radio protocol could be added later.
+<hr/>
+
+At this moment, this library is concentrating on Bluetooth Low Energy devices. <br/>Further Radio protocol could be added later.
 
 Specific features are :
 
@@ -20,6 +22,12 @@ Current release : <a href="#">verstion 0.7</a>
 | 0.7                                                                    | API refactoring            |
 | 0.6                                                                    | witti devices support      |
 
+# Requirements
+
+To be able to use this library, you must have a Miami Box Android TV with BboxIoT service running
+
+![Bbox Miami](img/bbox-miami.jpg)
+
 # Scope
 
 * Bluetooth discovery
@@ -36,9 +44,9 @@ Current release : <a href="#">verstion 0.7</a>
 
 ## Global 
 
-![architecture](architecture.png)
+![architecture](img/architecture.png)
 
-The project you are watching is only the wrapper between your client and Bboxiot Service (in the middle)
+The project you are watching is only the wrapper between your client and BboxIoT Service (in the middle)
 
 ## Supported devices
 
@@ -54,7 +62,12 @@ List of currently supported devices :
 |   Flower Power   |     Parrot          |     air temperature / soil temperature / soil electroductivity / water content / luminosity         |
 |   NIU   |     Altyor          |     button single push (advertizing)         |
 
-This list may not be exhaustive, please go to https://dev.bouyguestelecom.fr/forum/viewforum.php?f=36 to get a fully updated list of supported device
+This list is not exhaustive, please go to https://dev.bouyguestelecom.fr/forum/viewforum.php?f=36 to get a fully updated list of supported device
+
+# Support
+
+* BboxLab developper portal IoT section: https://dev.bouyguestelecom.fr/forum/viewforum.php?f=45
+* BboxLab developper portal Download section : 
 
 # License
 
