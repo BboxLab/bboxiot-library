@@ -21,25 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth;
+package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection;
 
 /**
- * Bluetooth event listener used to receive incoming event from bluetooth IOT service
+ * Connection status enumeration
  *
- * @author Bertrand Martel
+ * @author Bertrand Martel Bouygues Telecom
  */
-interface IBluetoothEventListener {
+public enum ConnectionStatus {
 
-    /**
-     * called when an event has been received
-     *
-     * @type
-     *      event type
-     * @topic
-     *      event topic
-     * @event
-     *      json string event data
-     */
-    void onEventReceived(int type,int topic,String event);
+    CONNECTION_SUCCESS(0), //connection success
+    CONNECTION_FAILURE(1), //connection failure
+    CONNECTION_WAITING(2); //connection waiting
 
+    private int value = 0;
+
+    private ConnectionStatus(int value) {
+        this.value = value;
+    }
+
+    public ConnectionStatus getStatus(int value) {
+
+        switch (value) {
+            case 0:
+                return CONNECTION_SUCCESS;
+            case 1:
+                return CONNECTION_FAILURE;
+            case 2:
+                return CONNECTION_WAITING;
+        }
+        return CONNECTION_FAILURE;
+    }
 }

@@ -34,16 +34,9 @@ import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.IBluetoothEventListener;
 interface IBluetoothManager {
 
     /**
-     * set smart protocol availability in IoT service
-     *
-     * @return
-     */
-    boolean isAvailable();
-
-    /**
     * set Bluetooth state (ON/OFF)
     */
-    void setBluetoothState(boolean state);
+    boolean setBluetoothState(boolean state);
 
     /**
      * get Bluetooth state (ON/OFF)
@@ -96,6 +89,11 @@ interface IBluetoothManager {
     */
     String getAssociationList();
 
+
+
+
+
+
     /**
      * Retrieve a connection for a given device Uid (JSON format)
      */
@@ -120,6 +118,10 @@ interface IBluetoothManager {
      * disconnect from device with given uid
      */
     boolean disconnect(String deviceUuid);
+
+
+
+
 
     /**
      * delete connection waiting to connect from the waiting list
@@ -150,6 +152,11 @@ interface IBluetoothManager {
      * keep a device connected (so device cant be disconnected due to maximum device number reached)
      */
     void setDeviceUidToKeepConnected(String deviceUid);
+
+
+
+
+
 
     /**
      * get the whole device function object in json format (including all properties for this function)
@@ -184,7 +191,7 @@ interface IBluetoothManager {
     /**
      * register to events featured in input request in JSON format
      */
-    String registerEvents(String request);
+    String registerEvents(String request,IBluetoothEventListener listener);
 
     /**
      * force a device with given uid to be added to association list

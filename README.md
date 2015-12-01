@@ -22,7 +22,7 @@ Current release : <a href="#">verstion 0.7</a>
 | 0.7                                                                    | API refactoring            |
 | 0.6                                                                    | witti devices support      |
 
-# Requirements
+## Requirements
 
 To be able to use this library, you must have a Miami Box Android TV with BboxIoT service running
 
@@ -40,13 +40,11 @@ To be able to use this library, you must have a Miami Box Android TV with BboxIo
 * Device database
   * store associated devices 
 
-# Architecture
-
-## Global 
+## Global architecture
 
 ![architecture](img/architecture.png)
 
-The project you are watching is only the wrapper between your client and BboxIoT Service (in the middle)
+The project you are watching is only the interface between your client and BboxIoT Service (in the middle)
 
 ## Supported devices
 
