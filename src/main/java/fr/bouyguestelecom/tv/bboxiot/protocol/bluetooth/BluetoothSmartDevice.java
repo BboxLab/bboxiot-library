@@ -23,6 +23,7 @@
  */
 package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth;
 
+import android.bluetooth.BluetoothDevice;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -79,6 +80,9 @@ public class BluetoothSmartDevice {
     private String deviceMode = "";
 
     private String address = "";
+
+    private BluetoothDevice device = null;
+
 
     /**
      * Build bluetooth device object
@@ -235,5 +239,18 @@ public class BluetoothSmartDevice {
 
     public String getDeviceAddress() {
         return address;
+    }
+
+    public void setDeviceUp(boolean deviceUp) {
+        this.isUp = deviceUp;
+    }
+
+
+    public void setDevice(BluetoothDevice device) {
+        this.device = device;
+    }
+
+    public BluetoothDevice getDevice() {
+        return device;
     }
 }

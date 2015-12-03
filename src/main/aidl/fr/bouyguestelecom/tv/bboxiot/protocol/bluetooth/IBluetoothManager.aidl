@@ -65,9 +65,6 @@ interface IBluetoothManager {
      */
     void clearScanningList();
 
-
-
-
     /**
      * Associate a device with specified uid
      *
@@ -90,7 +87,7 @@ interface IBluetoothManager {
     /**
     * Retrieve association list in JSON format
     */
-    String getConnectionList();
+    String getAssociationList();
 
     /**
      * connect to device with given uid
@@ -102,11 +99,6 @@ interface IBluetoothManager {
      */
     boolean disconnect(String deviceUuid);
 
-
-
-
-
-
     /**
      * Retrieve a connection for a given device Uid (JSON format)
      */
@@ -116,13 +108,6 @@ interface IBluetoothManager {
      * check if connection with given device uid exists or not
      */
     boolean hasConnection(String deviceUid);
-
-    /**
-     * Retrieve device information for device with given uid
-     */
-    String getSmartDeviceInfo(String deviceUid);
-
-
 
 
 

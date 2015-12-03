@@ -49,7 +49,7 @@ public enum ConnectionEvents {
         this.value = value;
     }
 
-    public ConnectionEvents getEvents(int value) {
+    public static ConnectionEvents getEvents(int value) {
 
         switch (value) {
             case 1:

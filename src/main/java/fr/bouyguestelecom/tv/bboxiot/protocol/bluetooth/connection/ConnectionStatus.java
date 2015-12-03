@@ -32,7 +32,7 @@ public enum ConnectionStatus {
 
     CONNECTION_SUCCESS(0), //connection success
     CONNECTION_FAILURE(1), //connection failure
-    CONNECTION_WAITING(2), ; //connection waiting
+    CONNECTION_WAITING(2),; //connection waiting
 
     private int value = 0;
 
@@ -40,7 +40,7 @@ public enum ConnectionStatus {
         this.value = value;
     }
 
-    public ConnectionStatus getStatus(int value) {
+    public static ConnectionStatus getStatus(int value) {
 
         switch (value) {
             case 0:

@@ -68,7 +68,7 @@ public enum BluetoothConnectionFlowStates {
         this.value = value;
     }
 
-    public BluetoothConnectionFlowStates getState(int value) {
+    public static BluetoothConnectionFlowStates getState(int value) {
 
         switch (value) {
             case 0:

@@ -47,7 +47,7 @@ public enum ConnectionErrorStates {
         return value;
     }
 
-    public ConnectionErrorStates getError(int value) {
+    public static ConnectionErrorStates getError(int value) {
 
         switch (value) {
             case 0:

@@ -14,12 +14,12 @@ import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.GenericEventAbstr
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.ScanningEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventType;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.inter.IScanListItemEvent;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.inter.IScanList;
 
 /**
  * @author Bertrand Martel
  */
-public class ScanListItem extends GenericEventAbstr implements IScanListItemEvent {
+public class ScanListItem extends GenericEventAbstr implements IScanList {
 
     private static String TAG = ScanItemEvent.class.getSimpleName();
 

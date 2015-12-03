@@ -5,20 +5,26 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.AssociationEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.GenericEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.ScanRegistrationType;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.AssociationEvent;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.AssociationListEvent;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.AssociationList;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.BluetoothStateEvent;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ConnectionItem;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.RegistrationEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ScanItemEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ScanListItem;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ScanStatusChangeEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ScanStatusEvent;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.inter.IScanListItemEvent;
 
 /**
  * @author Bertrand Martel
@@ -120,13 +126,20 @@ public class IotEvent {
 
                             case TOPIC_CONNECTION: {
 
-                                return new AssociationListEvent(topic, eventType, eventId, data);
+                                if (data.has(AssociationEventConstant.ASSOCIATION_EVENT_ITEMS)) {
 
+                                    return new AssociationList(topic, eventType, eventId, data);
+
+                                } else if (data.has(AssociationEventConstant.ASSOCIATION_EVENT_ITEM)) {
+
+                                    return new ConnectionItem(topic, eventType, eventId, data);
+
+                                }
+                                break;
                             }
                             case TOPIC_SCAN: {
 
                                 return new ScanListItem(topic, eventType, eventId, data);
-
                             }
                             default: {
                                 break;
@@ -149,7 +162,76 @@ public class IotEvent {
         return null;
     }
 
-    public static IScanListItemEvent parseScanningList(String request) {
+    public static BtConnection parseConnectionItem(String request) {
+
+        Log.i(TAG, "event : " + request);
+
+        JSONObject object = null;
+
+        try {
+
+            object = new JSONObject(request);
+
+            if (object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE) &&
+                    object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA) &&
+                    object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID) &&
+                    object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC)) {
+
+                EventTopic topic = EventTopic.getTopic(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC));
+                EventType eventType = EventType.getType(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE));
+                String eventId = object.getString(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID);
+                JSONObject data = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA);
+
+                if (eventType == EventType.EVENT_RESPONSE &&
+                        topic == EventTopic.TOPIC_CONNECTION &&
+                        data.has(AssociationEventConstant.ASSOCIATION_EVENT_ITEM)) {
+
+                    return new ConnectionItem(topic, eventType, eventId, data).getItem();
+
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    public static Map<String, BtConnection> parseAssociationList(String request) {
+
+        Log.i(TAG, "event : " + request);
+
+        JSONObject object = null;
+
+        try {
+
+            object = new JSONObject(request);
+
+            if (object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE) &&
+                    object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA) &&
+                    object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID) &&
+                    object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC)) {
+
+                EventTopic topic = EventTopic.getTopic(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC));
+                EventType eventType = EventType.getType(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE));
+                String eventId = object.getString(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID);
+                JSONObject data = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA);
+
+                if (eventType == EventType.EVENT_RESPONSE &&
+                        topic == EventTopic.TOPIC_CONNECTION) {
+
+                    return new AssociationList(topic, eventType, eventId, data).getList();
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return new HashMap<>();
+    }
+
+    public static Map<String, BluetoothSmartDevice> parseScanningList(String request) {
 
         Log.i(TAG, "event : " + request);
 
@@ -171,12 +253,13 @@ public class IotEvent {
 
                 if (eventType == EventType.EVENT_RESPONSE &&
                         topic == EventTopic.TOPIC_SCAN) {
-                    return new ScanListItem(topic, eventType, eventId, data);
+
+                    return new ScanListItem(topic, eventType, eventId, data).getList();
                 }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+        return new HashMap<>();
     }
 }

@@ -23,7 +23,6 @@
  */
 package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection;
 
-import android.os.RemoteException;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -57,11 +56,6 @@ public class BtConnection {
     protected boolean busy = false;
 
     /**
-     * Define is device is ready to be connected / disconnected
-     */
-    protected boolean deviceUp = false;
-
-    /**
      * device unique identifier
      */
     protected String deviceUuid = "";
@@ -71,12 +65,11 @@ public class BtConnection {
      */
     protected boolean connected = false;
 
-    public BtConnection(String deviceUuid, boolean connected, boolean isFirstConnection, boolean busy, boolean deviceUp, BluetoothSmartDevice device) {
+    public BtConnection(String deviceUuid, boolean connected, boolean isFirstConnection, boolean busy, BluetoothSmartDevice device) {
         this.deviceUuid = deviceUuid;
         this.connected = connected;
         this.isFirstConnection = isFirstConnection;
         this.busy = busy;
-        this.deviceUp = deviceUp;
         this.btDevice = device;
     }
 
@@ -93,7 +86,6 @@ public class BtConnection {
             result.put(BluetoothConst.BT_CONNECTION_CONNECTED, connected);
             result.put(BluetoothConst.BT_CONNECTION_FIRST_CONNECTION, isFirstConnection);
             result.put(BluetoothConst.BT_CONNECTION_BUSY, busy);
-            result.put(BluetoothConst.BT_CONNECTION_DEVICEUP, deviceUp);
             result.put(BluetoothConst.BT_CONNECTION_DEVICE, btDevice.toJson());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -102,16 +94,16 @@ public class BtConnection {
         return result;
     }
 
-    public boolean isConnected() throws RemoteException {
+    public boolean isConnected() {
         return connected;
     }
 
-    public boolean isBusy() throws RemoteException {
+    public boolean isBusy() {
         return busy;
     }
 
-    public boolean isUp() throws RemoteException {
-        return deviceUp;
+    public boolean isFirstTimeConnected() {
+        return isFirstConnection;
     }
 
     public String getDeviceUuid() {
@@ -129,14 +121,12 @@ public class BtConnection {
                     item.has(BluetoothConst.BT_CONNECTION_CONNECTED) &&
                     item.has(BluetoothConst.BT_CONNECTION_FIRST_CONNECTION) &&
                     item.has(BluetoothConst.BT_CONNECTION_BUSY) &&
-                    item.has(BluetoothConst.BT_CONNECTION_DEVICEUP) &&
                     item.has(BluetoothConst.BT_CONNECTION_DEVICE)) {
 
                 String deviceUuid = item.getString(BluetoothConst.BLUETOOTH_DEVICE_UUID);
                 boolean connected = item.getBoolean(BluetoothConst.BT_CONNECTION_CONNECTED);
                 boolean isFirstConnection = item.getBoolean(BluetoothConst.BT_CONNECTION_FIRST_CONNECTION);
                 boolean busy = item.getBoolean(BluetoothConst.BT_CONNECTION_BUSY);
-                boolean deviceUp = item.getBoolean(BluetoothConst.BT_CONNECTION_DEVICEUP);
                 JSONObject device = item.getJSONObject(BluetoothConst.BT_CONNECTION_DEVICE);
 
                 BluetoothSmartDevice smartDevice = BluetoothSmartDevice.parse(device);
@@ -146,7 +136,7 @@ public class BtConnection {
                     return null;
                 }
 
-                return new BtConnection(deviceUuid, connected, isFirstConnection, busy, deviceUp, smartDevice);
+                return new BtConnection(deviceUuid, connected, isFirstConnection, busy, smartDevice);
 
             } else {
                 Log.e(TAG, "Error wrong formatted BtConnection json Object");

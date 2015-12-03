@@ -30,6 +30,21 @@ public class EventBuilder {
 
     private final static String TAG = EventBuilder.class.getSimpleName();
 
+    public static GenericEventAbstr buildConnectionItem(BtConnection connection) {
+
+        JSONObject data = new JSONObject();
+
+        try {
+            data.put(AssociationEventConstant.ASSOCIATION_EVENT_ITEM, connection.toJson());
+            return new GenericEvent(EventTopic.TOPIC_CONNECTION, EventType.EVENT_RESPONSE, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), data);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public static GenericEventAbstr buildConnectionList(List<BtConnection> connectionList) {
 
         JSONObject data = new JSONObject();
@@ -40,8 +55,8 @@ public class EventBuilder {
         }
 
         try {
-            data.put(AssociationEventConstant.ASSOCIATION_EVENT_ITEMS, items);
 
+            data.put(AssociationEventConstant.ASSOCIATION_EVENT_ITEMS, items);
             return new GenericEvent(EventTopic.TOPIC_CONNECTION, EventType.EVENT_RESPONSE, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), data);
 
         } catch (JSONException e) {
@@ -57,6 +72,7 @@ public class EventBuilder {
         JSONObject data = new JSONObject();
 
         try {
+
             data.put(AssociationEventConstant.ASSOCIATION_EVENT_STATE, state.ordinal());
             data.put(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION, connection.toJson());
 

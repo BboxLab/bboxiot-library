@@ -8,4 +8,5 @@ public class AssociationEventConstant {
     public final static String ASSOCIATION_EVENT_STATE = "state";
     public final static String ASSOCIATION_EVENT_CONNECTION = "connection";
     public final static String ASSOCIATION_EVENT_ITEMS = "items";
+    public final static String ASSOCIATION_EVENT_ITEM = "item";
 }

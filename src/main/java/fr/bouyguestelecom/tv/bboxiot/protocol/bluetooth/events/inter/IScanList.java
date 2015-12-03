@@ -7,7 +7,7 @@ import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
 /**
  * @author Bertrand Martel
  */
-public interface IScanListItemEvent {
+public interface IScanList {
 
     public Map<String, BluetoothSmartDevice> getList();
 
