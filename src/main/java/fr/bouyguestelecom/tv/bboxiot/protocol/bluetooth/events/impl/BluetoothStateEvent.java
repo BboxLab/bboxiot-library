@@ -5,17 +5,16 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.GenericEventAbstr;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventType;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.GenericEvent;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.Common;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.GenericEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.inter.IBluetoothStateEvent;
 
 /**
  * @author Bertrand Martel
  */
-public class BluetoothStateEvent extends GenericEvent implements IBluetoothStateEvent {
+public class BluetoothStateEvent extends GenericEventAbstr implements IBluetoothStateEvent {
 
     private static String TAG = BluetoothStateEvent.class.getSimpleName();
 
@@ -40,19 +39,4 @@ public class BluetoothStateEvent extends GenericEvent implements IBluetoothState
         return state;
     }
 
-    @Override
-    public String toJsonString() {
-
-        JSONObject event = new JSONObject();
-        try {
-            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC, topic.ordinal());
-            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE, type.ordinal());
-            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID, eventId);
-            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA, data);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return event.toString();
-    }
-    
 }

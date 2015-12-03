@@ -46,12 +46,12 @@ interface IBluetoothManager {
     /**
      * start/stop scan with specified parameters in JSON format
      */
-    String setScanStatus(String request);
+    boolean setScanStatus(String request);
 
     /**
-     * retrieve scanning status in JSON format
+     * retrieve scanning status
      */
-    String getScanStatus();
+    boolean isScanning();
 
     /**
      * Retrieve bluetooth scanning list in JSON format
@@ -64,6 +64,9 @@ interface IBluetoothManager {
      * Clear bluetooth scanning list
      */
     void clearScanningList();
+
+
+
 
     /**
      * Associate a device with specified uid
@@ -87,7 +90,17 @@ interface IBluetoothManager {
     /**
     * Retrieve association list in JSON format
     */
-    String getAssociationList();
+    String getConnectionList();
+
+    /**
+     * connect to device with given uid
+     */
+    int connect(String deviceUuid,int attempt,boolean maxPriority);
+
+    /**
+     * disconnect from device with given uid
+     */
+    boolean disconnect(String deviceUuid);
 
 
 
@@ -109,15 +122,6 @@ interface IBluetoothManager {
      */
     String getSmartDeviceInfo(String deviceUid);
 
-    /**
-     * connect to device with given uid
-     */
-    int connect(String deviceUuid,int attempt,boolean maxPriority);
-
-    /**
-     * disconnect from device with given uid
-     */
-    boolean disconnect(String deviceUuid);
 
 
 

@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p/>
- * Copyright (c) 2015 InnovationLab BboxLab
+ * Copyright (c) 2015 BboxLab
  * <p/>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,35 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection;
+package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.config;
 
 /**
- * Connection status enumeration
+ * Features static key field in json configuration file for supported device
  *
  * @author Bertrand Martel Bouygues Telecom
  */
-public enum ConnectionStatus {
+public class GenericDeviceConst {
 
-    CONNECTION_SUCCESS(0), //connection success
-    CONNECTION_FAILURE(1), //connection failure
-    CONNECTION_WAITING(2), ; //connection waiting
+    public final static String JSON_CONFIG_MANUFACTURER_NAME = "manufacturerName";
 
-    private int value = 0;
+    public final static String JSON_CONFIG_PRODUCT_NAME = "productName";
 
-    private ConnectionStatus(int value) {
-        this.value = value;
-    }
+    public final static String JSON_CONFIG_PROTOCOL = "protocol";
 
-    public ConnectionStatus getStatus(int value) {
+    public final static String JSON_CONFIG_SMART_BUILDER_CLASS_NAME = "smartBuilder";
 
-        switch (value) {
-            case 0:
-                return CONNECTION_SUCCESS;
-            case 1:
-                return CONNECTION_FAILURE;
-            case 2:
-                return CONNECTION_WAITING;
-        }
-        return CONNECTION_FAILURE;
-    }
+    public final static String JSON_CONFIG_SMART_FUNCTIONS = "smartFunctions";
+
+    public final static String GENERIC_DEVICE = "genericDevice";
 }

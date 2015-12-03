@@ -19,4 +19,5 @@ public interface IGenericEvent {
     public String getEventId();
 
     public String toJsonString();
+    
 }

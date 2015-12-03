@@ -7,7 +7,7 @@ import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventRegist
 /**
  * @author Bertrand Martel
  */
-public interface IRegistrationEvnt {
+public interface IRegistrationEvent {
 
     public Set<EventRegistration> getRegistrationType();
 }

@@ -12,15 +12,14 @@ import java.util.Set;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventRegistration;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventType;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.GenericEvent;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.GenericEventAbstr;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.Common;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.GenericEventConstant;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.inter.IRegistrationEvnt;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.inter.IRegistrationEvent;
 
 /**
  * @author Bertrand Martel
  */
-public class RegistrationEvent extends GenericEvent implements IRegistrationEvnt {
+public class RegistrationEvent extends GenericEventAbstr implements IRegistrationEvent {
 
     private static String TAG = RegistrationEvent.class.getSimpleName();
 
@@ -43,21 +42,6 @@ public class RegistrationEvent extends GenericEvent implements IRegistrationEvnt
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public String toJsonString() {
-
-        JSONObject event = new JSONObject();
-        try {
-            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC, topic.ordinal());
-            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE, type.ordinal());
-            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID, eventId);
-            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA, data);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return event.toString();
     }
 
     @Override

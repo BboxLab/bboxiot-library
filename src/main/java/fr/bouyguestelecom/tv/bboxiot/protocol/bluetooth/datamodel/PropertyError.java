@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p/>
- * Copyright (c) 2015 InnovationLab BboxLab
+ * Copyright (c) 2015 BboxLab
  * <p/>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,35 +21,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection;
+package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.datamodel;
 
 /**
- * Connection status enumeration
+ * Error codes
  *
  * @author Bertrand Martel Bouygues Telecom
  */
-public enum ConnectionStatus {
+public enum PropertyError {
 
-    CONNECTION_SUCCESS(0), //connection success
-    CONNECTION_FAILURE(1), //connection failure
-    CONNECTION_WAITING(2), ; //connection waiting
+    NONE(0),
+    
+    /**
+     * PUSH call has timeout
+     */
+    PUSH_TIMEOUT_ERROR(1),
 
-    private int value = 0;
+    /**
+     * PULL call has timeout
+     */
+    PULL_TIMEOUT_ERROR(2),
 
-    private ConnectionStatus(int value) {
+    /**
+     * a gatt error occured. This is likely to be a connection issue
+     */
+    GATT_ERROR(3),
+
+    /**
+     * called when error is triggered by bluetooth workflow issue or other overflow issue (eg task list full)
+     */
+    PROCESS_ERROR(4), ;
+
+    private final int value;
+
+    private PropertyError(int value) {
         this.value = value;
     }
 
-    public ConnectionStatus getStatus(int value) {
+    public int getValue() {
+        return value;
+    }
+
+    public PropertyError getErrorId(int value) {
 
         switch (value) {
-            case 0:
-                return CONNECTION_SUCCESS;
             case 1:
-                return CONNECTION_FAILURE;
+                return PUSH_TIMEOUT_ERROR;
             case 2:
-                return CONNECTION_WAITING;
+                return PULL_TIMEOUT_ERROR;
+            case 3:
+                return GATT_ERROR;
+            case 4:
+                return PROCESS_ERROR;
+
         }
-        return CONNECTION_FAILURE;
+        return NONE;
     }
 }
