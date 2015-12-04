@@ -125,9 +125,14 @@ interface IBluetoothManager {
     String subscribe(String request,IBluetoothEventListener listener);
 
     /**
+     * unsubscribe event listener
+     */
+    void unsubscribe(String listenerId);
+
+    /**
      * force a device with given uid to be added to association list
      */
-    String addDeviceToAssociationList(String deviceUid);
+    void addDeviceToAssociationList(String deviceUid);
 
     /**
      * get the whole device function object in json format (including all properties for this function)
