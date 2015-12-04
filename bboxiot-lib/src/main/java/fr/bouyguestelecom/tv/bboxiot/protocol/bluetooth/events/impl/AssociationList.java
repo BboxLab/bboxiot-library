@@ -21,7 +21,7 @@ import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.inter.IAssociatio
  */
 public class AssociationList extends GenericEventAbstr implements IAssociationList {
 
-    private static String TAG = AssociationEvent.class.getSimpleName();
+    private static String TAG = ConnectionEvent.class.getSimpleName();
 
     private Map<String, BtConnection> connectionList = new HashMap<>();
 

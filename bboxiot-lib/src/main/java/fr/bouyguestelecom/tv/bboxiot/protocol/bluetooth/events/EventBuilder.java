@@ -74,7 +74,9 @@ public class EventBuilder {
         try {
 
             data.put(AssociationEventConstant.ASSOCIATION_EVENT_STATE, state.ordinal());
-            data.put(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION, connection.toJson());
+
+            if (connection != null)
+                data.put(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION, connection.toJson());
 
             return new GenericEvent(EventTopic.TOPIC_CONNECTION, EventType.EVENT_INCOMING, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), data);
 
