@@ -5,12 +5,12 @@ package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums;
  */
 public enum AssociationState {
 
-    ASSOCIATION_UNDEFINED(0),
-    ASSOCIATION_ASSOCIATION_COMPLETE(1),
-    ASSOCIATION_CONNECTED(2),
-    ASSOCIATION_DISCONNECTED(3),
-    ASSOCIATION_DEVICE_NOT_FOUND(4),
-    ASSOCIATION_CONNECTION_ERROR(5);
+    UNDEFINED(0),
+    ASSOCIATION_COMPLETE(1),
+    CONNECTED(2),
+    DISCONNECTED(3),
+    DEVICE_NOT_FOUND(4),
+    CONNECTION_ERROR(5);
 
     private int value;
 
@@ -22,19 +22,19 @@ public enum AssociationState {
 
         switch (value) {
             case 0:
-                return ASSOCIATION_UNDEFINED;
+                return UNDEFINED;
             case 1:
-                return ASSOCIATION_ASSOCIATION_COMPLETE;
+                return ASSOCIATION_COMPLETE;
             case 2:
-                return ASSOCIATION_CONNECTED;
+                return CONNECTED;
             case 3:
-                return ASSOCIATION_DISCONNECTED;
+                return DISCONNECTED;
             case 4:
-                return ASSOCIATION_DEVICE_NOT_FOUND;
+                return DEVICE_NOT_FOUND;
             case 5:
-                return ASSOCIATION_CONNECTION_ERROR;
+                return CONNECTION_ERROR;
             default:
-                return ASSOCIATION_UNDEFINED;
+                return UNDEFINED;
         }
     }
 }

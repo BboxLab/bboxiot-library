@@ -20,7 +20,7 @@ public class AssociationEvent extends GenericEventAbstr implements IAssociationE
 
     private static String TAG = AssociationEvent.class.getSimpleName();
 
-    private AssociationState state = AssociationState.ASSOCIATION_UNDEFINED;
+    private AssociationState state = AssociationState.UNDEFINED;
 
     private BtConnection connection = null;
 
