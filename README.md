@@ -1,5 +1,7 @@
 # Bbox IoT library
 
+[![Build Status](https://travis-ci.org/BboxLab/bboxiot-library.svg)](https://travis-ci.org/BboxLab/bboxiot-library)
+
 Bbox IoT is an Android service aiming at controlling and monitoring connected devices through high-level APIs
 
 <hr/>
