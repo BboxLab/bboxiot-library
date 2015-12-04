@@ -10,12 +10,12 @@ Specific features are :
 
 * BLE devices control
 * BLE connection workflow management
-* high level APIs for for controlling BLE workflow and devices
+* high level APIs for controlling BLE workflow and devices
 * flexible architecture and datamodel for multi-protocol implementation
 
 # Version History
 
-Current release : <a href="#">verstion 0.7</a>
+Current release : <a href="#">version 0.7</a>
 
 | version                                                                |    comment                 |
 |------------------------------------------------------------------------|----------------------------|
@@ -65,7 +65,7 @@ This list is not exhaustive, please go to https://dev.bouyguestelecom.fr/forum/v
 # Support
 
 * BboxLab developper portal IoT section: https://dev.bouyguestelecom.fr/forum/viewforum.php?f=45
-* BboxLab developper portal Download section : 
+* BboxLab developper portal Download section : https://dev.bouyguestelecom.fr/forum/viewtopic.php?f=36&t=71
 
 # License
 

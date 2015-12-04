@@ -109,9 +109,6 @@ interface IBluetoothManager {
      */
     boolean hasConnection(String deviceUid);
 
-
-
-
     /**
      * delete connection waiting to connect from the waiting list
      */
@@ -142,10 +139,15 @@ interface IBluetoothManager {
      */
     void setDeviceUidToKeepConnected(String deviceUid);
 
+    /**
+     * register to events featured in input request in JSON format
+     */
+    String registerEvents(String request,IBluetoothEventListener listener);
 
-
-
-
+    /**
+     * force a device with given uid to be added to association list
+     */
+    String addDeviceToAssociationList(String deviceUid);
 
     /**
      * get the whole device function object in json format (including all properties for this function)
@@ -177,13 +179,4 @@ interface IBluetoothManager {
      */
     String pullValue(String request);
 
-    /**
-     * register to events featured in input request in JSON format
-     */
-    String registerEvents(String request,IBluetoothEventListener listener);
-
-    /**
-     * force a device with given uid to be added to association list
-     */
-    String addDeviceToAssociationList(String deviceUid);
 }
