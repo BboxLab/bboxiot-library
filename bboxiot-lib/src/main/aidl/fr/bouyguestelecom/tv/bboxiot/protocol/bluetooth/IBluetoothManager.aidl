@@ -92,7 +92,7 @@ interface IBluetoothManager {
     /**
      * connect to device with given uid
      */
-    int connect(String deviceUuid,int attempt,boolean maxPriority);
+    int connect(String deviceUuid);
 
     /**
      * disconnect from device with given uid
@@ -112,37 +112,17 @@ interface IBluetoothManager {
     /**
      * delete connection waiting to connect from the waiting list
      */
-    void deleteWaitingConnection();
-
-    /**
-     * prevent all devices from connecting except one single device
-     */
-    void blockConnectionExcept(String deviceUid);
-
-    /**
-     * all devices can be connected again
-     */
-    void unlockConnections();
-
-    /**
-     * retrieve Bluetooth flow state status in JSON format
-     */
-    String getBluetoothFlowState();
-
-    /**
-     * remove a device from disconnection list (device in disconnection list are disconnecting device)
-     */
-    void removeFromDisconnectionList(String deviceUid);
+    void deleteWaitingConnections();
 
     /**
      * keep a device connected (so device cant be disconnected due to maximum device number reached)
      */
-    void setDeviceUidToKeepConnected(String deviceUid);
+    void keepConnected(String deviceUid);
 
     /**
-     * register to events featured in input request in JSON format
+     * subscribe to events featured in input request in JSON format
      */
-    String registerEvents(String request,IBluetoothEventListener listener);
+    String subscribe(String request,IBluetoothEventListener listener);
 
     /**
      * force a device with given uid to be added to association list

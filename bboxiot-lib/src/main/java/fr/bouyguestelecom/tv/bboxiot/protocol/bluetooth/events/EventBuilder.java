@@ -14,8 +14,8 @@ import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.AssociationEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.ScanningEventConstant;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.AssociationState;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventRegistration;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.ConnectionState;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventSubscription;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.ScanRegistrationType;
@@ -67,7 +67,7 @@ public class EventBuilder {
 
     }
 
-    public static GenericEventAbstr buildAssociationEvent(AssociationState state, BtConnection connection) {
+    public static GenericEventAbstr buildAssociationEvent(ConnectionState state, BtConnection connection) {
 
         JSONObject data = new JSONObject();
 
@@ -222,11 +222,11 @@ public class EventBuilder {
         return null;
     }
 
-    public static IGenericEvent buildRegistration(Set<EventRegistration> registrationTypeList) {
+    public static IGenericEvent buildSubscription(Set<EventSubscription> subscriptionTypeList) {
 
         JSONArray array = new JSONArray();
 
-        for (EventRegistration event : registrationTypeList) {
+        for (EventSubscription event : subscriptionTypeList) {
             array.put(event.ordinal());
         }
 

@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.util.HashSet;
 import java.util.Set;
 
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventRegistration;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventSubscription;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.GenericEventAbstr;
@@ -23,7 +23,7 @@ public class RegistrationEvent extends GenericEventAbstr implements IRegistratio
 
     private static String TAG = RegistrationEvent.class.getSimpleName();
 
-    private Set<EventRegistration> registrationTypeList = new HashSet<>();
+    private Set<EventSubscription> registrationTypeList = new HashSet<>();
 
     public RegistrationEvent(EventTopic topic, EventType type, String eventId, JSONObject data) {
         super(topic, type, eventId, data);
@@ -34,7 +34,7 @@ public class RegistrationEvent extends GenericEventAbstr implements IRegistratio
                 JSONArray array = (JSONArray) data.getJSONArray(Common.CONSTANT_COMMON_DATA);
 
                 for (int i = 0; i < array.length(); i++) {
-                    registrationTypeList.add(EventRegistration.getRegistration(array.getInt(i)));
+                    registrationTypeList.add(EventSubscription.getRegistration(array.getInt(i)));
                 }
             } else {
                 Log.e(TAG, "Error in Bluetooth registration event format");
@@ -45,7 +45,7 @@ public class RegistrationEvent extends GenericEventAbstr implements IRegistratio
     }
 
     @Override
-    public Set<EventRegistration> getRegistrationType() {
+    public Set<EventSubscription> getRegistrationType() {
         return registrationTypeList;
     }
 }
