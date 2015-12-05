@@ -1,7 +1,7 @@
 # Bbox IoT library
 
 [![Build Status](https://travis-ci.org/BboxLab/bboxiot-library.svg)](https://travis-ci.org/BboxLab/bboxiot-library)
-[ ![Download](https://api.bintray.com/packages/bboxlab/maven/bboxiot-library/images/download.svg) ](https://bintray.com/bboxlab/maven/bboxiot-library/_latestVersion)
+[![Download](https://api.bintray.com/packages/bboxlab/maven/bboxiot-library/images/download.svg)](https://bintray.com/bboxlab/maven/bboxiot-library/_latestVersion)
 [![Coverage Status](https://coveralls.io/repos/BboxLab/bboxiot-library/badge.svg?branch=master&service=github)](https://coveralls.io/github/BboxLab/bboxiot-library?branch=master)
 [![License](http://img.shields.io/:license-mit-blue.svg)](LICENSE.md)
 
@@ -67,17 +67,14 @@ List of currently supported devices :
 
 This list is not exhaustive, please go to https://dev.bouyguestelecom.fr/forum/viewforum.php?f=36 to get a fully updated list of supported device
 
-# Dependency
+# Including in your project
 
-Include BboxIoT library directly to your Android project :
-
-in your module's `build.gradle` :
+Grab via Gradle:
 
 ```
-dependencies {
-	compile 'bboxlab:bboxiot-library:0.7'
-}
+compile 'bboxlab:bboxiot-library:0.7'
 ```
+
 # Support
 
 * BboxLab developper portal IoT section: https://dev.bouyguestelecom.fr/forum/viewforum.php?f=45
