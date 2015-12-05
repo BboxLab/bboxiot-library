@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/BboxLab/bboxiot-library.svg)](https://travis-ci.org/BboxLab/bboxiot-library)
 [ ![Download](https://api.bintray.com/packages/bboxlab/maven/bboxiot-library/images/download.svg) ](https://bintray.com/bboxlab/maven/bboxiot-library/_latestVersion)
+[![Coverage Status](https://coveralls.io/repos/BboxLab/bboxiot-library/badge.svg?branch=master&service=github)](https://coveralls.io/github/BboxLab/bboxiot-library?branch=master)
+[![License](http://img.shields.io/:license-mit-blue.svg)](LICENSE.md)
 
 Bbox IoT is an Android service aiming at controlling and monitoring connected devices through high-level APIs
 

@@ -21,3 +21,6 @@ install:
 
 script:
   - ./gradlew clean assembleDebug
+
+after_success:
+  - ./gradlew cobertura coveralls
