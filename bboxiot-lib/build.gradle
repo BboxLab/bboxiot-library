@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'bintray-release'
 
 android {
     compileSdkVersion 22
@@ -27,26 +28,17 @@ android {
             minifyEnabled false
         }
     }
-
-    libraryVariants.all { variant ->
-
-        variant.outputs.each { output ->
-            def file = output.outputFile
-            output.outputFile = new File(file.parent, file.name.replace(".aar", "-" + defaultConfig.versionName + "-" + getDateTime() + ".aar"))
-        }
-
-    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-
-def getDateTime() {
-    DateFormat df = new SimpleDateFormat("ddMMYYYY");
-
-    return df.format(new Date());
+publish {
+    userOrg = 'bboxlab'
+    groupId = 'bboxlab'
+    artifactId = 'bboxiot-library'
+    publishVersion = '0.7'
+    desc = 'BboxIoT Pre Release'
+    website = 'https://github.com/BboxLab/bboxiot-library'
 }
