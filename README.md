@@ -65,6 +65,17 @@ List of currently supported devices :
 
 This list is not exhaustive, please go to https://dev.bouyguestelecom.fr/forum/viewforum.php?f=36 to get a fully updated list of supported device
 
+# Dependency
+
+Include BboxIoT library directly to your Android project :
+
+in your module's `build.gradle` :
+
+```
+dependencies {
+	compile 'bboxlab:bboxiot-library:0.7'
+}
+```
 # Support
 
 * BboxLab developper portal IoT section: https://dev.bouyguestelecom.fr/forum/viewforum.php?f=45
