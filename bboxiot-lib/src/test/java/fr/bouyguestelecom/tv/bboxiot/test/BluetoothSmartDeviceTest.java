@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.config.GenericDevice;
+import fr.bouyguestelecom.tv.bboxiot.config.GenericDevice;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.ConnectionMode;
 
 /**

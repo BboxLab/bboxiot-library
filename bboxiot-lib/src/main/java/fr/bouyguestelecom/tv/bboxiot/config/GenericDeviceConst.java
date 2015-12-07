@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p/>
- * Copyright (c) 2015 BboxLab
+ * Copyright (c) 2015 InnovationLab BboxLab
  * <p/>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,60 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.datamodel;
+package fr.bouyguestelecom.tv.bboxiot.config;
 
 /**
- * Error codes
+ * Features static key field in json configuration file for supported device
  *
  * @author Bertrand Martel Bouygues Telecom
  */
-public enum PropertyError {
+public class GenericDeviceConst {
 
-    NONE(0),
-    
-    /**
-     * PUSH call has timeout
-     */
-    PUSH_TIMEOUT_ERROR(1),
-
-    /**
-     * PULL call has timeout
-     */
-    PULL_TIMEOUT_ERROR(2),
-
-    /**
-     * a gatt error occured. This is likely to be a connection issue
-     */
-    GATT_ERROR(3),
-
-    /**
-     * called when error is triggered by bluetooth workflow issue or other overflow issue (eg task list full)
-     */
-    PROCESS_ERROR(4), ;
-
-    private final int value;
-
-    private PropertyError(int value) {
-        this.value = value;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public PropertyError getErrorId(int value) {
-
-        switch (value) {
-            case 1:
-                return PUSH_TIMEOUT_ERROR;
-            case 2:
-                return PULL_TIMEOUT_ERROR;
-            case 3:
-                return GATT_ERROR;
-            case 4:
-                return PROCESS_ERROR;
-
-        }
-        return NONE;
-    }
+    public final static String JSON_CONFIG_PROTOCOL = "protocol";
+    public final static String JSON_CONFIG_SUPPORTED_DEVICE = "supportedDevice";
+    public final static String GENERIC_DEVICE = "genericDevice";
 }

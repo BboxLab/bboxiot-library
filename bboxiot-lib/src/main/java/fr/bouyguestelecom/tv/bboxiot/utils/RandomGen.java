@@ -21,35 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums;
+package fr.bouyguestelecom.tv.bboxiot.utils;
+
+import java.util.Random;
 
 /**
- * @author Bertrand Martel
+ * generator for random string
+ *
+ * @author Bertrand Martel Bouygues Telecom
  */
-public enum ScanRegistrationType {
+public class RandomGen {
 
-    SCAN_EVENT_UNDEFINED(0),
-    SCAN_EVENT_NEW_DEVICE_DISCOVERED(1),
-    SCAN_EVENT_STATUS_CHANGE(2);
+    private static final char[] symbols;
 
-    private int value;
-
-    private ScanRegistrationType(int value) {
-        this.value = value;
+    static {
+        StringBuilder tmp = new StringBuilder();
+        for (char ch = '0'; ch <= '9'; ++ch)
+            tmp.append(ch);
+        for (char ch = 'a'; ch <= 'z'; ++ch)
+            tmp.append(ch);
+        symbols = tmp.toString().toCharArray();
     }
 
-    public static ScanRegistrationType getType(int value) {
+    private final Random random = new Random();
 
-        switch (value) {
-            case 0:
-                return SCAN_EVENT_UNDEFINED;
-            case 1:
-                return SCAN_EVENT_NEW_DEVICE_DISCOVERED;
-            case 2:
-                return SCAN_EVENT_STATUS_CHANGE;
-            default:
-                return SCAN_EVENT_UNDEFINED;
-        }
+    private final char[] buf;
+
+    public RandomGen(int length) {
+        if (length < 1)
+            throw new IllegalArgumentException("length < 1: " + length);
+        buf = new char[length];
     }
 
+    public String nextString() {
+        for (int idx = 0; idx < buf.length; ++idx)
+            buf[idx] = symbols[random.nextInt(symbols.length)];
+        return new String(buf);
+    }
 }

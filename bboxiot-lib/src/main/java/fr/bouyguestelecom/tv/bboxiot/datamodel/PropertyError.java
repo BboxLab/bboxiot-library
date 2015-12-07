@@ -21,41 +21,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.utils;
-
-import java.util.Random;
+package fr.bouyguestelecom.tv.bboxiot.datamodel;
 
 /**
- * generator for random string
+ * Error codes
  *
  * @author Bertrand Martel Bouygues Telecom
  */
-public class RandomGen {
+public enum PropertyError {
 
-    private static final char[] symbols;
+    NONE(0),
+    
+    /**
+     * PUSH call has timeout
+     */
+    PUSH_TIMEOUT_ERROR(1),
 
-    static {
-        StringBuilder tmp = new StringBuilder();
-        for (char ch = '0'; ch <= '9'; ++ch)
-            tmp.append(ch);
-        for (char ch = 'a'; ch <= 'z'; ++ch)
-            tmp.append(ch);
-        symbols = tmp.toString().toCharArray();
+    /**
+     * PULL call has timeout
+     */
+    PULL_TIMEOUT_ERROR(2),
+
+    /**
+     * a gatt error occured. This is likely to be a connection issue
+     */
+    GATT_ERROR(3),
+
+    /**
+     * called when error is triggered by bluetooth workflow issue or other overflow issue (eg task list full)
+     */
+    PROCESS_ERROR(4), ;
+
+    private final int value;
+
+    private PropertyError(int value) {
+        this.value = value;
     }
 
-    private final Random random = new Random();
-
-    private final char[] buf;
-
-    public RandomGen(int length) {
-        if (length < 1)
-            throw new IllegalArgumentException("length < 1: " + length);
-        buf = new char[length];
+    public int getValue() {
+        return value;
     }
 
-    public String nextString() {
-        for (int idx = 0; idx < buf.length; ++idx)
-            buf[idx] = symbols[random.nextInt(symbols.length)];
-        return new String(buf);
+    public PropertyError getErrorId(int value) {
+
+        switch (value) {
+            case 1:
+                return PUSH_TIMEOUT_ERROR;
+            case 2:
+                return PULL_TIMEOUT_ERROR;
+            case 3:
+                return GATT_ERROR;
+            case 4:
+                return PROCESS_ERROR;
+
+        }
+        return NONE;
     }
 }

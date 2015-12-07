@@ -34,8 +34,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.config.GenericDevice;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.config.GenericDeviceConst;
+import fr.bouyguestelecom.tv.bboxiot.config.GenericDevice;
+import fr.bouyguestelecom.tv.bboxiot.config.GenericDeviceConst;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.ConnectionMode;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 
@@ -56,7 +56,7 @@ public class BluetoothSmartDevice {
     /**
      * define if device has been found on network or not
      */
-    private boolean isUp = false;
+    private boolean deviceUp = false;
 
     /**
      * device unique identifier
@@ -66,7 +66,7 @@ public class BluetoothSmartDevice {
     /**
      * Bluetooth device name (this is not unique device name)
      */
-    private List<String> deviceName = new ArrayList<>();
+    private List<String> deviceNameList = new ArrayList<>();
 
     /**
      * manufacturer data AD frame
@@ -103,14 +103,14 @@ public class BluetoothSmartDevice {
         this.genericDevice = genericDevice;
 
         if (deviceName != null)
-            this.deviceName = deviceName;
+            this.deviceNameList = deviceName;
 
         if (manufacturerData != null)
             this.manufacturerData = manufacturerData;
 
         this.lastActivityTimeStamp = lastTimeStamp;
 
-        this.isUp = true;
+        this.deviceUp = true;
 
         this.deviceMode = deviceMode;
     }
@@ -128,7 +128,7 @@ public class BluetoothSmartDevice {
     }
 
     public List<String> getDeviceNameList() {
-        return deviceName;
+        return deviceNameList;
     }
 
     public byte[] getManufacturerData() {
@@ -147,7 +147,7 @@ public class BluetoothSmartDevice {
         try {
             result.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
             result.put(GenericDeviceConst.GENERIC_DEVICE, new JSONObject(genericDevice.toJsonString()));
-            result.put(BluetoothConst.DEVICE_UP, isUp);
+            result.put(BluetoothConst.DEVICE_UP, deviceUp);
 
             result.put(BluetoothConst.DEVICE_LAST_TIMESTAMP, lastActivityTimeStamp);
 
@@ -158,8 +158,8 @@ public class BluetoothSmartDevice {
             result.put(BluetoothConst.JSON_CONFIG_MANUFACTURER_DATA, manufacturerDataArray);
 
             JSONArray deviceNameArray = new JSONArray();
-            for (int i = 0; i < deviceName.size(); i++) {
-                deviceNameArray.put(deviceName.get(i));
+            for (int i = 0; i < deviceNameList.size(); i++) {
+                deviceNameArray.put(deviceNameList.get(i));
             }
             result.put(BluetoothConst.JSON_CONFIG_DEVICE_NAME, deviceNameArray);
             result.put(BluetoothConst.JSON_CONFIG_DEVICE_MODE, deviceMode.ordinal());
@@ -175,7 +175,7 @@ public class BluetoothSmartDevice {
     }
 
     public boolean isUp() {
-        return isUp;
+        return deviceUp;
     }
 
     public long getLastActivityTime() {
@@ -224,9 +224,15 @@ public class BluetoothSmartDevice {
 
                 ConnectionMode deviceMode = ConnectionMode.getMode(item.getInt(BluetoothConst.JSON_CONFIG_DEVICE_MODE));
 
+                boolean deviceUp = item.getBoolean(BluetoothConst.DEVICE_UP);
+
                 String deviceAddr = item.getString(BluetoothConst.DEVICE_ADDRESS);
 
-                return new BluetoothSmartDevice(deviceAddr, deviceUid, deviceName, manufacturerData, lastTimeStamp, genericDevice, deviceMode);
+                BluetoothSmartDevice smartDevice = new BluetoothSmartDevice(deviceAddr, deviceUid, deviceName, manufacturerData, lastTimeStamp, genericDevice, deviceMode);
+
+                smartDevice.setDeviceUp(deviceUp);
+
+                return smartDevice;
 
             } else {
                 Log.e(TAG, "Error missing filed in BluetoothSmartDevice Json object");
@@ -243,7 +249,7 @@ public class BluetoothSmartDevice {
     }
 
     public void setDeviceUp(boolean deviceUp) {
-        this.isUp = deviceUp;
+        this.deviceUp = deviceUp;
     }
 
 

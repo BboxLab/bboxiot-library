@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p/>
- * Copyright (c) 2015 BboxLab
+ * Copyright (c) 2015 InnovationLab BboxLab
  * <p/>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.config;
+package fr.bouyguestelecom.tv.bboxiot.config;
 
 import android.os.RemoteException;
 import android.util.Log;

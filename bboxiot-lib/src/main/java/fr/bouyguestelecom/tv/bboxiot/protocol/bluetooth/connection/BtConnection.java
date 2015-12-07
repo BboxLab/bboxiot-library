@@ -41,14 +41,14 @@ public class BtConnection {
     /**
      * Bluetooth devivce object
      */
-    protected BluetoothSmartDevice btDevice = null;
+    protected BluetoothSmartDevice btSmartDevice = null;
 
     private static String TAG = BtConnection.class.getSimpleName();
 
     /**
      * define if device has already been connected before
      */
-    protected boolean isFirstConnection = true;
+    protected boolean firstConnection = true;
 
     /**
      * indicate bluetooth connection is in connecting state
@@ -68,9 +68,9 @@ public class BtConnection {
     public BtConnection(String deviceUuid, boolean connected, boolean isFirstConnection, boolean busy, BluetoothSmartDevice device) {
         this.deviceUuid = deviceUuid;
         this.connected = connected;
-        this.isFirstConnection = isFirstConnection;
+        this.firstConnection = isFirstConnection;
         this.busy = busy;
-        this.btDevice = device;
+        this.btSmartDevice = device;
     }
 
     /**
@@ -84,9 +84,9 @@ public class BtConnection {
         try {
             result.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
             result.put(BluetoothConst.BT_CONNECTION_CONNECTED, connected);
-            result.put(BluetoothConst.BT_CONNECTION_FIRST_CONNECTION, isFirstConnection);
+            result.put(BluetoothConst.BT_CONNECTION_FIRST_CONNECTION, firstConnection);
             result.put(BluetoothConst.BT_CONNECTION_BUSY, busy);
-            result.put(BluetoothConst.BT_CONNECTION_DEVICE, btDevice.toJson());
+            result.put(BluetoothConst.BT_CONNECTION_DEVICE, btSmartDevice.toJson());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -102,16 +102,16 @@ public class BtConnection {
         return busy;
     }
 
-    public boolean isFirstTimeConnected() {
-        return isFirstConnection;
+    public boolean isFirstConnection() {
+        return firstConnection;
     }
 
     public String getDeviceUuid() {
         return deviceUuid;
     }
 
-    public BluetoothSmartDevice getBluetoothDevice() {
-        return btDevice;
+    public BluetoothSmartDevice getBtSmartDevice() {
+        return btSmartDevice;
     }
 
     public static BtConnection parse(JSONObject item) {

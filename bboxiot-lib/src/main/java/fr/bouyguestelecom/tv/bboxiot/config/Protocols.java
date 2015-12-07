@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  * <p/>
- * Copyright (c) 2015 BboxLab
+ * Copyright (c) 2015 InnovationLab BboxLab
  * <p/>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,16 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.config;
+package fr.bouyguestelecom.tv.bboxiot.config;
 
 /**
- * Features static key field in json configuration file for supported device
- *
- * @author Bertrand Martel Bouygues Telecom
+ * @author Bertrand Martel
  */
-public class GenericDeviceConst {
+public enum Protocols {
 
-    public final static String JSON_CONFIG_PROTOCOL = "protocol";
-    public final static String JSON_CONFIG_SUPPORTED_DEVICE = "supportedDevice";
-    public final static String GENERIC_DEVICE = "genericDevice";
+    UNDEFINED(0),
+    BLUETOOTH(1),
+    WIFI(2);
+
+    private int value;
+
+    private Protocols(int value) {
+        this.value = value;
+    }
+
+    public static Protocols getProtocol(int value) {
+
+        switch (value) {
+            case 0:
+                return UNDEFINED;
+            case 1:
+                return BLUETOOTH;
+            case 2:
+                return WIFI;
+            default:
+                return UNDEFINED;
+        }
+    }
 }
