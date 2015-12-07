@@ -132,7 +132,7 @@ interface IBluetoothManager {
     /**
      * force a device with given uid to be added to association list
      */
-    void addDeviceToAssociationList(String deviceUid);
+    boolean addDeviceToAssociationList(String request);
 
     /**
      * get the whole device function object in json format (including all properties for this function)

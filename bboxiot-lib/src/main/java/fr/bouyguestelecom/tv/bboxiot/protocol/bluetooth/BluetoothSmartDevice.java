@@ -36,6 +36,7 @@ import java.util.List;
 
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.config.GenericDevice;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.config.GenericDeviceConst;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.ConnectionMode;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 
 /**
@@ -77,7 +78,7 @@ public class BluetoothSmartDevice {
      */
     private long lastActivityTimeStamp = -1;
 
-    private String deviceMode = "";
+    private ConnectionMode deviceMode = ConnectionMode.MODE_NONE;
 
     private String address = "";
 
@@ -93,7 +94,7 @@ public class BluetoothSmartDevice {
                                 byte[] manufacturerData,
                                 long lastTimeStamp,
                                 GenericDevice genericDevice,
-                                String deviceMode) {
+                                ConnectionMode deviceMode) {
 
         this.address = address;
 
@@ -114,7 +115,7 @@ public class BluetoothSmartDevice {
         this.deviceMode = deviceMode;
     }
 
-    public String getDeviceMode() {
+    public ConnectionMode getDeviceMode() {
         return deviceMode;
     }
 
@@ -161,7 +162,7 @@ public class BluetoothSmartDevice {
                 deviceNameArray.put(deviceName.get(i));
             }
             result.put(BluetoothConst.JSON_CONFIG_DEVICE_NAME, deviceNameArray);
-            result.put(BluetoothConst.JSON_CONFIG_DEVICE_MODE, deviceMode);
+            result.put(BluetoothConst.JSON_CONFIG_DEVICE_MODE, deviceMode.ordinal());
             result.put(BluetoothConst.DEVICE_ADDRESS, address);
 
         } catch (JSONException e) {
@@ -221,7 +222,7 @@ public class BluetoothSmartDevice {
                     return null;
                 }
 
-                String deviceMode = item.getString(BluetoothConst.JSON_CONFIG_DEVICE_MODE);
+                ConnectionMode deviceMode = ConnectionMode.getMode(item.getInt(BluetoothConst.JSON_CONFIG_DEVICE_MODE));
 
                 String deviceAddr = item.getString(BluetoothConst.DEVICE_ADDRESS);
 

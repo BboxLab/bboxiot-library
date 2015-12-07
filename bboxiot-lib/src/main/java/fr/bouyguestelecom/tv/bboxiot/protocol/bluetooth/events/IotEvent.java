@@ -16,9 +16,9 @@ import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.GenericE
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.ScanRegistrationType;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ConnectionEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.AssociationList;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.BluetoothStateEvent;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ConnectionEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ConnectionItem;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.RegistrationEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ScanItemEvent;
@@ -107,7 +107,7 @@ public class IotEvent {
                                 return new ScanStatusEvent(topic, eventType, eventId, data);
                             }
                             case TOPIC_CONNECTION: {
-                                break;
+                                return new ScanItemEvent(topic, eventType, eventId, data);
                             }
                             case TOPIC_PROPERTIES: {
                                 break;

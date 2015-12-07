@@ -251,4 +251,15 @@ public class EventBuilder {
         }
         return new GenericEvent(EventTopic.TOPIC_BLUETOOTH_STATE, EventType.EVENT_INCOMING, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), value);
     }
+
+    public static IGenericEvent buildAddDeviceEvent(BluetoothSmartDevice device) {
+
+        JSONObject value = new JSONObject();
+        try {
+            value.put(ScanningEventConstant.SCANNING_EVENT_ITEMS, device.toJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return new GenericEvent(EventTopic.TOPIC_CONNECTION, EventType.EVENT_REQUEST, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), value);
+    }
 }
