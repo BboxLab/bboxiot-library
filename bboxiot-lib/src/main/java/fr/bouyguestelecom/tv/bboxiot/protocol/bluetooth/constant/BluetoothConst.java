@@ -36,8 +36,6 @@ public class BluetoothConst {
 
     public final static String JSON_CONFIG_MANUFACTURER_DATA = "manufacturerData";
 
-    public final static String BLUETOOTH_PREFIX = "bt";
-
     public final static String BLUETOOTH_DEVICE_UUID = "deviceUuid";
 
     public final static String JSON_CONFIG_DEVICE_MODE = "deviceMode";
@@ -54,12 +52,17 @@ public class BluetoothConst {
 
     public final static String BT_CONNECTION_BUSY = "busy";
 
-    public final static String BT_CONNECTION_DEVICEUP = "deviceUp";
-
     public final static String BT_CONNECTION_CONNECTED = "connected";
 
     public final static String BT_CONNECTION_DEVICE = "smartDevice";
 
-    public final static String BT_CONNECTION_SMART_TYPE_ARRAY = "smartTypeList";
+    public final static String BT_CONNECTION_SMART_FUNCTION_ARRAY = "functions";
 
+    public final static String BT_CONNECTION_SMART_PROPERTY_ARRAY = "properties";
+
+    public final static String BT_CONNECTION_SMART_NAME = "name";
+
+    public final static String BT_CONNECTION_SMART_CAPABILITIES = "capabilities";
+
+    public final static String BT_CONNECTION_SMART_VALUE = "value";
 }

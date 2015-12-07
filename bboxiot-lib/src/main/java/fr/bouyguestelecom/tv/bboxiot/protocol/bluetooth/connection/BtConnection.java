@@ -25,9 +25,14 @@ package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.bouyguestelecom.tv.bboxiot.datamodel.SmartFunction;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 
@@ -42,6 +47,8 @@ public class BtConnection {
      * Bluetooth devivce object
      */
     protected BluetoothSmartDevice btSmartDevice = null;
+
+    protected List<SmartFunction> deviceFunctions = new ArrayList<>();
 
     private static String TAG = BtConnection.class.getSimpleName();
 
@@ -65,12 +72,13 @@ public class BtConnection {
      */
     protected boolean connected = false;
 
-    public BtConnection(String deviceUuid, boolean connected, boolean isFirstConnection, boolean busy, BluetoothSmartDevice device) {
+    public BtConnection(String deviceUuid, boolean connected, boolean isFirstConnection, boolean busy, BluetoothSmartDevice device, List<SmartFunction> deviceFunctions) {
         this.deviceUuid = deviceUuid;
         this.connected = connected;
         this.firstConnection = isFirstConnection;
         this.busy = busy;
         this.btSmartDevice = device;
+        this.deviceFunctions = deviceFunctions;
     }
 
     /**
@@ -87,6 +95,16 @@ public class BtConnection {
             result.put(BluetoothConst.BT_CONNECTION_FIRST_CONNECTION, firstConnection);
             result.put(BluetoothConst.BT_CONNECTION_BUSY, busy);
             result.put(BluetoothConst.BT_CONNECTION_DEVICE, btSmartDevice.toJson());
+
+            JSONArray array = new JSONArray();
+            for (int i = 0; i < deviceFunctions.size(); i++) {
+                JSONObject parsedFunction = deviceFunctions.get(i).toJson();
+                if (parsedFunction != null)
+                    array.put(parsedFunction);
+                else
+                    Log.e(TAG, "Error device function item is null");
+            }
+            result.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION_ARRAY, array);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -121,12 +139,22 @@ public class BtConnection {
                     item.has(BluetoothConst.BT_CONNECTION_CONNECTED) &&
                     item.has(BluetoothConst.BT_CONNECTION_FIRST_CONNECTION) &&
                     item.has(BluetoothConst.BT_CONNECTION_BUSY) &&
-                    item.has(BluetoothConst.BT_CONNECTION_DEVICE)) {
+                    item.has(BluetoothConst.BT_CONNECTION_DEVICE) &&
+                    item.has(BluetoothConst.BT_CONNECTION_SMART_FUNCTION_ARRAY)) {
 
                 String deviceUuid = item.getString(BluetoothConst.BLUETOOTH_DEVICE_UUID);
                 boolean connected = item.getBoolean(BluetoothConst.BT_CONNECTION_CONNECTED);
                 boolean isFirstConnection = item.getBoolean(BluetoothConst.BT_CONNECTION_FIRST_CONNECTION);
                 boolean busy = item.getBoolean(BluetoothConst.BT_CONNECTION_BUSY);
+
+                JSONArray smartFunctionArray = item.getJSONArray(BluetoothConst.BT_CONNECTION_SMART_FUNCTION_ARRAY);
+
+                ArrayList<SmartFunction> smartFunctions = new ArrayList<>();
+
+                for (int i = 0; i < smartFunctionArray.length(); i++) {
+                    smartFunctions.add(SmartFunction.parse(smartFunctionArray.getJSONObject(i)));
+                }
+
                 JSONObject device = item.getJSONObject(BluetoothConst.BT_CONNECTION_DEVICE);
 
                 BluetoothSmartDevice smartDevice = BluetoothSmartDevice.parse(device);
@@ -136,7 +164,7 @@ public class BtConnection {
                     return null;
                 }
 
-                return new BtConnection(deviceUuid, connected, isFirstConnection, busy, smartDevice);
+                return new BtConnection(deviceUuid, connected, isFirstConnection, busy, smartDevice, smartFunctions);
 
             } else {
                 Log.e(TAG, "Error wrong formatted BtConnection json Object");
