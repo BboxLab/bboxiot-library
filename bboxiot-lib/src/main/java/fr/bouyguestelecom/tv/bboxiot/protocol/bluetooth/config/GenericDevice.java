@@ -26,12 +26,8 @@ package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.config;
 import android.os.RemoteException;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Structure for supported device
@@ -42,87 +38,40 @@ public class GenericDevice {
 
     private final static String TAG = GenericDevice.class.getSimpleName();
 
-    /**
-     * device implementation class name
-     */
-    private String smartBuilderClassName = "";
-
-    /**
-     * list of device functions
-     */
-    private List<String> smartFunctionsList = new ArrayList<>();
-
-    /**
-     * manufacturer name
-     */
-    private String manufacturerName = "";
-
-    /**
-     * product name
-     */
-    private String productName = "";
+    private SupportedDevices supportedDevice = SupportedDevices.UNDEFINED;
 
     /**
      * radio protocol used
      */
-    private String protocol = "";
+    private Protocols protocol = Protocols.UNDEFINED;
 
     public GenericDevice() {
-
     }
 
     /**
      * Build supported bluetooth device structure
-     *
-     * @param manufacturerName
-     * @param productName
-     * @param smartBuilderClassName
-     * @param smartFunctionsList
      */
-    public GenericDevice(String protocol,
-                         String manufacturerName,
-                         String productName,
-                         String smartBuilderClassName,
-                         List<String> smartFunctionsList
+    public GenericDevice(Protocols protocol,
+                         SupportedDevices supportedDevice
     ) {
         this.protocol = protocol;
-        this.manufacturerName = manufacturerName;
-        this.productName = productName;
-        this.smartBuilderClassName = smartBuilderClassName;
-        this.smartFunctionsList = smartFunctionsList;
+        this.supportedDevice = supportedDevice;
     }
 
-    public String getManufacturerName() {
-        return manufacturerName;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public String getSmartBuilderClassName() {
-        return smartBuilderClassName;
-    }
-
-    public List<String> getSmartFunctionsList() {
-        return smartFunctionsList;
-    }
-
-    public String getProtocol() {
+    public Protocols getProtocol() {
         return protocol;
+    }
+
+    public SupportedDevices getSupportedDevice() {
+        return supportedDevice;
     }
 
     public String toJsonString() throws RemoteException {
 
         JSONObject result = new JSONObject();
         try {
-            result.put(GenericDeviceConst.JSON_CONFIG_MANUFACTURER_NAME, manufacturerName);
-            result.put(GenericDeviceConst.JSON_CONFIG_PRODUCT_NAME, productName);
-            JSONArray smartFunctionsArray = new JSONArray();
-            for (int i = 0; i < smartFunctionsList.size(); i++) {
-                smartFunctionsArray.put(smartFunctionsList.get(i));
-            }
-            result.put(GenericDeviceConst.JSON_CONFIG_SMART_FUNCTIONS, smartFunctionsArray);
+            result.put(GenericDeviceConst.JSON_CONFIG_SUPPORTED_DEVICE, supportedDevice.ordinal());
+            result.put(GenericDeviceConst.JSON_CONFIG_PROTOCOL, protocol.ordinal());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -132,23 +81,14 @@ public class GenericDevice {
     public static GenericDevice parse(JSONObject item) {
 
         try {
-            if (item.has(GenericDeviceConst.JSON_CONFIG_MANUFACTURER_NAME) &&
-                    item.has(GenericDeviceConst.JSON_CONFIG_PRODUCT_NAME) &&
-                    item.has(GenericDeviceConst.JSON_CONFIG_SMART_FUNCTIONS)) {
+            if (item.has(GenericDeviceConst.JSON_CONFIG_SUPPORTED_DEVICE) &&
+                    item.has(GenericDeviceConst.JSON_CONFIG_PROTOCOL)) {
 
-                String manufacturerName = item.getString(GenericDeviceConst.JSON_CONFIG_MANUFACTURER_NAME);
-                String productName = item.getString(GenericDeviceConst.JSON_CONFIG_PRODUCT_NAME);
+                SupportedDevices supportedDevice = SupportedDevices.getDevice(item.getInt(GenericDeviceConst.JSON_CONFIG_SUPPORTED_DEVICE));
+                Protocols btProtocol = Protocols.getProtocol(item.getInt(GenericDeviceConst.JSON_CONFIG_PROTOCOL));
 
-                List<String> smartFunctionList = new ArrayList<>();
+                return new GenericDevice(btProtocol, supportedDevice);
 
-                JSONArray array = item.getJSONArray(GenericDeviceConst.JSON_CONFIG_SMART_FUNCTIONS);
-
-                for (int i = 0; i < array.length(); i++) {
-                    smartFunctionList.add(array.get(i).toString());
-                }
-
-                return new GenericDevice("", manufacturerName, productName, "", smartFunctionList);
-                
             } else {
                 Log.e(TAG, "Error missing filed in Generic Device object");
             }

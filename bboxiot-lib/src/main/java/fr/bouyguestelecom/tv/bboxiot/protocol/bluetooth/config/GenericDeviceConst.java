@@ -30,15 +30,7 @@ package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.config;
  */
 public class GenericDeviceConst {
 
-    public final static String JSON_CONFIG_MANUFACTURER_NAME = "manufacturerName";
-
-    public final static String JSON_CONFIG_PRODUCT_NAME = "productName";
-
     public final static String JSON_CONFIG_PROTOCOL = "protocol";
-
-    public final static String JSON_CONFIG_SMART_BUILDER_CLASS_NAME = "smartBuilder";
-
-    public final static String JSON_CONFIG_SMART_FUNCTIONS = "smartFunctions";
-
+    public final static String JSON_CONFIG_SUPPORTED_DEVICE = "supportedDevice";
     public final static String GENERIC_DEVICE = "genericDevice";
 }
