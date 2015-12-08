@@ -48,17 +48,19 @@ public class ScanListItem extends GenericEventAbstr implements IScanList {
 
     private Map<String, BluetoothSmartDevice> deviceList = new HashMap<>();
 
+    private JSONArray scanItems = new JSONArray();
+
     public ScanListItem(EventTopic topic, EventType type, String eventId, JSONObject data) {
         super(topic, type, eventId, data);
 
         try {
             if (data.has(ScanningEventConstant.SCANNING_EVENT_ITEMS)) {
 
-                JSONArray array = data.getJSONArray(ScanningEventConstant.SCANNING_EVENT_ITEMS);
+                scanItems = data.getJSONArray(ScanningEventConstant.SCANNING_EVENT_ITEMS);
 
-                for (int i = 0; i < array.length(); i++) {
+                for (int i = 0; i < scanItems.length(); i++) {
 
-                    BluetoothSmartDevice device = BluetoothSmartDevice.parse(array.getJSONObject(i));
+                    BluetoothSmartDevice device = BluetoothSmartDevice.parse(scanItems.getJSONObject(i));
                     if (device != null) {
                         deviceList.put(device.getDeviceUuid(), device);
                     } else {
@@ -77,5 +79,10 @@ public class ScanListItem extends GenericEventAbstr implements IScanList {
     @Override
     public Map<String, BluetoothSmartDevice> getList() {
         return deviceList;
+    }
+
+    @Override
+    public JSONArray toJsonArray() {
+        return scanItems;
     }
 }

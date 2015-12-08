@@ -28,11 +28,6 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.AssociationEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.GenericEventConstant;
@@ -48,6 +43,8 @@ import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ScanItemEven
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ScanListItem;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ScanStatusChangeEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ScanStatusEvent;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.inter.IAssociationList;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.inter.IScanList;
 
 /**
  * @author Bertrand Martel
@@ -185,7 +182,7 @@ public class IotEvent {
         return null;
     }
 
-    public static BtConnection parseConnectionItem(String request) {
+    public static ConnectionItem parseConnectionItem(String request) {
 
         Log.i(TAG, "event : " + request);
 
@@ -209,7 +206,7 @@ public class IotEvent {
                         topic == EventTopic.TOPIC_CONNECTION &&
                         data.has(AssociationEventConstant.ASSOCIATION_EVENT_ITEM)) {
 
-                    return new ConnectionItem(topic, eventType, eventId, data).getItem();
+                    return new ConnectionItem(topic, eventType, eventId, data);
 
                 }
             }
@@ -221,7 +218,7 @@ public class IotEvent {
     }
 
 
-    public static Map<String, BtConnection> parseAssociationList(String request) {
+    public static IAssociationList parseAssociationList(String request) {
 
         Log.i(TAG, "event : " + request);
 
@@ -244,17 +241,17 @@ public class IotEvent {
                 if (eventType == EventType.EVENT_RESPONSE &&
                         topic == EventTopic.TOPIC_CONNECTION) {
 
-                    return new AssociationList(topic, eventType, eventId, data).getList();
+                    return new AssociationList(topic, eventType, eventId, data);
                 }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return new HashMap<>();
+        return null;
     }
 
-    public static Map<String, BluetoothSmartDevice> parseScanningList(String request) {
+    public static IScanList parseScanningList(String request) {
 
         Log.i(TAG, "event : " + request);
 
@@ -277,12 +274,12 @@ public class IotEvent {
                 if (eventType == EventType.EVENT_RESPONSE &&
                         topic == EventTopic.TOPIC_SCAN) {
 
-                    return new ScanListItem(topic, eventType, eventId, data).getList();
+                    return new ScanListItem(topic, eventType, eventId, data);
                 }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return new HashMap<>();
+        return null;
     }
 }

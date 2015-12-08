@@ -48,17 +48,19 @@ public class AssociationList extends GenericEventAbstr implements IAssociationLi
 
     private Map<String, BtConnection> connectionList = new HashMap<>();
 
+    private JSONArray connectionItems = new JSONArray();
+
     public AssociationList(EventTopic topic, EventType type, String eventId, JSONObject data) {
         super(topic, type, eventId, data);
 
         try {
             if (data.has(AssociationEventConstant.ASSOCIATION_EVENT_ITEMS)) {
 
-                JSONArray array = data.getJSONArray(AssociationEventConstant.ASSOCIATION_EVENT_ITEMS);
+                connectionItems = data.getJSONArray(AssociationEventConstant.ASSOCIATION_EVENT_ITEMS);
 
-                for (int i = 0; i < array.length(); i++) {
+                for (int i = 0; i < connectionItems.length(); i++) {
 
-                    BtConnection connection = BtConnection.parse((JSONObject) array.get(i));
+                    BtConnection connection = BtConnection.parse((JSONObject) connectionItems.get(i));
 
                     if (connection != null) {
                         connectionList.put(connection.getDeviceUuid(), connection);
@@ -77,5 +79,10 @@ public class AssociationList extends GenericEventAbstr implements IAssociationLi
     @Override
     public Map<String, BtConnection> getList() {
         return connectionList;
+    }
+
+    @Override
+    public JSONArray toJsonArray() {
+        return connectionItems;
     }
 }

@@ -23,6 +23,8 @@
  */
 package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.inter;
 
+import org.json.JSONArray;
+
 import java.util.Map;
 
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
@@ -33,5 +35,7 @@ import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
 public interface IScanList {
 
     public Map<String, BluetoothSmartDevice> getList();
+
+    public JSONArray toJsonArray();
 
 }

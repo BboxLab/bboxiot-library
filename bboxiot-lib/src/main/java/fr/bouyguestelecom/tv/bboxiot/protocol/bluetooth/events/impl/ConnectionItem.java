@@ -25,6 +25,7 @@ package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,5 +68,13 @@ public class ConnectionItem extends GenericEventAbstr implements IConnectionItem
     @Override
     public BtConnection getItem() {
         return btConnection;
+    }
+
+    @Override
+    public JSONArray getJsonArrayFunctionList() {
+        if (btConnection != null)
+            return btConnection.getJsonArrayFunctionList();
+        else
+            return new JSONArray();
     }
 }

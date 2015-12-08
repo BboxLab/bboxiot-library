@@ -280,4 +280,61 @@ public class BtConnection {
         }
         return null;
     }
+
+    public JSONArray getJsonArrayFunctionList() {
+
+        try {
+            JSONArray array = new JSONArray();
+
+            Iterator it = deviceFunctions.entrySet().iterator();
+
+            while (it.hasNext()) {
+
+                Map.Entry<Functions, HashMap<Properties, SmartProperty>> pair = (Map.Entry) it.next();
+                HashMap<Properties, SmartProperty> entries = pair.getValue();
+
+                JSONObject functionItem = new JSONObject();
+                functionItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, pair.getKey().ordinal());
+
+                JSONArray propertiesArray = new JSONArray();
+
+                Iterator it2 = entries.entrySet().iterator();
+
+                while (it2.hasNext()) {
+
+                    Map.Entry<Properties, SmartProperty> pair2 = (Map.Entry) it2.next();
+
+                    JSONObject propertyItem = new JSONObject();
+                    propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, pair2.getKey().ordinal());
+                    propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION, pair.getKey().ordinal());
+
+                    Iterator<Capability> it3 = pair2.getValue().getCapabilities().iterator();
+
+                    JSONArray capabilitiesArray = new JSONArray();
+                    while (it3.hasNext()) {
+                        capabilitiesArray.put(it3.next().ordinal());
+                    }
+
+                    propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES, capabilitiesArray);
+
+                    propertyItem.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE, pair2.getValue().getType().ordinal());
+
+                    if (pair2.getValue().getType() == PropertyTypes.BUTTON_STATE) {
+                        propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_VALUE, ((ButtonState) pair2.getValue().getValue()).ordinal());
+                    } else {
+                        propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_VALUE, pair2.getValue().getValue());
+                    }
+
+                    propertiesArray.put(propertyItem);
+                }
+
+                functionItem.put(BluetoothConst.BT_CONNECTION_SMART_PROPERTY_ARRAY, propertiesArray);
+
+                array.put(functionItem);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return new JSONArray();
+    }
 }

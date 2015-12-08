@@ -23,6 +23,8 @@
  */
 package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.inter;
 
+import org.json.JSONArray;
+
 import java.util.Map;
 
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
@@ -34,4 +36,5 @@ public interface IAssociationList {
 
     public Map<String, BtConnection> getList();
 
+    public JSONArray toJsonArray();
 }

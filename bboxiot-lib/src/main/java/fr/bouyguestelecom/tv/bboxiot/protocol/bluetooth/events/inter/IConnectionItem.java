@@ -23,6 +23,8 @@
  */
 package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.inter;
 
+import org.json.JSONArray;
+
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
 
 /**
@@ -31,5 +33,7 @@ import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
 public interface IConnectionItem {
 
     public BtConnection getItem();
+
+    public JSONArray getJsonArrayFunctionList();
 
 }
