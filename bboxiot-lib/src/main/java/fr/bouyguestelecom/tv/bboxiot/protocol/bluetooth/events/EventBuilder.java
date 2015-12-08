@@ -32,10 +32,14 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.Set;
 
+import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Capability;
+import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Functions;
+import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Properties;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.AssociationEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.Common;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.PropertiesEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.ScanningEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.ConnectionState;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventSubscription;
@@ -284,5 +288,36 @@ public class EventBuilder {
             e.printStackTrace();
         }
         return new GenericEvent(EventTopic.TOPIC_CONNECTION, EventType.EVENT_REQUEST, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), value);
+    }
+
+    public static <T> String buildPushRequest(Properties property, Functions function, T value) {
+
+        JSONObject request = new JSONObject();
+        try {
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, Capability.PUSH.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, function);
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property);
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_VALUE, value);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return new GenericEvent(EventTopic.TOPIC_PROPERTIES, EventType.EVENT_REQUEST, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), request).toJsonString();
+    }
+
+
+    public static String buildPullRequest(Properties property, Functions function) {
+        JSONObject request = new JSONObject();
+        try {
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, Capability.PULL.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, function);
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return new GenericEvent(EventTopic.TOPIC_PROPERTIES, EventType.EVENT_REQUEST, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), request).toJsonString();
     }
 }

@@ -27,13 +27,11 @@ package fr.bouyguestelecom.tv.bboxiot.datamodel.enums;
  * @author Bertrand Martel
  */
 public enum Capability {
-    
+
     NONE(0),
     PULL(1),
     PUSH(2),
-    MONITOR(3),
-    GET(4),
-    SET(5);
+    GET(3);
 
     private int value = 0;
 
@@ -51,11 +49,7 @@ public enum Capability {
             case 2:
                 return PUSH;
             case 3:
-                return MONITOR;
-            case 4:
                 return GET;
-            case 5:
-                return SET;
         }
         return NONE;
     }

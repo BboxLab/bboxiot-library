@@ -36,6 +36,8 @@ import java.util.List;
 
 import fr.bouyguestelecom.tv.bboxiot.config.GenericDevice;
 import fr.bouyguestelecom.tv.bboxiot.config.GenericDeviceConst;
+import fr.bouyguestelecom.tv.bboxiot.datamodel.Model;
+import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Functions;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.ConnectionMode;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 
@@ -83,7 +85,6 @@ public class BluetoothSmartDevice {
     private String address = "";
 
     private BluetoothDevice device = null;
-
 
     /**
      * Build bluetooth device object

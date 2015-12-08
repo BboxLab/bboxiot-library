@@ -28,15 +28,18 @@ package fr.bouyguestelecom.tv.bboxiot.datamodel;
  *
  * @author Bertrand Martel
  */
-public interface ICapable {
+public interface IProperty {
 
     public boolean isPushAble();
 
     public boolean isPullAble();
 
-    public boolean isSetAble();
-
     public boolean isGetAble();
 
-    public boolean isMonitorAble();
+    public int getIntValue();
+
+    public boolean getBoolValue();
+
+    public float getFloatValue();
+
 }

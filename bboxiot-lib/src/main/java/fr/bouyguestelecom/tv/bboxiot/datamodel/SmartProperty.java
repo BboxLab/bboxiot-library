@@ -31,42 +31,79 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.Iterator;
 import java.util.List;
 
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Capability;
+import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Functions;
+import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Properties;
+import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.PropertyTypes;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.EventBuilder;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.PropertiesEventConstant;
 
 /**
  * @author Bertrand Martel
  */
-public class SmartProperty implements ICapable {
+public class SmartProperty<T> implements IProperty {
 
     private static String TAG = SmartProperty.class.getSimpleName();
 
-    private String name = "";
+    private Properties property = Properties.NONE;
 
-    private Object value = null;
+    private Functions function = Functions.NONE;
 
-    private EnumSet<Capability> capabilities = null;
+    private T value = null;
 
-    public SmartProperty(String name, List<Capability> capabilities) {
-        this.name = name;
-        for (int i = 0; i < capabilities.size(); i++) {
-            this.capabilities.add(capabilities.get(i));
-        }
+    private PropertyTypes type = PropertyTypes.NONE;
+
+    private EnumSet<Capability> capabilities = EnumSet.noneOf(Capability.class);
+
+    public SmartProperty(Functions function, Properties property, PropertyTypes type, T initValue) {
+        this.property = property;
+        this.function = function;
+        this.capabilities.addAll(capabilities);
+        this.type = type;
+        this.value = initValue;
     }
 
-    public String getName() {
-        return name;
+    public SmartProperty(Functions function, Properties property, List<Capability> capabilities, PropertyTypes type, T value) {
+        this.property = property;
+        this.function = function;
+        this.capabilities.addAll(capabilities);
+        this.type = type;
+        this.value = value;
     }
 
-    public Object getValue() {
+    public T getValue() {
         return value;
     }
 
-    public EnumSet<Capability> getCapabilities() {
-        return capabilities;
+    @Override
+    public int getIntValue() {
+        if (value instanceof Integer) {
+            return (Integer) value;
+        }
+        return -1;
+    }
+
+    @Override
+    public boolean getBoolValue() {
+        if (value instanceof Boolean) {
+            return (Boolean) value;
+        }
+        return false;
+    }
+
+    @Override
+    public float getFloatValue() {
+        if (value instanceof Float) {
+            return (Float) value;
+        }
+        return -1;
+    }
+
+    public PropertyTypes getType() {
+        return this.type;
     }
 
     @Override
@@ -80,71 +117,31 @@ public class SmartProperty implements ICapable {
     }
 
     @Override
-    public boolean isSetAble() {
-        return capabilities.contains(Capability.SET);
-    }
-
-    @Override
     public boolean isGetAble() {
         return capabilities.contains(Capability.GET);
     }
 
-    @Override
-    public boolean isMonitorAble() {
-        return capabilities.contains(Capability.MONITOR);
+    public Properties getProperty() {
+        return property;
     }
 
-    public static SmartProperty parse(JSONObject item) {
-        try {
-            if (item.has(BluetoothConst.BT_CONNECTION_SMART_NAME) &&
-                    item.has(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES) &&
-                    item.has(BluetoothConst.BT_CONNECTION_SMART_VALUE)) {
-
-                String name = item.getString(BluetoothConst.BT_CONNECTION_SMART_NAME);
-
-                JSONArray capabilitiesArray = item.getJSONArray(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES);
-
-                List<Capability> capabilities = new ArrayList<>();
-                for (int i = 0; i < capabilitiesArray.length(); i++) {
-                    capabilities.add(Capability.getCapability(capabilitiesArray.getInt(i)));
-                }
-
-                Object value = item.get(BluetoothConst.BT_CONNECTION_SMART_VALUE);
-
-                return new SmartProperty(name, capabilities);
-
-            } else {
-                Log.e(TAG, "Missing field for SmartFunction object");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public Functions getFunction() {
+        return function;
     }
 
-    public JSONObject toJson() {
+    public void set(T value) {
+        this.value = value;
+    }
 
-        JSONObject result = new JSONObject();
+    public String push(T value) {
+        return EventBuilder.buildPushRequest(property, function, value);
+    }
 
-        try {
-            result.put(BluetoothConst.BT_CONNECTION_SMART_NAME, name);
+    public String pull() {
+        return EventBuilder.buildPullRequest(property, function);
+    }
 
-            Iterator it = capabilities.iterator();
-
-            JSONArray array = new JSONArray();
-            while (it.hasNext()) {
-                Capability capability = (Capability) it.next();
-                array.put(capability.ordinal());
-            }
-
-            result.put(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES, array);
-
-            result.put(BluetoothConst.BT_CONNECTION_SMART_VALUE, value);
-            
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return result;
+    public EnumSet<Capability> getCapabilities() {
+        return capabilities;
     }
 }

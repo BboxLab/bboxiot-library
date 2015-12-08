@@ -60,7 +60,9 @@ public class BluetoothConst {
 
     public final static String BT_CONNECTION_SMART_PROPERTY_ARRAY = "properties";
 
-    public final static String BT_CONNECTION_SMART_NAME = "name";
+    public final static String BT_CONNECTION_SMART_FUNCTION = "function";
+
+    public final static String BT_CONNECTION_SMART_NAME = "type";
 
     public final static String BT_CONNECTION_SMART_CAPABILITIES = "capabilities";
 
