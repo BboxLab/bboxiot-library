@@ -135,33 +135,28 @@ interface IBluetoothManager {
     boolean addDeviceToAssociationList(String request);
 
     /**
-     * get the whole device function object in json format (including all properties for this function)
-     */
-    String getDeviceFunction(String deviceUid);
-
-    /**
      * check if device with given device uid features function name
      */
-    boolean hasDeviceFunction(String deviceUid,String functionName);
+    boolean hasDeviceFunction(String deviceUid,int function);
 
     /**
      * check if device with given device uid features property name for given function name
      */
-    boolean hasDeviceProperty(String deviceUid,String functionName,String propertyName);
+    boolean hasDeviceProperty(String deviceUid,int function,int property);
 
     /**
      * get device property object in json format
      */
-    String getDeviceProperty(String deviceUid,String functionName,String propertyName);
+    String getDeviceProperty(String deviceUid,int function,int property);
 
     /**
      * push a value to a property according to JSON input request
      */
-    String pushValue(String request);
+    boolean pushValue(String request);
 
     /**
      * pull a value from a proeprty according to JSON input request
      */
-    String pullValue(String request);
+    boolean pullValue(String request);
 
 }

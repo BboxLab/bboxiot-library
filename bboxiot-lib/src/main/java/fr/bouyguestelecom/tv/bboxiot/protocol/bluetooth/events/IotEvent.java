@@ -38,7 +38,9 @@ import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.AssociationL
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.BluetoothStateEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ConnectionEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ConnectionItem;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.PropertyResponseEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.PropertyIncomingEvent;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.PropertyRequestEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.RegistrationEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ScanItemEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ScanListItem;
@@ -132,7 +134,7 @@ public class IotEvent {
                                 return new ScanItemEvent(topic, eventType, eventId, data);
                             }
                             case TOPIC_PROPERTIES: {
-                                break;
+                                return new PropertyRequestEvent(topic, eventType, eventId, data);
                             }
                             case TOPIC_BLUETOOTH_STATE: {
                             }
@@ -163,6 +165,10 @@ public class IotEvent {
 
                                 return new ScanListItem(topic, eventType, eventId, data);
                             }
+                            case TOPIC_PROPERTIES: {
+
+                                return new PropertyResponseEvent(topic, eventType, eventId, data);
+                            }
                             default: {
                                 break;
                             }
@@ -184,9 +190,38 @@ public class IotEvent {
         return null;
     }
 
-    public static ConnectionItem parseConnectionItem(String request) {
+    public static PropertyRequestEvent parsePropertyRequest(String request) {
 
-        Log.i(TAG, "event : " + request);
+        JSONObject object = null;
+
+        try {
+            object = new JSONObject(request);
+
+            if (object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE) &&
+                    object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA) &&
+                    object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID) &&
+                    object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC)) {
+
+                EventTopic topic = EventTopic.getTopic(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC));
+                EventType eventType = EventType.getType(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE));
+                String eventId = object.getString(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID);
+                JSONObject data = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA);
+
+                if ((eventType == EventType.EVENT_REQUEST) && (topic == EventTopic.TOPIC_PROPERTIES)) {
+                    return new PropertyRequestEvent(topic, eventType, eventId, data);
+                }
+
+            } else {
+                Log.e(TAG, "Error event doesnt respect format");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+    }
+
+    public static ConnectionItem parseConnectionItem(String request) {
 
         JSONObject object = null;
 

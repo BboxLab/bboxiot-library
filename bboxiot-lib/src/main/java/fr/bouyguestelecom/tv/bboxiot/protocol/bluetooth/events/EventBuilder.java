@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Set;
 
 import fr.bouyguestelecom.tv.bboxiot.datamodel.SmartProperty;
-import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Capability;
+import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.ActionStatus;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Functions;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Properties;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
@@ -47,6 +47,7 @@ import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.ConnectionS
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventSubscription;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventType;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.PropertyEventType;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.ScanRegistrationType;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.ScanningAction;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.ScanningType;
@@ -292,13 +293,18 @@ public class EventBuilder {
         return new GenericEvent(EventTopic.TOPIC_CONNECTION, EventType.EVENT_REQUEST, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), value);
     }
 
-    public static <T> String buildPushRequest(Properties property, Functions function, T value) {
+    public static <T> String buildPushRequest(SmartProperty property, T value) {
+        return buildPushRequest(property.getDeviceUid(), property.getFunction(), property.getProperty(), value);
+    }
+
+    public static <T> String buildPushRequest(String deviceUid, Functions function, Properties property, T value) {
 
         JSONObject request = new JSONObject();
         try {
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, Capability.PUSH.ordinal());
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, function);
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property);
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.PUSH.ordinal());
+            request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUid);
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, function.ordinal());
             request.put(PropertiesEventConstant.PROPERTIES_EVENT_VALUE, value);
 
         } catch (JSONException e) {
@@ -307,14 +313,19 @@ public class EventBuilder {
 
         return new GenericEvent(EventTopic.TOPIC_PROPERTIES, EventType.EVENT_REQUEST, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), request).toJsonString();
     }
+    
+    public static String buildPullRequest(SmartProperty property) {
+        return buildPullRequest(property.getDeviceUid(), property.getFunction(), property.getProperty());
+    }
 
+    public static String buildPullRequest(String deviceUuid, Functions function, Properties property) {
 
-    public static String buildPullRequest(Properties property, Functions function) {
         JSONObject request = new JSONObject();
         try {
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, Capability.PULL.ordinal());
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, function);
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property);
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.PULL.ordinal());
+            request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, function.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, property.ordinal());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -323,17 +334,84 @@ public class EventBuilder {
         return new GenericEvent(EventTopic.TOPIC_PROPERTIES, EventType.EVENT_REQUEST, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), request).toJsonString();
     }
 
-    public static IGenericEvent buildPropertyEvent(SmartProperty property, String deviceUuid) {
+    public static IGenericEvent buildRequestPropertyEvent(Properties property, Functions function, String deviceUid) {
+
+        JSONObject request = new JSONObject();
+        try {
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.PROPERTY.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, function.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.ordinal());
+            request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUid);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return new GenericEvent(EventTopic.TOPIC_PROPERTIES, EventType.EVENT_REQUEST, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), request);
+    }
+
+    public static IGenericEvent buildResponsePropertyEvent(SmartProperty property) {
+
+        JSONObject request = new JSONObject();
+        try {
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.PROPERTY.ordinal());
+            request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, property.getDeviceUid());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.toJson());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return new GenericEvent(EventTopic.TOPIC_PROPERTIES, EventType.EVENT_RESPONSE, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), request);
+    }
+
+
+    public static IGenericEvent buildIncomingPropertyEvent(SmartProperty property, String deviceUuid) {
 
         JSONObject request = new JSONObject();
 
         try {
             request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.toJson());
             request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.INCOMING.ordinal());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return new GenericEvent(EventTopic.TOPIC_PROPERTIES, EventType.EVENT_INCOMING, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), request);
+    }
+
+    public static IGenericEvent buildPullResponse(SmartProperty property, String deviceUuid, ActionStatus status, String eventId) {
+
+        JSONObject request = new JSONObject();
+
+        try {
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.toJson());
+            request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
+            request.put(PropertiesEventConstant.PROPERTIES_ACTION_ID, eventId);
+            request.put(PropertiesEventConstant.PROPERTIES_ACTION_STATUS, status.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.PULL.ordinal());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return new GenericEvent(EventTopic.TOPIC_PROPERTIES, EventType.EVENT_RESPONSE, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), request);
+    }
+
+    public static IGenericEvent buildPushResponse(SmartProperty property, String deviceUuid, ActionStatus status, String eventId) {
+
+        JSONObject request = new JSONObject();
+
+        try {
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.toJson());
+            request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
+            request.put(PropertiesEventConstant.PROPERTIES_ACTION_ID, eventId);
+            request.put(PropertiesEventConstant.PROPERTIES_ACTION_STATUS, status.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.PUSH.ordinal());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return new GenericEvent(EventTopic.TOPIC_PROPERTIES, EventType.EVENT_RESPONSE, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), request);
     }
 }

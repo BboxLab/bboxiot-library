@@ -30,8 +30,7 @@ public enum Capability {
 
     NONE(0),
     PULL(1),
-    PUSH(2),
-    GET(3);
+    PUSH(2);
 
     private int value = 0;
 
@@ -48,8 +47,6 @@ public enum Capability {
                 return PULL;
             case 2:
                 return PUSH;
-            case 3:
-                return GET;
         }
         return NONE;
     }

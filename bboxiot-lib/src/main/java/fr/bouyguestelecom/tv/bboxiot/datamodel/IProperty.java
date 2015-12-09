@@ -34,8 +34,6 @@ public interface IProperty {
 
     public boolean isPullAble();
 
-    public boolean isGetAble();
-
     public int getIntValue();
 
     public boolean getBoolValue();

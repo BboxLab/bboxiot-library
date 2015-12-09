@@ -6,17 +6,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import fr.bouyguestelecom.tv.bboxiot.datamodel.SmartProperty;
+import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.ActionStatus;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.GenericEventAbstr;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.PropertiesEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.EventType;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.inter.IPropertyIncomingEvent;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.enums.PropertyEventType;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.inter.IPropertyResponseEvent;
 
 /**
  * @author Bertrand Martel
  */
-public class PropertyIncomingEvent extends GenericEventAbstr implements IPropertyIncomingEvent {
+public class PropertyResponseEvent extends GenericEventAbstr implements IPropertyResponseEvent {
 
     private static String TAG = ScanItemEvent.class.getSimpleName();
 
@@ -24,14 +26,29 @@ public class PropertyIncomingEvent extends GenericEventAbstr implements IPropert
 
     private String deviceUuid = "";
 
-    public PropertyIncomingEvent(EventTopic topic, EventType type, String eventId, JSONObject data) {
+    private ActionStatus status = ActionStatus.NONE;
+
+    private PropertyEventType eventType = PropertyEventType.NONE;
+
+    private String actionId = "";
+
+    public PropertyResponseEvent(EventTopic topic, EventType type, String eventId, JSONObject data) {
         super(topic, type, eventId, data);
 
         try {
             if (data.has(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY) &&
-                    data.has(BluetoothConst.BLUETOOTH_DEVICE_UUID)) {
+                    data.has(BluetoothConst.BLUETOOTH_DEVICE_UUID) &&
+                    data.has(PropertiesEventConstant.PROPERTIES_ACTION_STATUS) &&
+                    data.has(PropertiesEventConstant.PROPERTIES_EVENT_TYPE) &&
+                    data.has(PropertiesEventConstant.PROPERTIES_ACTION_ID)) {
 
                 deviceUuid = data.getString(BluetoothConst.BLUETOOTH_DEVICE_UUID);
+
+                status = ActionStatus.getStatus(data.getInt(PropertiesEventConstant.PROPERTIES_ACTION_STATUS));
+
+                actionId = data.getString(PropertiesEventConstant.PROPERTIES_ACTION_ID);
+
+                eventType = PropertyEventType.getPropertyEventType(data.getInt(PropertiesEventConstant.PROPERTIES_EVENT_TYPE));
 
                 JSONObject propertyJson = data.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY);
 
@@ -55,4 +72,18 @@ public class PropertyIncomingEvent extends GenericEventAbstr implements IPropert
         return deviceUuid;
     }
 
+    @Override
+    public ActionStatus getStatus() {
+        return status;
+    }
+
+    @Override
+    public PropertyEventType getActionType() {
+        return eventType;
+    }
+
+    @Override
+    public String getActionId() {
+        return actionId;
+    }
 }

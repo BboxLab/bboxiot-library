@@ -23,6 +23,8 @@
  */
 package fr.bouyguestelecom.tv.bboxiot.datamodel;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,8 +39,9 @@ import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Capability;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Functions;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Properties;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.PropertyTypes;
+import fr.bouyguestelecom.tv.bboxiot.listener.IPullListener;
+import fr.bouyguestelecom.tv.bboxiot.listener.IPushListener;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.EventBuilder;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.PropertiesEventConstant;
 
 /**
@@ -54,9 +57,15 @@ public class SmartProperty<T> implements IProperty {
 
     private T value = null;
 
+    private String deviceUid = "";
+
     private PropertyTypes type = PropertyTypes.NONE;
 
     private EnumSet<Capability> capabilities = EnumSet.noneOf(Capability.class);
+
+    private IPullListener pullListener = null;
+
+    private IPushListener pushListener = null;
 
     public SmartProperty(Functions function, Properties property, PropertyTypes type, T initValue) {
         this.property = property;
@@ -66,12 +75,13 @@ public class SmartProperty<T> implements IProperty {
         this.value = initValue;
     }
 
-    public SmartProperty(Functions function, Properties property, List<Capability> capabilities, PropertyTypes type, T value) {
+    public SmartProperty(String deviceUid, Functions function, Properties property, List<Capability> capabilities, PropertyTypes type, T value) {
         this.property = property;
         this.function = function;
         this.capabilities.addAll(capabilities);
         this.type = type;
         this.value = value;
+        this.deviceUid = deviceUid;
     }
 
     public T getValue() {
@@ -116,11 +126,6 @@ public class SmartProperty<T> implements IProperty {
         return capabilities.contains(Capability.PULL);
     }
 
-    @Override
-    public boolean isGetAble() {
-        return capabilities.contains(Capability.GET);
-    }
-
     public Properties getProperty() {
         return property;
     }
@@ -133,20 +138,16 @@ public class SmartProperty<T> implements IProperty {
         this.value = value;
     }
 
-    public String push(T value) {
-        return EventBuilder.buildPushRequest(property, function, value);
-    }
-
-    public String pull() {
-        return EventBuilder.buildPullRequest(property, function);
-    }
-
     public EnumSet<Capability> getCapabilities() {
         return capabilities;
     }
 
     public void setValue(T value) {
         this.value = value;
+    }
+
+    public String getDeviceUid() {
+        return deviceUid;
     }
 
     public static SmartProperty parse(JSONObject item) {
@@ -156,7 +157,8 @@ public class SmartProperty<T> implements IProperty {
                     item.has(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES) &&
                     item.has(BluetoothConst.BT_CONNECTION_SMART_VALUE) &&
                     item.has(BluetoothConst.BT_CONNECTION_SMART_FUNCTION) &&
-                    item.has(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE)) {
+                    item.has(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE) &&
+                    item.has(BluetoothConst.BLUETOOTH_DEVICE_UUID)) {
 
                 Properties propertyVal = Properties.getProperty(item.getInt(BluetoothConst.BT_CONNECTION_SMART_NAME));
                 Functions functionVal = Functions.getFunction(item.getInt(BluetoothConst.BT_CONNECTION_SMART_FUNCTION));
@@ -172,13 +174,15 @@ public class SmartProperty<T> implements IProperty {
 
                 PropertyTypes propertyType = PropertyTypes.getPropertyType(item.getInt(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE));
 
+                String deviceUid = item.getString(BluetoothConst.BLUETOOTH_DEVICE_UUID);
+
                 SmartProperty smartProperty = null;
 
                 if (propertyType == PropertyTypes.BUTTON_STATE) {
                     ButtonState buttonState = ButtonState.getState((int) value);
-                    smartProperty = new SmartProperty(functionVal, propertyVal, capabilities, propertyType, buttonState);
+                    smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, capabilities, propertyType, buttonState);
                 } else {
-                    smartProperty = new SmartProperty(functionVal, propertyVal, capabilities, propertyType, value);
+                    smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, capabilities, propertyType, value);
                 }
 
                 return smartProperty;
@@ -198,6 +202,8 @@ public class SmartProperty<T> implements IProperty {
 
             propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, property.ordinal());
             propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION, function.ordinal());
+
+            propertyItem.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUid);
 
             Iterator<Capability> it3 = capabilities.iterator();
 
@@ -220,5 +226,29 @@ public class SmartProperty<T> implements IProperty {
             e.printStackTrace();
         }
         return propertyItem;
+    }
+
+    public void setPullListener(IPullListener listener) {
+        this.pullListener = listener;
+    }
+
+    public boolean pull(String eventId) {
+        if (pullListener != null) {
+            return pullListener.onPull(eventId);
+        }
+        Log.e(TAG, "no pull listener for property " + property);
+        return false;
+    }
+
+    public void setPushListener(IPushListener listener) {
+        this.pushListener = listener;
+    }
+
+    public boolean push(Object value, String eventId) {
+        if (pushListener != null) {
+            return pushListener.onPush(value, eventId);
+        }
+        Log.e(TAG, "no push listener for property " + property);
+        return false;
     }
 }

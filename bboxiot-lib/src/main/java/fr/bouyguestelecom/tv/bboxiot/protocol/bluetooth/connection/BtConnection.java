@@ -142,6 +142,8 @@ public class BtConnection {
 
                     propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES, capabilitiesArray);
 
+                    propertyItem.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
+
                     propertyItem.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE, pair2.getValue().getType().ordinal());
 
                     if (pair2.getValue().getType() == PropertyTypes.BUTTON_STATE) {
@@ -226,7 +228,8 @@ public class BtConnection {
                                     property.has(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES) &&
                                     property.has(BluetoothConst.BT_CONNECTION_SMART_VALUE) &&
                                     property.has(BluetoothConst.BT_CONNECTION_SMART_FUNCTION) &&
-                                    property.has(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE)) {
+                                    property.has(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE) &&
+                                    property.has(BluetoothConst.BLUETOOTH_DEVICE_UUID)) {
 
                                 Properties propertyVal = Properties.getProperty(property.getInt(BluetoothConst.BT_CONNECTION_SMART_NAME));
                                 Functions functionVal = Functions.getFunction(property.getInt(BluetoothConst.BT_CONNECTION_SMART_FUNCTION));
@@ -242,13 +245,15 @@ public class BtConnection {
 
                                 PropertyTypes propertyType = PropertyTypes.getPropertyType(property.getInt(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE));
 
+                                String deviceUid = property.getString(BluetoothConst.BLUETOOTH_DEVICE_UUID);
+
                                 SmartProperty smartProperty = null;
 
                                 if (propertyType == PropertyTypes.BUTTON_STATE) {
                                     ButtonState buttonState = ButtonState.getState((int) value);
-                                    smartProperty = new SmartProperty(functionVal, propertyVal, capabilities, propertyType, buttonState);
+                                    smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, capabilities, propertyType, buttonState);
                                 } else {
-                                    smartProperty = new SmartProperty(functionVal, propertyVal, capabilities, propertyType, value);
+                                    smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, capabilities, propertyType, value);
                                 }
 
                                 if (smartProperty != null)
@@ -316,6 +321,8 @@ public class BtConnection {
                     }
 
                     propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES, capabilitiesArray);
+
+                    propertyItem.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
 
                     propertyItem.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE, pair2.getValue().getType().ordinal());
 

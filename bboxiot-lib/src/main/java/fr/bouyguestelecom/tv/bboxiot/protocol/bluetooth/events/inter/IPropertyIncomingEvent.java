@@ -5,10 +5,9 @@ import fr.bouyguestelecom.tv.bboxiot.datamodel.SmartProperty;
 /**
  * @author Bertrand Martel
  */
-public interface IPropertyEvent {
+public interface IPropertyIncomingEvent {
 
     public SmartProperty getProperty();
 
     public String getDeviceUid();
-
 }
