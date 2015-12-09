@@ -42,7 +42,7 @@ import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.PropertyTypes;
 import fr.bouyguestelecom.tv.bboxiot.listener.IPullListener;
 import fr.bouyguestelecom.tv.bboxiot.listener.IPushListener;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.PropertiesEventConstant;
+import fr.bouyguestelecom.tv.bboxiot.events.constant.PropertiesEventConstant;
 
 /**
  * @author Bertrand Martel
