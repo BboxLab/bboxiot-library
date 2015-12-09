@@ -38,6 +38,7 @@ import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.AssociationL
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.BluetoothStateEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ConnectionEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ConnectionItem;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.PropertyIncomingEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.RegistrationEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ScanItemEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.impl.ScanListItem;
@@ -103,7 +104,8 @@ public class IotEvent {
                                 return new ConnectionEvent(topic, eventType, eventId, data);
                             }
                             case TOPIC_PROPERTIES: {
-                                break;
+
+                                return new PropertyIncomingEvent(topic, eventType, eventId, data);
                             }
                             case TOPIC_BLUETOOTH_STATE: {
 

@@ -11,7 +11,8 @@ public class PropertiesEventConstant {
 
     public final static String PROPERTIES_EVENT_PROPERTY = "property";
 
-    public final static String PROPERTIES_EVENT_PROPERTY_TYPE = "type";
+    public final static String PROPERTIES_EVENT_PROPERTY_TYPE = "property_type";
 
     public final static String PROPERTIES_EVENT_VALUE = "value";
+
 }

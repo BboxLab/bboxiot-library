@@ -23,16 +23,16 @@
  */
 package fr.bouyguestelecom.tv.bboxiot.datamodel;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.List;
 
+import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.ButtonState;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Capability;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Functions;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Properties;
@@ -143,5 +143,82 @@ public class SmartProperty<T> implements IProperty {
 
     public EnumSet<Capability> getCapabilities() {
         return capabilities;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
+    }
+
+    public static SmartProperty parse(JSONObject item) {
+
+        try {
+            if (item.has(BluetoothConst.BT_CONNECTION_SMART_NAME) &&
+                    item.has(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES) &&
+                    item.has(BluetoothConst.BT_CONNECTION_SMART_VALUE) &&
+                    item.has(BluetoothConst.BT_CONNECTION_SMART_FUNCTION) &&
+                    item.has(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE)) {
+
+                Properties propertyVal = Properties.getProperty(item.getInt(BluetoothConst.BT_CONNECTION_SMART_NAME));
+                Functions functionVal = Functions.getFunction(item.getInt(BluetoothConst.BT_CONNECTION_SMART_FUNCTION));
+
+                JSONArray capabilitiesArray = item.getJSONArray(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES);
+
+                List<Capability> capabilities = new ArrayList<>();
+                for (int k = 0; k < capabilitiesArray.length(); k++) {
+                    capabilities.add(Capability.getCapability(capabilitiesArray.getInt(k)));
+                }
+
+                Object value = item.get(BluetoothConst.BT_CONNECTION_SMART_VALUE);
+
+                PropertyTypes propertyType = PropertyTypes.getPropertyType(item.getInt(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE));
+
+                SmartProperty smartProperty = null;
+
+                if (propertyType == PropertyTypes.BUTTON_STATE) {
+                    ButtonState buttonState = ButtonState.getState((int) value);
+                    smartProperty = new SmartProperty(functionVal, propertyVal, capabilities, propertyType, buttonState);
+                } else {
+                    smartProperty = new SmartProperty(functionVal, propertyVal, capabilities, propertyType, value);
+                }
+
+                return smartProperty;
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public JSONObject toJson() {
+
+        JSONObject propertyItem = new JSONObject();
+
+        try {
+
+            propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, property.ordinal());
+            propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION, function.ordinal());
+
+            Iterator<Capability> it3 = capabilities.iterator();
+
+            JSONArray capabilitiesArray = new JSONArray();
+            while (it3.hasNext()) {
+                capabilitiesArray.put(it3.next().ordinal());
+            }
+
+            propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES, capabilitiesArray);
+
+            propertyItem.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE, type.ordinal());
+
+            if (type == PropertyTypes.BUTTON_STATE) {
+                propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_VALUE, ((ButtonState) value).ordinal());
+            } else {
+                propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_VALUE, value);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return propertyItem;
     }
 }

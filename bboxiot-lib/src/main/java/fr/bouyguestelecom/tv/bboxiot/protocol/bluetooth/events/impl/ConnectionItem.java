@@ -53,10 +53,8 @@ public class ConnectionItem extends GenericEventAbstr implements IConnectionItem
 
                 JSONObject connectionJson = data.getJSONObject(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION);
 
-                BtConnection connection = BtConnection.parse(connectionJson);
-
-                btConnection = connection;
-
+                btConnection = BtConnection.parse(connectionJson);
+                
             } else {
                 Log.e(TAG, "Error in association item event format");
             }

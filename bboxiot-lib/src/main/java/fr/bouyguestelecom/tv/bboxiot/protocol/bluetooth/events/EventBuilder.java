@@ -32,11 +32,13 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.Set;
 
+import fr.bouyguestelecom.tv.bboxiot.datamodel.SmartProperty;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Capability;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Functions;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Properties;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.AssociationEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.events.constant.PropertiesEventConstant;
@@ -319,5 +321,19 @@ public class EventBuilder {
         }
 
         return new GenericEvent(EventTopic.TOPIC_PROPERTIES, EventType.EVENT_REQUEST, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), request).toJsonString();
+    }
+
+    public static IGenericEvent buildPropertyEvent(SmartProperty property, String deviceUuid) {
+
+        JSONObject request = new JSONObject();
+
+        try {
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.toJson());
+            request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return new GenericEvent(EventTopic.TOPIC_PROPERTIES, EventType.EVENT_INCOMING, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), request);
     }
 }
