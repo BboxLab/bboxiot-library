@@ -18,7 +18,7 @@ Specific features are :
 * high level APIs for controlling BLE workflow and devices
 * flexible architecture and datamodel for multi-protocol implementation
 
-# Version History
+## Version History
 
 Current release : <a href="https://github.com/BboxLab/bboxiot-library/releases/tag/0.71">version 0.71</a>
 
@@ -34,7 +34,7 @@ To be able to use this library, you must have a Miami Box Android TV with BboxIo
 
 ![Bbox Miami](img/bbox-miami.jpg)
 
-# Scope
+## Scope
 
 * BLE discovery
   * scanning
@@ -59,14 +59,14 @@ List of currently supported devices :
 |   Product Name               |    Manufacturer   |  Status    |functionnalities    |
 |---------------------------|---------------|------------|-----------------|
 |   SmartLite   |     Beewi           |    ![good](img/status_good.png)   | state / color / intensity     |
-|   SmartClim   |     Beewi          |  ![good](img/status_medium.png)  |  temperature / humidity         |
+|   SmartClim   |     Beewi          |  ![good](img/status_good.png)  |  temperature / humidity         |
 |   SmartTrack   |     Beewi          |  ![good](img/status_good.png)  |   button single/double push (advertizing)         |
 |   Aroma Light   |     AwoX          | ![good](img/status_bad.png)  |    state / color / intensity / odor         |
 |   SmartPlug   |     AwoX          |   ![good](img/status_bad.png)  |  state / active power         |
 |   Flower Power   |     Parrot          |    ![good](img/status_bad.png)  | air temperature / soil temperature / soil electroductivity / water content / luminosity         |
 |   NIU   |     Altyor          |  ![good](img/status_good.png)  | button single push (advertizing)         |
 
-# Including in your project
+## Including in your project
 
 Grab via Gradle:
 
@@ -74,11 +74,11 @@ Grab via Gradle:
 compile 'bboxlab:bboxiot-library:0.71'
 ```
 
-# Support
+## Support
 
 * BboxLab developper portal IoT section: https://dev.bouyguestelecom.fr/forum/viewforum.php?f=45
 * BboxLab developper portal Download section : https://dev.bouyguestelecom.fr/forum/viewtopic.php?f=36&t=71
 
-# License
+## License
 
 The MIT License (MIT) Copyright (c) 2015 InnovationLab BboxLab
