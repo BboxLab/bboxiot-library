@@ -75,7 +75,7 @@ List of currently supported devices :
 Grab via Gradle:
 
 ```
-compile 'bboxlab:bboxiot-library:0.72'
+compile 'bboxlab:bboxiot-library:0.73'
 ```
 
 ## Support
