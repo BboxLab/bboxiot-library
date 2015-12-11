@@ -1,5 +1,7 @@
 package fr.bouyguestelecom.tv.bboxiot.datamodel;
 
+import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Unit;
+
 /**
  * The MIT License (MIT)
  * <p/>
@@ -39,5 +41,7 @@ public interface IProperty {
     public boolean getBoolValue();
 
     public float getFloatValue();
+
+    public Unit getUnit();
 
 }

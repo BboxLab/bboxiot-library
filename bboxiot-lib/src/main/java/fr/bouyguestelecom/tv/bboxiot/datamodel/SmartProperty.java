@@ -39,10 +39,11 @@ import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Capability;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Functions;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Properties;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.PropertyTypes;
+import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Unit;
+import fr.bouyguestelecom.tv.bboxiot.events.constant.PropertiesEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.listener.IPullListener;
 import fr.bouyguestelecom.tv.bboxiot.listener.IPushListener;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
-import fr.bouyguestelecom.tv.bboxiot.events.constant.PropertiesEventConstant;
 
 /**
  * @author Bertrand Martel
@@ -67,21 +68,25 @@ public class SmartProperty<T> implements IProperty {
 
     private IPushListener pushListener = null;
 
-    public SmartProperty(Functions function, Properties property, PropertyTypes type, T initValue) {
+    private Unit unit = Unit.NONE;
+
+    public SmartProperty(Functions function, Properties property, PropertyTypes type, Unit unit, T initValue) {
         this.property = property;
         this.function = function;
         this.capabilities.addAll(capabilities);
         this.type = type;
         this.value = initValue;
+        this.unit = unit;
     }
 
-    public SmartProperty(String deviceUid, Functions function, Properties property, List<Capability> capabilities, PropertyTypes type, T value) {
+    public SmartProperty(String deviceUid, Functions function, Properties property, Unit unit, List<Capability> capabilities, PropertyTypes type, T value) {
         this.property = property;
         this.function = function;
         this.capabilities.addAll(capabilities);
         this.type = type;
         this.value = value;
         this.deviceUid = deviceUid;
+        this.unit = unit;
     }
 
     public T getValue() {
@@ -158,7 +163,8 @@ public class SmartProperty<T> implements IProperty {
                     item.has(BluetoothConst.BT_CONNECTION_SMART_VALUE) &&
                     item.has(BluetoothConst.BT_CONNECTION_SMART_FUNCTION) &&
                     item.has(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE) &&
-                    item.has(BluetoothConst.BLUETOOTH_DEVICE_UUID)) {
+                    item.has(BluetoothConst.BLUETOOTH_DEVICE_UUID) &&
+                    item.has(PropertiesEventConstant.PROPERTIES_UNIT)) {
 
                 Properties propertyVal = Properties.getProperty(item.getInt(BluetoothConst.BT_CONNECTION_SMART_NAME));
                 Functions functionVal = Functions.getFunction(item.getInt(BluetoothConst.BT_CONNECTION_SMART_FUNCTION));
@@ -176,13 +182,15 @@ public class SmartProperty<T> implements IProperty {
 
                 String deviceUid = item.getString(BluetoothConst.BLUETOOTH_DEVICE_UUID);
 
+                Unit unit = Unit.getUnit(item.getInt(PropertiesEventConstant.PROPERTIES_UNIT));
+
                 SmartProperty smartProperty = null;
 
                 if (propertyType == PropertyTypes.BUTTON_STATE) {
                     ButtonState buttonState = ButtonState.getState((int) value);
-                    smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, capabilities, propertyType, buttonState);
+                    smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, unit, capabilities, propertyType, buttonState);
                 } else {
-                    smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, capabilities, propertyType, value);
+                    smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, unit, capabilities, propertyType, value);
                 }
 
                 return smartProperty;
@@ -202,6 +210,7 @@ public class SmartProperty<T> implements IProperty {
 
             propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, property.ordinal());
             propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION, function.ordinal());
+            propertyItem.put(PropertiesEventConstant.PROPERTIES_UNIT, unit.ordinal());
 
             propertyItem.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUid);
 
@@ -250,5 +259,10 @@ public class SmartProperty<T> implements IProperty {
         }
         Log.e(TAG, "no push listener for property " + property);
         return false;
+    }
+
+    @Override
+    public Unit getUnit() {
+        return unit;
     }
 }

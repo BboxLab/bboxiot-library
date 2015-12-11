@@ -41,9 +41,10 @@ import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Capability;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Functions;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Properties;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.PropertyTypes;
+import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Unit;
+import fr.bouyguestelecom.tv.bboxiot.events.constant.PropertiesEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
-import fr.bouyguestelecom.tv.bboxiot.events.constant.PropertiesEventConstant;
 
 /**
  * Bluetooth connection
@@ -132,6 +133,7 @@ public class BtConnection {
                     JSONObject propertyItem = new JSONObject();
                     propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, pair2.getKey().ordinal());
                     propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION, pair.getKey().ordinal());
+                    propertyItem.put(PropertiesEventConstant.PROPERTIES_UNIT, pair2.getValue().getUnit().ordinal());
 
                     Iterator<Capability> it3 = pair2.getValue().getCapabilities().iterator();
 
@@ -229,10 +231,12 @@ public class BtConnection {
                                     property.has(BluetoothConst.BT_CONNECTION_SMART_VALUE) &&
                                     property.has(BluetoothConst.BT_CONNECTION_SMART_FUNCTION) &&
                                     property.has(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE) &&
-                                    property.has(BluetoothConst.BLUETOOTH_DEVICE_UUID)) {
+                                    property.has(BluetoothConst.BLUETOOTH_DEVICE_UUID) &&
+                                    property.has(PropertiesEventConstant.PROPERTIES_UNIT)) {
 
                                 Properties propertyVal = Properties.getProperty(property.getInt(BluetoothConst.BT_CONNECTION_SMART_NAME));
                                 Functions functionVal = Functions.getFunction(property.getInt(BluetoothConst.BT_CONNECTION_SMART_FUNCTION));
+                                Unit unit = Unit.getUnit(property.getInt(PropertiesEventConstant.PROPERTIES_UNIT));
 
                                 JSONArray capabilitiesArray = property.getJSONArray(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES);
 
@@ -251,9 +255,9 @@ public class BtConnection {
 
                                 if (propertyType == PropertyTypes.BUTTON_STATE) {
                                     ButtonState buttonState = ButtonState.getState((int) value);
-                                    smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, capabilities, propertyType, buttonState);
+                                    smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, unit, capabilities, propertyType, buttonState);
                                 } else {
-                                    smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, capabilities, propertyType, value);
+                                    smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, unit, capabilities, propertyType, value);
                                 }
 
                                 if (smartProperty != null)
@@ -312,6 +316,7 @@ public class BtConnection {
                     JSONObject propertyItem = new JSONObject();
                     propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, pair2.getKey().ordinal());
                     propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION, pair.getKey().ordinal());
+                    propertyItem.put(PropertiesEventConstant.PROPERTIES_UNIT, pair2.getValue().getUnit().ordinal());
 
                     Iterator<Capability> it3 = pair2.getValue().getCapabilities().iterator();
 

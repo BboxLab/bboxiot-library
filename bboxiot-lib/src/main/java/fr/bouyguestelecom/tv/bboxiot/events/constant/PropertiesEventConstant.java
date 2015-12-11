@@ -18,4 +18,6 @@ public class PropertiesEventConstant {
     public final static String PROPERTIES_ACTION_STATUS = "status";
 
     public final static String PROPERTIES_ACTION_ID = "action_id";
+
+    public final static String PROPERTIES_UNIT = "unit";
 }
