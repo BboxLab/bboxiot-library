@@ -26,6 +26,7 @@ public class Model {
         properties.put(Properties.POWER_FACTOR, new SmartProperty<Float>(Functions.SMART_METER, Properties.POWER_FACTOR, PropertyTypes.FLOAT, 0F));
         properties.put(Properties.ACTIVE_POWER, new SmartProperty<Float>(Functions.SMART_METER, Properties.ACTIVE_POWER, PropertyTypes.FLOAT, 0F));
         properties.put(Properties.REACTIVE_POWER, new SmartProperty<Float>(Functions.SMART_METER, Properties.REACTIVE_POWER, PropertyTypes.FLOAT, 0F));
+        properties.put(Properties.FREQUENCY_MEASUREMENT, new SmartProperty<Integer>(Functions.SMART_METER, Properties.FREQUENCY_MEASUREMENT, PropertyTypes.INTEGER, 0));
         dataMap.put(Functions.SMART_METER, properties);
 
         properties = new HashMap<>();
