@@ -36,9 +36,6 @@ import fr.bouyguestelecom.tv.bboxiot.datamodel.SmartProperty;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.ActionStatus;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Functions;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Properties;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.AssociationEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.PropertiesEventConstant;
@@ -51,6 +48,9 @@ import fr.bouyguestelecom.tv.bboxiot.events.enums.PropertyEventType;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.ScanRegistrationType;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.ScanningAction;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.ScanningType;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 import fr.bouyguestelecom.tv.bboxiot.utils.RandomGen;
 
 /**
@@ -313,7 +313,7 @@ public class EventBuilder {
 
         return new GenericEvent(EventTopic.TOPIC_PROPERTIES, EventType.EVENT_REQUEST, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), request).toJsonString();
     }
-    
+
     public static String buildPullRequest(SmartProperty property) {
         return buildPullRequest(property.getDeviceUid(), property.getFunction(), property.getProperty());
     }
@@ -324,8 +324,8 @@ public class EventBuilder {
         try {
             request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.PULL.ordinal());
             request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, function.ordinal());
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, property.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, function.ordinal());
 
         } catch (JSONException e) {
             e.printStackTrace();
