@@ -20,10 +20,11 @@ Specific features are :
 
 ## Version History
 
-Current release : <a href="https://github.com/BboxLab/bboxiot-library/releases/tag/0.72">version 0.72</a>
+Current release : <a href="https://github.com/BboxLab/bboxiot-library/releases/tag/0.73">version 0.73</a>
 
 | version                                                                |    comment                 |
 |------------------------------------------------------------------------|----------------------------|
+| 0.73                                                                   | unit support for properties |
 | 0.72                                                                   | SmarLite / Oblo / Notti devices support  |
 | 0.71                                                                   | fewer API with JSON input for usability  |
 | 0.7                                                                    | API refactoring            |

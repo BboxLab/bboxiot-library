@@ -43,7 +43,7 @@ publish {
     userOrg = 'bboxlab'
     groupId = 'bboxlab'
     artifactId = 'bboxiot-library'
-    publishVersion = '0.72'
+    publishVersion = '0.73'
     desc = 'BboxIoT Pre Release'
     website = 'https://github.com/BboxLab/bboxiot-library'
 }
