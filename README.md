@@ -20,10 +20,11 @@ Specific features are :
 
 ## Version History
 
-Current release : <a href="https://github.com/BboxLab/bboxiot-library/releases/tag/0.71">version 0.71</a>
+Current release : <a href="https://github.com/BboxLab/bboxiot-library/releases/tag/0.72">version 0.72</a>
 
 | version                                                                |    comment                 |
 |------------------------------------------------------------------------|----------------------------|
+| 0.72                                                                   | SmarLite / Oblo / Notti devices support  |
 | 0.71                                                                   | fewer API with JSON input for usability  |
 | 0.7                                                                    | API refactoring            |
 | 0.6                                                                    | witti devices support      |
@@ -56,22 +57,24 @@ The project you are watching is only the interface between your client and BboxI
 
 List of currently supported devices : 
 
-|   Product Name               |    Manufacturer   |  Status    |functionnalities    |
-|---------------------------|---------------|------------|-----------------|
-|   SmartLite   |     Beewi           |    ![good](img/status_good.png)   | state / color / intensity     |
-|   SmartClim   |     Beewi          |  ![good](img/status_good.png)  |  temperature / humidity         |
-|   SmartTrack   |     Beewi          |  ![good](img/status_good.png)  |   button single/double push (advertizing)         |
-|   Aroma Light   |     AwoX          | ![good](img/status_bad.png)  |    state / color / intensity / odor         |
-|   SmartPlug   |     AwoX          |   ![good](img/status_bad.png)  |  state / active power         |
-|   Flower Power   |     Parrot          |    ![good](img/status_bad.png)  | air temperature / soil temperature / soil electroductivity / water content / luminosity         |
-|   NIU   |     Altyor          |  ![good](img/status_good.png)  | button single push (advertizing)         |
+|   Product Name               |    Manufacturer   |  Status                         |   type                 | functionnalities    |
+|------------------------------|-------------------|---------------------------------|------------------------|---------------------|
+|   SmartLite                  |     Beewi         |    ![good](img/status_good.png) |   actuator / sensor    | state / color / intensity     |
+|   SmartClim                  |     Beewi         |  ![good](img/status_good.png)   |   sensor               | temperature / humidity         |
+|   SmartTrack                 |     Beewi         |  ![good](img/status_good.png)   |    sensor              | button single/double push (advertizing)         |
+|   Aroma Light                |     AwoX          | ![good](img/status_bad.png)     |    actuator / sensor   | state / color / intensity / odor         |
+|   SmartPlug                  |     AwoX          |   ![good](img/status_bad.png)   |    actuator / sensor   | state / active power         |
+|   Flower Power               |     Parrot        |    ![good](img/status_bad.png)  |    sensor              | air temperature / soil temperature / soil electroductivity / water content / luminosity         |
+|   NIU                        |     Altyor        |  ![good](img/status_good.png)   |     sensor             | button single push (advertizing)         |
+|   Oblo                       |     RtRk          |    ![good](img/status_good.png) |     actuator / sensor  | state / tension / current / power factor / active power / reactive power     |
+|   Notti                      |     Witty         |    ![good](img/status_good.png) |     actuator           | state / color     |
 
 ## Including in your project
 
 Grab via Gradle:
 
 ```
-compile 'bboxlab:bboxiot-library:0.71'
+compile 'bboxlab:bboxiot-library:0.72'
 ```
 
 ## Support
