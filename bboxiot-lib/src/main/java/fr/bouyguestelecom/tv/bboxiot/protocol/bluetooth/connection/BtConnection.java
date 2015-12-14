@@ -344,6 +344,9 @@ public class BtConnection {
 
                 array.put(functionItem);
             }
+
+            return array;
+            
         } catch (JSONException e) {
             e.printStackTrace();
         }
