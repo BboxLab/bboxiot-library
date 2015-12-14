@@ -65,7 +65,7 @@ public class EventBuilder {
         JSONObject data = new JSONObject();
 
         try {
-            data.put(AssociationEventConstant.ASSOCIATION_EVENT_ITEM, connection.toJson());
+            data.put(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION, connection.toJson());
             return new GenericEvent(EventTopic.TOPIC_CONNECTION, EventType.EVENT_RESPONSE, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), data);
 
         } catch (JSONException e) {
