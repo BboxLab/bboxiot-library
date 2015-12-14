@@ -241,7 +241,7 @@ public class IotEvent {
 
                 if (eventType == EventType.EVENT_RESPONSE &&
                         topic == EventTopic.TOPIC_CONNECTION &&
-                        data.has(AssociationEventConstant.ASSOCIATION_EVENT_ITEM)) {
+                        data.has(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION)) {
 
                     return new ConnectionItem(topic, eventType, eventId, data);
 
