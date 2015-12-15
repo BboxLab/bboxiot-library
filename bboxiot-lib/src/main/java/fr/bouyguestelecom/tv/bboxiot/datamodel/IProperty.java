@@ -1,7 +1,3 @@
-package fr.bouyguestelecom.tv.bboxiot.datamodel;
-
-import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Unit;
-
 /**
  * The MIT License (MIT)
  * <p/>
@@ -30,6 +26,10 @@ import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Unit;
  *
  * @author Bertrand Martel
  */
+package fr.bouyguestelecom.tv.bboxiot.datamodel;
+
+import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Unit;
+
 public interface IProperty {
 
     public boolean isPushAble();
