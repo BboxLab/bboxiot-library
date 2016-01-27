@@ -37,7 +37,8 @@ public enum ButtonState {
     RELEASED(1),
     PUSHED(2),
     DOUBLE_PUSH(3),
-    LONG_PUSH(4);
+    LONG_PUSH(4),
+    LONG_PUSH_RELEASE(5);
 
     private final int value;
 
@@ -60,6 +61,8 @@ public enum ButtonState {
                 return DOUBLE_PUSH;
             case 4:
                 return LONG_PUSH;
+            case 5:
+                return LONG_PUSH_RELEASE;
         }
         return NONE;
     }
