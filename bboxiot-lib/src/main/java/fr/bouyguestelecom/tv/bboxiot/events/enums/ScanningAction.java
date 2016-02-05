@@ -30,7 +30,9 @@ public enum ScanningAction {
 
     SCANNING_ACTION_UNDEFINED(0),
     SCANNING_ACTION_START(1),
-    SCANNING_ACTION_STOP(2);
+    SCANNING_ACTION_STOP(2),
+    SCANNING_ACTION_EXTERNAL_START(3),
+    SCANNING_ACTION_EXTERNAL_STOP(4);
 
     private int value;
 
@@ -47,6 +49,10 @@ public enum ScanningAction {
                 return SCANNING_ACTION_START;
             case 2:
                 return SCANNING_ACTION_STOP;
+            case 3:
+                return SCANNING_ACTION_EXTERNAL_START;
+            case 4:
+                return SCANNING_ACTION_EXTERNAL_STOP;
             default:
                 return SCANNING_ACTION_UNDEFINED;
         }
