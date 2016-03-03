@@ -218,7 +218,7 @@ public class BtConnection {
                     if (function.has(BluetoothConst.BT_CONNECTION_SMART_NAME) &&
                             function.has(BluetoothConst.BT_CONNECTION_SMART_PROPERTY_ARRAY)) {
 
-                        Functions type = Functions.getFunction(function.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_NAME).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                        Functions type = Functions.getFunctionValue(function.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_NAME).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
 
                         JSONArray propertiesArray = function.getJSONArray(BluetoothConst.BT_CONNECTION_SMART_PROPERTY_ARRAY);
 
@@ -236,8 +236,8 @@ public class BtConnection {
                                     property.has(BluetoothConst.BLUETOOTH_DEVICE_UUID) &&
                                     property.has(PropertiesEventConstant.PROPERTIES_UNIT)) {
 
-                                Properties propertyVal = Properties.getProperty(property.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_NAME).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
-                                Functions functionVal = Functions.getFunction(property.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_FUNCTION).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                                Properties propertyVal = Properties.getPropertyValue(property.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_NAME).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                                Functions functionVal = Functions.getFunctionValue(property.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_FUNCTION).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
                                 Unit unit = Unit.getUnit(property.getJSONObject(PropertiesEventConstant.PROPERTIES_UNIT).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
 
                                 JSONArray capabilitiesArray = property.getJSONArray(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES);

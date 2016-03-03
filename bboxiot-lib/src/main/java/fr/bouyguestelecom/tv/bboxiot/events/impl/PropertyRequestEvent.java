@@ -44,11 +44,11 @@ public class PropertyRequestEvent extends GenericEventAbstr implements IProperty
 
                 deviceUuid = data.getString(BluetoothConst.BLUETOOTH_DEVICE_UUID);
 
-                property = Properties.getProperty(data.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                property = Properties.getPropertyValue(data.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
 
                 eventType = PropertyEventType.getPropertyEventType(data.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_TYPE).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
 
-                function = Functions.getFunction(data.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                function = Functions.getFunctionValue(data.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
 
                 if (eventType == PropertyEventType.PUSH) {
 

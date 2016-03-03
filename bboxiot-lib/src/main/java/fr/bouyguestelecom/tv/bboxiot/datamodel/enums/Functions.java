@@ -33,55 +33,42 @@ package fr.bouyguestelecom.tv.bboxiot.datamodel.enums;
  */
 public enum Functions {
 
-    NONE(0),
-    SWITCH(1),
-    SMART_METER(2),
-    BATTERY(3),
-    PLANT_MONITOR(4),
-    RGB_LED(5),
-    WHITE_LED(6),
-    OIL_DIFFUSER(7),
-    TEMPERATURE(8),
-    HUMIDITY(9),
-    BUTTON(10),
-    BUZZER(11),
-    PIXEL(12);
+    NONE(0, "none"),
+    SWITCH(1, "switch"),
+    SMART_METER(2, "smart_meter"),
+    BATTERY(3, "battery"),
+    PLANT_MONITOR(4, "plant_monitor"),
+    RGB_LED(5, "rgb_light"),
+    WHITE_LED(6, "white_light"),
+    OIL_DIFFUSER(7, "oil_diffuser"),
+    TEMPERATURE(8, "thermometer"),
+    HUMIDITY(9, "hygrometer"),
+    BUTTON(10, "button"),
+    BUZZER(11, "buzzer"),
+    PIXEL(12, "pixel");
 
     private int value = 0;
+    private String valueStr = "";
 
-    private Functions(int value) {
+    private Functions(int value, String valueStr) {
         this.value = value;
+        this.valueStr = valueStr;
     }
 
-    public static Functions getFunction(int value) {
+    public static Functions getFunctionValue(int value) {
 
-        switch (value) {
-            case 0:
-                return NONE;
-            case 1:
-                return SWITCH;
-            case 2:
-                return SMART_METER;
-            case 3:
-                return BATTERY;
-            case 4:
-                return PLANT_MONITOR;
-            case 5:
-                return RGB_LED;
-            case 6:
-                return WHITE_LED;
-            case 7:
-                return OIL_DIFFUSER;
-            case 8:
-                return TEMPERATURE;
-            case 9:
-                return HUMIDITY;
-            case 10:
-                return BUTTON;
-            case 11:
-                return BUZZER;
-            case 12:
-                return PIXEL;
+        for (Functions function : Functions.values()) {
+            if (value == function.value)
+                return function;
+        }
+        return NONE;
+    }
+
+    public static Functions getFunctionStr(String value) {
+
+        for (Functions function : Functions.values()) {
+            if (value.equals(function.valueStr))
+                return function;
         }
         return NONE;
     }

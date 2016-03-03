@@ -168,8 +168,8 @@ public class SmartProperty<T> implements IProperty {
                     item.has(BluetoothConst.BLUETOOTH_DEVICE_UUID) &&
                     item.has(PropertiesEventConstant.PROPERTIES_UNIT)) {
 
-                Properties propertyVal = Properties.getProperty(item.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_NAME).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
-                Functions functionVal = Functions.getFunction(item.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_FUNCTION).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                Properties propertyVal = Properties.getPropertyValue(item.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_NAME).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                Functions functionVal = Functions.getFunctionValue(item.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_FUNCTION).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
 
                 JSONArray capabilitiesArray = item.getJSONArray(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES);
 
