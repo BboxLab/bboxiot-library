@@ -5,7 +5,9 @@
 [![Coverage Status](https://coveralls.io/repos/BboxLab/bboxiot-library/badge.svg?branch=master&service=github)](https://coveralls.io/github/BboxLab/bboxiot-library?branch=master)
 [![License](http://img.shields.io/:license-mit-blue.svg)](LICENSE.md)
 
-Bbox IoT is an Android service aiming at controlling and monitoring connected devices through high-level APIs
+Android wrapper for BboxIoT
+
+Bbox IoT is an Android service aiming at controlling and monitoring IoT devices through high-level APIs
 
 <hr/>
 
@@ -18,12 +20,19 @@ Specific features are :
 * high level APIs for controlling BLE workflow and devices
 * flexible architecture and datamodel for multi-protocol implementation
 
+## Including in your project
+
+```
+compile 'bboxlab:bboxiot-library:0.75'
+```
+
 ## Version History
 
-Current release : <a href="https://github.com/BboxLab/bboxiot-library/releases/tag/0.73">version 0.73</a>
+Current release : <a href="https://github.com/BboxLab/bboxiot-library/releases/tag/0.75">version 0.75</a>
 
 | version                                                                |    comment                 |
 |------------------------------------------------------------------------|----------------------------|
+| 0.75                                                                   | bugs fix / more verbose JSON protocol / string alias for properties-functions |
 | 0.73                                                                   | unit support for properties |
 | 0.72                                                                   | SmarLite / Oblo / Notti devices support  |
 | 0.71                                                                   | fewer API with JSON input for usability  |
@@ -70,14 +79,6 @@ List of currently supported devices :
 |   Oblo                       |     RtRk          |    ![good](img/status_good.png) |     actuator / sensor  | state / tension / current / power factor / active power / reactive power     |
 |   Notti                      |     Witty         |    ![good](img/status_good.png) |     actuator           | state / color     |
 
-## Including in your project
-
-Grab via Gradle:
-
-```
-compile 'bboxlab:bboxiot-library:0.73'
-```
-
 ## Support
 
 * BboxLab developper portal IoT section: https://dev.bouyguestelecom.fr/forum/viewforum.php?f=45
@@ -85,4 +86,4 @@ compile 'bboxlab:bboxiot-library:0.73'
 
 ## License
 
-The MIT License (MIT) Copyright (c) 2015 InnovationLab BboxLab
+The MIT License (MIT) Copyright (c) 2015-2016 InnovationLab BboxLab
