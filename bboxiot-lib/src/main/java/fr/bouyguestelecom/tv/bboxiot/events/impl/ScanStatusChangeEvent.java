@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import fr.bouyguestelecom.tv.bboxiot.events.GenericEventAbstr;
+import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.ScanningEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
@@ -48,7 +49,7 @@ public class ScanStatusChangeEvent extends GenericEventAbstr implements IScanSta
         try {
 
             if (data.has(ScanningEventConstant.SCANNING_EVENT_ACTION)) {
-                action = ScanningAction.getAction(data.getInt(ScanningEventConstant.SCANNING_EVENT_ACTION));
+                action = ScanningAction.getAction(data.getJSONObject(ScanningEventConstant.SCANNING_EVENT_ACTION).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
             }
 
         } catch (JSONException e) {

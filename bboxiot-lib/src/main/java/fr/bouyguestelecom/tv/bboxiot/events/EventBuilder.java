@@ -103,7 +103,7 @@ public class EventBuilder {
 
         try {
 
-            data.put(AssociationEventConstant.ASSOCIATION_EVENT_STATE, state.ordinal());
+            data.put(AssociationEventConstant.ASSOCIATION_EVENT_STATE, buildPair(state));
 
             if (connection != null)
                 data.put(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION, connection.toJson());
@@ -121,8 +121,9 @@ public class EventBuilder {
         JSONObject data = new JSONObject();
 
         try {
-            data.put(Common.CONSTANT_COMMON_TYPE, ScanRegistrationType.SCAN_EVENT_STATUS_CHANGE.ordinal());
-            data.put(ScanningEventConstant.SCANNING_EVENT_ACTION, action.ordinal());
+
+            data.put(Common.CONSTANT_COMMON_TYPE, buildPair(ScanRegistrationType.SCAN_EVENT_STATUS_CHANGE));
+            data.put(ScanningEventConstant.SCANNING_EVENT_ACTION, buildPair(action));
 
             return new GenericEvent(EventTopic.TOPIC_SCAN, EventType.EVENT_INCOMING, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), data);
 
@@ -159,8 +160,7 @@ public class EventBuilder {
         JSONObject data = new JSONObject();
 
         try {
-
-            data.put(Common.CONSTANT_COMMON_TYPE, ScanRegistrationType.SCAN_EVENT_NEW_DEVICE_DISCOVERED.ordinal());
+            data.put(Common.CONSTANT_COMMON_TYPE, buildPair(ScanRegistrationType.SCAN_EVENT_NEW_DEVICE_DISCOVERED));
             data.put(ScanningEventConstant.SCANNING_EVENT_ITEMS, device.toJson());
 
             return new GenericEvent(EventTopic.TOPIC_SCAN, EventType.EVENT_INCOMING, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), data);
@@ -193,6 +193,14 @@ public class EventBuilder {
         JSONObject data = new JSONObject();
 
         try {
+            JSONObject actionObj = new JSONObject();
+            actionObj.put(Common.CONSTANT_COMMON_PAIR_CODE, action.ordinal());
+            actionObj.put(Common.CONSTANT_COMMON_PAIR_NAME, action.toString());
+
+            JSONObject scanTypeObj = new JSONObject();
+            scanTypeObj.put(Common.CONSTANT_COMMON_PAIR_CODE, scanType.ordinal());
+            scanTypeObj.put(Common.CONSTANT_COMMON_PAIR_NAME, scanType.toString());
+
             if (action == ScanningAction.SCANNING_ACTION_START && scanType != ScanningType.SCANNING_TYPE_UNDEFINED) {
 
                 switch (scanType) {
@@ -201,8 +209,9 @@ public class EventBuilder {
 
                         if (period > 0) {
 
-                            data.put(ScanningEventConstant.SCANNING_EVENT_ACTION, action.ordinal());
-                            data.put(ScanningEventConstant.SCANNING_EVENT_TYPE, scanType.ordinal());
+                            data.put(ScanningEventConstant.SCANNING_EVENT_ACTION, buildPair(action));
+                            data.put(ScanningEventConstant.SCANNING_EVENT_TYPE, buildPair(scanType));
+
                             data.put(ScanningEventConstant.SCANNING_EVENT_PERIOD, period);
 
                             if (!targetDevice.equals("")) {
@@ -219,8 +228,8 @@ public class EventBuilder {
 
                         if (period > 0 && dutyCycle >= 0 && dutyCycle <= 100) {
 
-                            data.put(ScanningEventConstant.SCANNING_EVENT_ACTION, action.ordinal());
-                            data.put(ScanningEventConstant.SCANNING_EVENT_TYPE, scanType.ordinal());
+                            data.put(ScanningEventConstant.SCANNING_EVENT_ACTION, actionObj);
+                            data.put(ScanningEventConstant.SCANNING_EVENT_TYPE, scanTypeObj);
                             data.put(ScanningEventConstant.SCANNING_EVENT_PERIOD, period);
                             data.put(ScanningEventConstant.SCANNING_EVENT_DUTY, dutyCycle);
 
@@ -232,8 +241,8 @@ public class EventBuilder {
                     }
                     case SCANNING_TYPE_PERMANENT: {
 
-                        data.put(ScanningEventConstant.SCANNING_EVENT_ACTION, action.ordinal());
-                        data.put(ScanningEventConstant.SCANNING_EVENT_TYPE, scanType.ordinal());
+                        data.put(ScanningEventConstant.SCANNING_EVENT_ACTION, actionObj);
+                        data.put(ScanningEventConstant.SCANNING_EVENT_TYPE, scanTypeObj);
                         return new GenericEvent(EventTopic.TOPIC_SCAN, EventType.EVENT_REQUEST, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), data);
                     }
                 }
@@ -244,7 +253,7 @@ public class EventBuilder {
 
             } else if (action == ScanningAction.SCANNING_ACTION_STOP) {
 
-                data.put(ScanningEventConstant.SCANNING_EVENT_ACTION, action.ordinal());
+                data.put(ScanningEventConstant.SCANNING_EVENT_ACTION, actionObj);
                 return new GenericEvent(EventTopic.TOPIC_SCAN, EventType.EVENT_REQUEST, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), data);
 
             }
@@ -259,7 +268,7 @@ public class EventBuilder {
         JSONArray array = new JSONArray();
 
         for (EventSubscription event : subscriptionTypeList) {
-            array.put(event.ordinal());
+            array.put(buildPair(event));
         }
 
         JSONObject value = new JSONObject();
@@ -301,10 +310,10 @@ public class EventBuilder {
 
         JSONObject request = new JSONObject();
         try {
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.PUSH.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, buildPair(PropertyEventType.PUSH));
             request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUid);
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.ordinal());
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, function.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, buildPair(property));
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, buildPair(function));
             request.put(PropertiesEventConstant.PROPERTIES_EVENT_VALUE, value);
 
         } catch (JSONException e) {
@@ -322,10 +331,10 @@ public class EventBuilder {
 
         JSONObject request = new JSONObject();
         try {
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.PULL.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, buildPair(PropertyEventType.PULL));
             request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.ordinal());
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, function.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, buildPair(property));
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, buildPair(function));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -338,9 +347,9 @@ public class EventBuilder {
 
         JSONObject request = new JSONObject();
         try {
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.PROPERTY.ordinal());
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, function.ordinal());
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, buildPair(PropertyEventType.PROPERTY));
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION, buildPair(function));
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, buildPair(property));
             request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUid);
 
         } catch (JSONException e) {
@@ -354,7 +363,7 @@ public class EventBuilder {
 
         JSONObject request = new JSONObject();
         try {
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.PROPERTY.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, buildPair(PropertyEventType.PROPERTY));
             request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, property.getDeviceUid());
             request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.toJson());
 
@@ -373,7 +382,7 @@ public class EventBuilder {
         try {
             request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.toJson());
             request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.INCOMING.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, buildPair(PropertyEventType.INCOMING));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -389,8 +398,8 @@ public class EventBuilder {
             request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.toJson());
             request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
             request.put(PropertiesEventConstant.PROPERTIES_ACTION_ID, eventId);
-            request.put(PropertiesEventConstant.PROPERTIES_ACTION_STATUS, status.ordinal());
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.PULL.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_ACTION_STATUS, buildPair(status));
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, buildPair(PropertyEventType.PULL));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -406,12 +415,23 @@ public class EventBuilder {
             request.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY, property.toJson());
             request.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
             request.put(PropertiesEventConstant.PROPERTIES_ACTION_ID, eventId);
-            request.put(PropertiesEventConstant.PROPERTIES_ACTION_STATUS, status.ordinal());
-            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, PropertyEventType.PUSH.ordinal());
+            request.put(PropertiesEventConstant.PROPERTIES_ACTION_STATUS, buildPair(status));
+            request.put(PropertiesEventConstant.PROPERTIES_EVENT_TYPE, buildPair(PropertyEventType.PUSH));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return new GenericEvent(EventTopic.TOPIC_PROPERTIES, EventType.EVENT_RESPONSE, new RandomGen(Common.EVENT_ID_LENGTH).nextString(), request);
+    }
+
+    public static JSONObject buildPair(Enum enumValue) {
+        JSONObject pair = new JSONObject();
+        try {
+            pair.put(Common.CONSTANT_COMMON_PAIR_CODE, enumValue.ordinal());
+            pair.put(Common.CONSTANT_COMMON_PAIR_NAME, enumValue.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return pair;
     }
 }

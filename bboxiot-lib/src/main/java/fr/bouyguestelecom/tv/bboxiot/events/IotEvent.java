@@ -38,9 +38,9 @@ import fr.bouyguestelecom.tv.bboxiot.events.impl.AssociationList;
 import fr.bouyguestelecom.tv.bboxiot.events.impl.BluetoothStateEvent;
 import fr.bouyguestelecom.tv.bboxiot.events.impl.ConnectionEvent;
 import fr.bouyguestelecom.tv.bboxiot.events.impl.ConnectionItem;
-import fr.bouyguestelecom.tv.bboxiot.events.impl.PropertyResponseEvent;
 import fr.bouyguestelecom.tv.bboxiot.events.impl.PropertyIncomingEvent;
 import fr.bouyguestelecom.tv.bboxiot.events.impl.PropertyRequestEvent;
+import fr.bouyguestelecom.tv.bboxiot.events.impl.PropertyResponseEvent;
 import fr.bouyguestelecom.tv.bboxiot.events.impl.RegistrationEvent;
 import fr.bouyguestelecom.tv.bboxiot.events.impl.ScanItemEvent;
 import fr.bouyguestelecom.tv.bboxiot.events.impl.ScanListItem;
@@ -58,8 +58,6 @@ public class IotEvent {
 
     public static IGenericEvent parse(String eventStr) {
 
-        Log.i(TAG, "event : " + eventStr);
-
         JSONObject object = null;
 
         try {
@@ -71,8 +69,12 @@ public class IotEvent {
                     object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID) &&
                     object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC)) {
 
-                EventTopic topic = EventTopic.getTopic(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC));
-                EventType eventType = EventType.getType(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE));
+                JSONObject topicObj = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC);
+                JSONObject typeObj = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE);
+
+                EventTopic topic = EventTopic.getTopic(topicObj.getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                EventType eventType = EventType.getType(typeObj.getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+
                 String eventId = object.getString(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID);
                 JSONObject data = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA);
 
@@ -86,7 +88,7 @@ public class IotEvent {
 
                                 if (data.has(Common.CONSTANT_COMMON_TYPE)) {
 
-                                    ScanRegistrationType scanEventType = ScanRegistrationType.getType(data.getInt(Common.CONSTANT_COMMON_TYPE));
+                                    ScanRegistrationType scanEventType = ScanRegistrationType.getType(data.getJSONObject(Common.CONSTANT_COMMON_TYPE).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
 
                                     if (scanEventType == ScanRegistrationType.SCAN_EVENT_NEW_DEVICE_DISCOVERED) {
 
@@ -202,8 +204,12 @@ public class IotEvent {
                     object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID) &&
                     object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC)) {
 
-                EventTopic topic = EventTopic.getTopic(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC));
-                EventType eventType = EventType.getType(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE));
+                JSONObject topicObj = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC);
+                JSONObject typeObj = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE);
+
+                EventTopic topic = EventTopic.getTopic(topicObj.getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                EventType eventType = EventType.getType(typeObj.getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+
                 String eventId = object.getString(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID);
                 JSONObject data = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA);
 
@@ -234,8 +240,12 @@ public class IotEvent {
                     object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID) &&
                     object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC)) {
 
-                EventTopic topic = EventTopic.getTopic(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC));
-                EventType eventType = EventType.getType(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE));
+                JSONObject topicObj = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC);
+                JSONObject typeObj = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE);
+
+                EventTopic topic = EventTopic.getTopic(topicObj.getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                EventType eventType = EventType.getType(typeObj.getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+
                 String eventId = object.getString(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID);
                 JSONObject data = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA);
 
@@ -257,8 +267,6 @@ public class IotEvent {
 
     public static IAssociationList parseAssociationList(String request) {
 
-        Log.i(TAG, "event : " + request);
-
         JSONObject object = null;
 
         try {
@@ -270,8 +278,12 @@ public class IotEvent {
                     object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID) &&
                     object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC)) {
 
-                EventTopic topic = EventTopic.getTopic(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC));
-                EventType eventType = EventType.getType(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE));
+                JSONObject topicObj = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC);
+                JSONObject typeObj = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE);
+
+                EventTopic topic = EventTopic.getTopic(topicObj.getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                EventType eventType = EventType.getType(typeObj.getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+
                 String eventId = object.getString(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID);
                 JSONObject data = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA);
 
@@ -290,8 +302,6 @@ public class IotEvent {
 
     public static IScanList parseScanningList(String request) {
 
-        Log.i(TAG, "event : " + request);
-
         JSONObject object = null;
 
         try {
@@ -303,8 +313,12 @@ public class IotEvent {
                     object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID) &&
                     object.has(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC)) {
 
-                EventTopic topic = EventTopic.getTopic(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC));
-                EventType eventType = EventType.getType(object.getInt(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE));
+                JSONObject topicObj = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC);
+                JSONObject typeObj = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE);
+
+                EventTopic topic = EventTopic.getTopic(topicObj.getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                EventType eventType = EventType.getType(typeObj.getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+
                 String eventId = object.getString(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID);
                 JSONObject data = object.getJSONObject(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA);
 

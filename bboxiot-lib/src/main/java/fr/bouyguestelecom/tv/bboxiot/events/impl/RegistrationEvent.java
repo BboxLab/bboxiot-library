@@ -32,11 +32,11 @@ import org.json.JSONObject;
 import java.util.HashSet;
 import java.util.Set;
 
+import fr.bouyguestelecom.tv.bboxiot.events.GenericEventAbstr;
+import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventSubscription;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
-import fr.bouyguestelecom.tv.bboxiot.events.GenericEventAbstr;
-import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.events.inter.IRegistrationEvent;
 
 /**
@@ -57,7 +57,7 @@ public class RegistrationEvent extends GenericEventAbstr implements IRegistratio
                 JSONArray array = (JSONArray) data.getJSONArray(Common.CONSTANT_COMMON_DATA);
 
                 for (int i = 0; i < array.length(); i++) {
-                    registrationTypeList.add(EventSubscription.getRegistration(array.getInt(i)));
+                    registrationTypeList.add(EventSubscription.getRegistration(array.getJSONObject(i).getInt(Common.CONSTANT_COMMON_PAIR_CODE)));
                 }
             } else {
                 Log.e(TAG, "Error in Bluetooth registration event format");

@@ -26,6 +26,7 @@ package fr.bouyguestelecom.tv.bboxiot.events;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.GenericEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
@@ -77,8 +78,9 @@ public abstract class GenericEventAbstr implements IGenericEvent {
 
         JSONObject event = new JSONObject();
         try {
-            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC, topic.ordinal());
-            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE, type.ordinal());
+            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC, EventBuilder.buildPair(topic));
+            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE, EventBuilder.buildPair(type));
+            
             event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID, eventId);
             event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA, data);
         } catch (JSONException e) {

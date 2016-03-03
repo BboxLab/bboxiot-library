@@ -40,6 +40,8 @@ import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Functions;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Properties;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.PropertyTypes;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Unit;
+import fr.bouyguestelecom.tv.bboxiot.events.EventBuilder;
+import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.PropertiesEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.listener.IPullListener;
 import fr.bouyguestelecom.tv.bboxiot.listener.IPushListener;
@@ -166,28 +168,28 @@ public class SmartProperty<T> implements IProperty {
                     item.has(BluetoothConst.BLUETOOTH_DEVICE_UUID) &&
                     item.has(PropertiesEventConstant.PROPERTIES_UNIT)) {
 
-                Properties propertyVal = Properties.getProperty(item.getInt(BluetoothConst.BT_CONNECTION_SMART_NAME));
-                Functions functionVal = Functions.getFunction(item.getInt(BluetoothConst.BT_CONNECTION_SMART_FUNCTION));
+                Properties propertyVal = Properties.getProperty(item.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_NAME).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                Functions functionVal = Functions.getFunction(item.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_FUNCTION).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
 
                 JSONArray capabilitiesArray = item.getJSONArray(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES);
 
                 List<Capability> capabilities = new ArrayList<>();
                 for (int k = 0; k < capabilitiesArray.length(); k++) {
-                    capabilities.add(Capability.getCapability(capabilitiesArray.getInt(k)));
+                    capabilities.add(Capability.getCapability(capabilitiesArray.getJSONObject(k).getInt(Common.CONSTANT_COMMON_PAIR_CODE)));
                 }
 
                 Object value = item.get(BluetoothConst.BT_CONNECTION_SMART_VALUE);
 
-                PropertyTypes propertyType = PropertyTypes.getPropertyType(item.getInt(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE));
+                PropertyTypes propertyType = PropertyTypes.getPropertyType(item.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
 
                 String deviceUid = item.getString(BluetoothConst.BLUETOOTH_DEVICE_UUID);
 
-                Unit unit = Unit.getUnit(item.getInt(PropertiesEventConstant.PROPERTIES_UNIT));
+                Unit unit = Unit.getUnit(item.getJSONObject(PropertiesEventConstant.PROPERTIES_UNIT).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
 
                 SmartProperty smartProperty = null;
 
                 if (propertyType == PropertyTypes.BUTTON_STATE) {
-                    ButtonState buttonState = ButtonState.getState((int) value);
+                    ButtonState buttonState = ButtonState.getState(((JSONObject)value).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
                     smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, unit, capabilities, propertyType, buttonState);
                 } else {
                     smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, unit, capabilities, propertyType, value);
@@ -208,9 +210,9 @@ public class SmartProperty<T> implements IProperty {
 
         try {
 
-            propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, property.ordinal());
-            propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION, function.ordinal());
-            propertyItem.put(PropertiesEventConstant.PROPERTIES_UNIT, unit.ordinal());
+            propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, EventBuilder.buildPair(property));
+            propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION, EventBuilder.buildPair(function));
+            propertyItem.put(PropertiesEventConstant.PROPERTIES_UNIT, EventBuilder.buildPair(unit));
 
             propertyItem.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUid);
 
@@ -218,15 +220,15 @@ public class SmartProperty<T> implements IProperty {
 
             JSONArray capabilitiesArray = new JSONArray();
             while (it3.hasNext()) {
-                capabilitiesArray.put(it3.next().ordinal());
+                capabilitiesArray.put(EventBuilder.buildPair(it3.next()));
             }
 
             propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES, capabilitiesArray);
 
-            propertyItem.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE, type.ordinal());
+            propertyItem.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE, EventBuilder.buildPair(type));
 
             if (type == PropertyTypes.BUTTON_STATE) {
-                propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_VALUE, ((ButtonState) value).ordinal());
+                propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_VALUE, EventBuilder.buildPair((ButtonState) value));
             } else {
                 propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_VALUE, value);
             }

@@ -28,13 +28,14 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
 import fr.bouyguestelecom.tv.bboxiot.events.GenericEventAbstr;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.AssociationEventConstant;
+import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.ConnectionState;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.events.inter.IAssociationEvent;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
 
 /**
  * @author Bertrand Martel
@@ -54,7 +55,7 @@ public class ConnectionEvent extends GenericEventAbstr implements IAssociationEv
 
             if (data.has(AssociationEventConstant.ASSOCIATION_EVENT_STATE)) {
 
-                state = ConnectionState.getState(data.getInt(AssociationEventConstant.ASSOCIATION_EVENT_STATE));
+                state = ConnectionState.getState(data.getJSONObject(AssociationEventConstant.ASSOCIATION_EVENT_STATE).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
 
                 if (data.has(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION))
                     connection = BtConnection.parse(data.getJSONObject(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION));

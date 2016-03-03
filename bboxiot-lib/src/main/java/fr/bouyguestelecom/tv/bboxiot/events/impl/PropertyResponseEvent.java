@@ -7,13 +7,14 @@ import org.json.JSONObject;
 
 import fr.bouyguestelecom.tv.bboxiot.datamodel.SmartProperty;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.ActionStatus;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 import fr.bouyguestelecom.tv.bboxiot.events.GenericEventAbstr;
+import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.PropertiesEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.PropertyEventType;
 import fr.bouyguestelecom.tv.bboxiot.events.inter.IPropertyResponseEvent;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 
 /**
  * @author Bertrand Martel
@@ -44,11 +45,11 @@ public class PropertyResponseEvent extends GenericEventAbstr implements IPropert
 
                 deviceUuid = data.getString(BluetoothConst.BLUETOOTH_DEVICE_UUID);
 
-                status = ActionStatus.getStatus(data.getInt(PropertiesEventConstant.PROPERTIES_ACTION_STATUS));
+                status = ActionStatus.getStatus(data.getJSONObject(PropertiesEventConstant.PROPERTIES_ACTION_STATUS).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
 
                 actionId = data.getString(PropertiesEventConstant.PROPERTIES_ACTION_ID);
 
-                eventType = PropertyEventType.getPropertyEventType(data.getInt(PropertiesEventConstant.PROPERTIES_EVENT_TYPE));
+                eventType = PropertyEventType.getPropertyEventType(data.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_TYPE).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
 
                 JSONObject propertyJson = data.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY);
 

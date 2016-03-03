@@ -36,8 +36,8 @@ import java.util.List;
 
 import fr.bouyguestelecom.tv.bboxiot.config.GenericDevice;
 import fr.bouyguestelecom.tv.bboxiot.config.GenericDeviceConst;
-import fr.bouyguestelecom.tv.bboxiot.datamodel.Model;
-import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Functions;
+import fr.bouyguestelecom.tv.bboxiot.events.EventBuilder;
+import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.ConnectionMode;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 
@@ -163,7 +163,7 @@ public class BluetoothSmartDevice {
                 deviceNameArray.put(deviceNameList.get(i));
             }
             result.put(BluetoothConst.JSON_CONFIG_DEVICE_NAME, deviceNameArray);
-            result.put(BluetoothConst.JSON_CONFIG_DEVICE_MODE, deviceMode.ordinal());
+            result.put(BluetoothConst.JSON_CONFIG_DEVICE_MODE, EventBuilder.buildPair(deviceMode));
             result.put(BluetoothConst.DEVICE_ADDRESS, address);
 
         } catch (JSONException e) {
@@ -223,7 +223,7 @@ public class BluetoothSmartDevice {
                     return null;
                 }
 
-                ConnectionMode deviceMode = ConnectionMode.getMode(item.getInt(BluetoothConst.JSON_CONFIG_DEVICE_MODE));
+                ConnectionMode deviceMode = ConnectionMode.getMode(item.getJSONObject(BluetoothConst.JSON_CONFIG_DEVICE_MODE).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
 
                 boolean deviceUp = item.getBoolean(BluetoothConst.DEVICE_UP);
 

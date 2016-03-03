@@ -32,4 +32,8 @@ public class Common {
     public final static String CONSTANT_COMMON_VALUE = "value";
     public final static String CONSTANT_COMMON_TYPE = "type";
     public final static String CONSTANT_COMMON_DATA = "data";
+
+    public final static String CONSTANT_COMMON_PAIR_CODE = "code";
+    public final static String CONSTANT_COMMON_PAIR_NAME = "name";
+    
 }
