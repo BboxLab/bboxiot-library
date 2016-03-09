@@ -24,30 +24,32 @@
 package fr.bouyguestelecom.tv.bboxiot.datamodel.enums;
 
 /**
+ * Property Capability enum
+ *
  * @author Bertrand Martel
  */
 public enum Capability {
 
-    NONE(0),
-    PULL(1),
-    PUSH(2);
+    NONE("none"),
+    PULL("pull"),
+    PUSH("push");
 
-    private int value = 0;
+    private String valueStr = "";
 
-    private Capability(int value) {
-        this.value = value;
+    private Capability(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public static Capability getCapability(int value) {
+    public static Capability getCapabilityStr(String value) {
 
-        switch (value) {
-            case 0:
-                return NONE;
-            case 1:
-                return PULL;
-            case 2:
-                return PUSH;
+        for (Capability capability : Capability.values()) {
+            if (value.equals(capability.valueStr))
+                return capability;
         }
         return NONE;
+    }
+
+    public String getValueStr() {
+        return valueStr;
     }
 }

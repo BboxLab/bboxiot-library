@@ -24,43 +24,36 @@
 package fr.bouyguestelecom.tv.bboxiot.events.enums;
 
 /**
+ * Connection state enum
+ *
  * @author Bertrand Martel
  */
 public enum ConnectionState {
 
-    UNDEFINED(0),
-    ASSOCIATION_COMPLETE(1),
-    CONNECTED(2),
-    DISCONNECTED(3),
-    DEVICE_NOT_FOUND(4),
-    CONNECTION_ERROR(5),
-    CONNECTION_IDLE(6);
+    UNDEFINED("undefined"),
+    ASSOCIATION_COMPLETE("association_complete"),
+    CONNECTED("connected"),
+    DISCONNECTED("disconnected"),
+    DEVICE_NOT_FOUND("device_not_found"),
+    CONNECTION_ERROR("connection_error"),
+    CONNECTION_IDLE("connection_idle");
 
-    private int value;
+    private String valueStr = "";
 
-    private ConnectionState(int value) {
-        this.value = value;
+    private ConnectionState(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public static ConnectionState getState(int value) {
+    public static ConnectionState getConnectionStateStr(String value) {
 
-        switch (value) {
-            case 0:
-                return UNDEFINED;
-            case 1:
-                return ASSOCIATION_COMPLETE;
-            case 2:
-                return CONNECTED;
-            case 3:
-                return DISCONNECTED;
-            case 4:
-                return DEVICE_NOT_FOUND;
-            case 5:
-                return CONNECTION_ERROR;
-            case 6:
-                return CONNECTION_IDLE;
-            default:
-                return UNDEFINED;
+        for (ConnectionState state : ConnectionState.values()) {
+            if (value.equals(state.valueStr))
+                return state;
         }
+        return UNDEFINED;
+    }
+
+    public String getValueStr() {
+        return valueStr;
     }
 }

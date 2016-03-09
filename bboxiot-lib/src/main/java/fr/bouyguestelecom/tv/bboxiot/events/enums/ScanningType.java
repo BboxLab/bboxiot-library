@@ -24,34 +24,33 @@
 package fr.bouyguestelecom.tv.bboxiot.events.enums;
 
 /**
+ * Scanning type enum
+ *
  * @author Bertrand Martel
  */
 public enum ScanningType {
 
-    SCANNING_TYPE_UNDEFINED(0),
-    SCANNING_TYPE_CONTINUOUS(1),
-    SCANNING_TYPE_PERMANENT(2),
-    SCANNING_TYPE_PERIODIC(3);
+    SCANNING_TYPE_UNDEFINED("scanning_type_undefined"),
+    SCANNING_TYPE_CONTINUOUS("scanning_type_continuous"),
+    SCANNING_TYPE_PERMANENT("scanning_type_permanent"),
+    SCANNING_TYPE_PERIODIC("scanning_type_periodic");
 
-    private int value;
+    private String valueStr = "";
 
-    private ScanningType(int value) {
-        this.value = value;
+    private ScanningType(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public static ScanningType getType(int value) {
+    public static ScanningType getScanningTypeStr(String value) {
 
-        switch (value) {
-            case 0:
-                return SCANNING_TYPE_UNDEFINED;
-            case 1:
-                return SCANNING_TYPE_CONTINUOUS;
-            case 2:
-                return SCANNING_TYPE_PERMANENT;
-            case 3:
-                return SCANNING_TYPE_PERIODIC;
-            default:
-                return SCANNING_TYPE_UNDEFINED;
+        for (ScanningType scanningType : ScanningType.values()) {
+            if (value.equals(scanningType.valueStr))
+                return scanningType;
         }
+        return SCANNING_TYPE_UNDEFINED;
+    }
+
+    public String getValueStr() {
+        return valueStr;
     }
 }

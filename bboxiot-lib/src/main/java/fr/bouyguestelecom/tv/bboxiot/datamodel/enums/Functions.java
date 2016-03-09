@@ -29,39 +29,30 @@
 package fr.bouyguestelecom.tv.bboxiot.datamodel.enums;
 
 /**
+ * Functions enum
+ *
  * @author Bertrand Martel
  */
 public enum Functions {
 
-    NONE(0, "none"),
-    SWITCH(1, "switch"),
-    SMART_METER(2, "smart_meter"),
-    BATTERY(3, "battery"),
-    PLANT_MONITOR(4, "plant_monitor"),
-    RGB_LED(5, "rgb_light"),
-    WHITE_LED(6, "white_light"),
-    OIL_DIFFUSER(7, "oil_diffuser"),
-    TEMPERATURE(8, "thermometer"),
-    HUMIDITY(9, "hygrometer"),
-    BUTTON(10, "button"),
-    BUZZER(11, "buzzer"),
-    PIXEL(12, "pixel");
+    NONE("none"),
+    SWITCH("switch"),
+    SMART_METER("smart_meter"),
+    BATTERY("battery"),
+    PLANT_MONITOR("plant_monitor"),
+    RGB_LED("rgb_light"),
+    WHITE_LED("white_light"),
+    OIL_DIFFUSER("oil_diffuser"),
+    TEMPERATURE("thermometer"),
+    HUMIDITY("hygrometer"),
+    BUTTON("button"),
+    BUZZER("buzzer"),
+    PIXEL("pixel");
 
-    private int value = 0;
     private String valueStr = "";
 
-    private Functions(int value, String valueStr) {
-        this.value = value;
+    private Functions(String valueStr) {
         this.valueStr = valueStr;
-    }
-
-    public static Functions getFunctionValue(int value) {
-
-        for (Functions function : Functions.values()) {
-            if (value == function.value)
-                return function;
-        }
-        return NONE;
     }
 
     public static Functions getFunctionStr(String value) {
@@ -71,5 +62,9 @@ public enum Functions {
                 return function;
         }
         return NONE;
+    }
+
+    public String getValueStr() {
+        return valueStr;
     }
 }

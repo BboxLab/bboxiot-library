@@ -29,47 +29,46 @@
 package fr.bouyguestelecom.tv.bboxiot.datamodel.enums;
 
 /**
+ * Properties enum
+ * <p/>
+ * List of all properties
+ *
  * @author Bertrand Martel
  */
 public enum Properties {
 
-    NONE(0, "none"),
-    ONOFF(1, "onoff"),
-    CURRENT(2, "current"),
-    TENSION(3, "tension"),
-    POWER_FACTOR(4, "power_factor"),
-    ACTIVE_POWER(5, "active_power"),
-    REACTIVE_POWER(6, "reactive_power"),
-    FREQUENCY_MEASUREMENT(7, "frequency_measurement"),
-    STATE(8, "state"),
-    SUNLIGHT(9, "sunlight"),
-    AIR_TEMPERATURE(10, "air_temperature"),
-    SOIL_TEMPERATURE(11, "soil_temperature"),
-    SOIL_ELECTRODUCTIVITY(12, "soil_electroductivity"),
-    WATER_CONTENT(13, "water_content"),
-    COLOR(14, "color"),
-    INTENSITY(15, "intensity"),
-    TEMPERATURE(16, "temperature"),
-    SPEED(17, "speed"),
-    HUMIDITY(18, "humidity");
+    NONE("none"),
+    ONOFF("onoff"),
+    CURRENT("current"),
+    TENSION("tension"),
+    POWER_FACTOR("power_factor"),
+    ACTIVE_POWER("active_power"),
+    REACTIVE_POWER("reactive_power"),
+    FREQUENCY_MEASUREMENT("frequency_measurement"),
+    STATE("state"),
+    SUNLIGHT("sunlight"),
+    AIR_TEMPERATURE("air_temperature"),
+    SOIL_TEMPERATURE("soil_temperature"),
+    SOIL_ELECTRODUCTIVITY("soil_electroductivity"),
+    WATER_CONTENT("water_content"),
+    COLOR("color"),
+    INTENSITY("intensity"),
+    TEMPERATURE("temperature"),
+    SPEED("speed"),
+    HUMIDITY("humidity");
 
-    private int value = 0;
     private String valueStr = "";
 
-    private Properties(int value, String valueStr) {
-        this.value = value;
+    private Properties(String valueStr) {
         this.valueStr = valueStr;
     }
 
-    public static Properties getPropertyValue(int value) {
-
-        for (Properties property : Properties.values()) {
-            if (value == property.value)
-                return property;
-        }
-        return NONE;
-    }
-
+    /**
+     * Retrieve property object from property string
+     *
+     * @param valueStr
+     * @return
+     */
     public static Properties getPropertyStr(String valueStr) {
 
         for (Properties property : Properties.values()) {
@@ -77,5 +76,14 @@ public enum Properties {
                 return property;
         }
         return NONE;
+    }
+
+    /**
+     * Retrieve property string
+     *
+     * @return
+     */
+    public String getValueStr() {
+        return valueStr;
     }
 }

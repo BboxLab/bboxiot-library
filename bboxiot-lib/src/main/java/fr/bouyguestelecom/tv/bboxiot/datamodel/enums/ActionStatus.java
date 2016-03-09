@@ -29,30 +29,32 @@
 package fr.bouyguestelecom.tv.bboxiot.datamodel.enums;
 
 /**
+ * Action status enum
+ *
  * @author Bertrand Martel
  */
 public enum ActionStatus {
 
-    NONE(0),
-    SUCCESS(1),
-    ERROR(2);
+    NONE("none"),
+    SUCCESS("success"),
+    ERROR("error");
 
-    private int value = 0;
+    private String valueStr = "";
 
-    private ActionStatus(int value) {
-        this.value = value;
+    private ActionStatus(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public static ActionStatus getStatus(int value) {
+    public static ActionStatus getActionStatusStr(String value) {
 
-        switch (value) {
-            case 0:
-                return NONE;
-            case 1:
-                return SUCCESS;
-            case 2:
-                return ERROR;
+        for (ActionStatus action : ActionStatus.values()) {
+            if (value.equals(action.valueStr))
+                return action;
         }
         return NONE;
+    }
+
+    public String getValueStr() {
+        return valueStr;
     }
 }

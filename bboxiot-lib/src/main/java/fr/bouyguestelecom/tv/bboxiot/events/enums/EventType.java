@@ -24,37 +24,34 @@
 package fr.bouyguestelecom.tv.bboxiot.events.enums;
 
 /**
+ * Event type enum
+ *
  * @author Bertrand Martel
  */
 public enum EventType {
 
-    EVENT_UNKNOWN(0),
-    EVENT_REQUEST(1),
-    EVENT_RESPONSE(2),
-    EVENT_SUBSCRIPTION(3),
-    EVENT_INCOMING(4);
+    EVENT_UNKNOWN("event_unknown"),
+    EVENT_REQUEST("event_request"),
+    EVENT_RESPONSE("event_response"),
+    EVENT_SUBSCRIPTION("event_subscription"),
+    EVENT_INCOMING("event_incoming");
 
-    private int value;
+    private String valueStr = "";
 
-    private EventType(int value) {
-        this.value = value;
+    private EventType(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public static EventType getType(int value) {
+    public static EventType getEventTypeStr(String value) {
 
-        switch (value) {
-            case 0:
-                return EVENT_UNKNOWN;
-            case 1:
-                return EVENT_REQUEST;
-            case 2:
-                return EVENT_RESPONSE;
-            case 3:
-                return EVENT_SUBSCRIPTION;
-            case 4:
-                return EVENT_INCOMING;
-            default:
-                return EVENT_UNKNOWN;
+        for (EventType eventType : EventType.values()) {
+            if (value.equals(eventType.valueStr))
+                return eventType;
         }
+        return EVENT_UNKNOWN;
+    }
+
+    public String getValueStr() {
+        return valueStr;
     }
 }

@@ -40,6 +40,10 @@ import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.events.inter.IRegistrationEvent;
 
 /**
+ * Registration event
+ * <p/>
+ * for subscribing to events on BboxIoT Service
+ *
  * @author Bertrand Martel
  */
 public class RegistrationEvent extends GenericEventAbstr implements IRegistrationEvent {
@@ -57,7 +61,7 @@ public class RegistrationEvent extends GenericEventAbstr implements IRegistratio
                 JSONArray array = (JSONArray) data.getJSONArray(Common.CONSTANT_COMMON_DATA);
 
                 for (int i = 0; i < array.length(); i++) {
-                    registrationTypeList.add(EventSubscription.getRegistration(array.getJSONObject(i).getInt(Common.CONSTANT_COMMON_PAIR_CODE)));
+                    registrationTypeList.add(EventSubscription.getEventSubscriptionStr(array.getString(i)));
                 }
             } else {
                 Log.e(TAG, "Error in Bluetooth registration event format");

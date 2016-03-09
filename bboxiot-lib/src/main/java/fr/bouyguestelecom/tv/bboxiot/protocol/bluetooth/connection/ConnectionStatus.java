@@ -30,26 +30,26 @@ package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection;
  */
 public enum ConnectionStatus {
 
-    CONNECTION_SUCCESS(0), //connection success
-    CONNECTION_FAILURE(1), //connection failure
-    CONNECTION_WAITING(2),; //connection waiting
+    CONNECTION_SUCCESS("connection_success"), //connection success
+    CONNECTION_FAILURE("connection_failure"), //connection failure
+    CONNECTION_WAITING("connection_waiting"); //connection waiting
 
-    private int value = 0;
+    private String valueStr = "";
 
-    private ConnectionStatus(int value) {
-        this.value = value;
+    private ConnectionStatus(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public static ConnectionStatus getStatus(int value) {
+    public static ConnectionStatus getConnectionStatusStr(String value) {
 
-        switch (value) {
-            case 0:
-                return CONNECTION_SUCCESS;
-            case 1:
-                return CONNECTION_FAILURE;
-            case 2:
-                return CONNECTION_WAITING;
+        for (ConnectionStatus connectionStatus : ConnectionStatus.values()) {
+            if (value.equals(connectionStatus.valueStr))
+                return connectionStatus;
         }
         return CONNECTION_FAILURE;
+    }
+
+    public String getValueStr() {
+        return valueStr;
     }
 }

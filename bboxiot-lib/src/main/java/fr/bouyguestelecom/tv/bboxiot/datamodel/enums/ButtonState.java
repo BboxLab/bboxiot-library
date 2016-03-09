@@ -29,25 +29,25 @@
 package fr.bouyguestelecom.tv.bboxiot.datamodel.enums;
 
 /**
+ * Button state enum
+ *
  * @author Bertrand Martel
  */
 public enum ButtonState {
 
-    NONE(0),
-    RELEASED(1),
-    PUSHED(2),
-    DOUBLE_PUSH(3),
-    LONG_PUSH(4),
-    LONG_PUSH_RELEASE(5);
+    NONE(0, "none"),
+    RELEASED(1, "released"),
+    PUSHED(2, "pushed"),
+    DOUBLE_PUSH(3, "double_push"),
+    LONG_PUSH(4, "long_push"),
+    LONG_PUSH_RELEASE(5, "long_push_release");
 
-    private final int value;
+    private String valueStr = "";
+    private int value;
 
-    private ButtonState(int value) {
+    private ButtonState(int value, String valueStr) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
+        this.valueStr = valueStr;
     }
 
     public static ButtonState getState(int value) {
@@ -65,5 +65,18 @@ public enum ButtonState {
                 return LONG_PUSH_RELEASE;
         }
         return NONE;
+    }
+
+    public static ButtonState getButtonStateStr(String value) {
+
+        for (ButtonState buttonState : ButtonState.values()) {
+            if (value.equals(buttonState.valueStr))
+                return buttonState;
+        }
+        return NONE;
+    }
+
+    public String getValueStr() {
+        return valueStr;
     }
 }

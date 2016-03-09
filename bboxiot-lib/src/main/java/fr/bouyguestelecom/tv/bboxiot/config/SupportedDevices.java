@@ -24,64 +24,44 @@
 package fr.bouyguestelecom.tv.bboxiot.config;
 
 /**
+ * Supported device list
+ *
  * @author Bertrand Martel
  */
 public enum SupportedDevices {
 
-    UNDEFINED(0),
-    BEEWI_SMARTLITE(1),
-    BEEWI_SMARTCLIM(2),
-    BEEWI_SMARTRACK(3),
-    ALTYOR_NIU(4),
-    WITTY_NOTTI(5),
-    WITTY_DOTTI(6),
-    AWOX_SMARTPLUG(7),
-    DICE_DICEPLUS(8),
-    AWOX_AROMALIGHT(9),
-    AWOX_SMARTLIGHT(10),
-    AWOX_SMARTLIGHT_COLOR(11),
-    IWEDIA_RTRK(12),
-    PARROT_FLOWERPOWER(13);
+    UNDEFINED("undefined"),
+    BEEWI_SMARTLITE("beewi_smartlite"),
+    BEEWI_SMARTCLIM("beewi_smartclim"),
+    BEEWI_SMARTRACK("beewi_smartrack"),
+    ALTYOR_NIU("altyor_niu"),
+    WITTY_NOTTI("witty_notti"),
+    WITTY_DOTTI("witty_dotti"),
+    AWOX_SMARTPLUG("awox_smartplug"),
+    DICE_DICEPLUS("dice_diceplus"),
+    AWOX_AROMALIGHT("awox_aromalight"),
+    AWOX_SMARTLIGHT("awox_smartlight"),
+    AWOX_SMARTLIGHT_COLOR("awox_smartlight_color"),
+    IWEDIA_RTRK("iwedia_rtrk"),
+    PARROT_FLOWERPOWER("parrot_flowerpower");
 
-    private int value;
+    private String valueStr = "";
 
-    private SupportedDevices(int value) {
-        this.value = value;
+    private SupportedDevices(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public static SupportedDevices getDevice(int value) {
+    public static SupportedDevices getSupportedDeviceStr(String value) {
 
-        switch (value) {
-            case 0:
-                return UNDEFINED;
-            case 1:
-                return BEEWI_SMARTLITE;
-            case 2:
-                return BEEWI_SMARTCLIM;
-            case 3:
-                return BEEWI_SMARTRACK;
-            case 4:
-                return ALTYOR_NIU;
-            case 5:
-                return WITTY_NOTTI;
-            case 6:
-                return WITTY_DOTTI;
-            case 7:
-                return AWOX_SMARTPLUG;
-            case 8:
-                return DICE_DICEPLUS;
-            case 9:
-                return AWOX_AROMALIGHT;
-            case 10:
-                return AWOX_SMARTLIGHT;
-            case 11:
-                return AWOX_SMARTLIGHT_COLOR;
-            case 12:
-                return IWEDIA_RTRK;
-            case 13:
-                return PARROT_FLOWERPOWER;
-            default:
-                return UNDEFINED;
+        for (SupportedDevices action : SupportedDevices.values()) {
+            if (value.equals(action.valueStr))
+                return action;
         }
+        return UNDEFINED;
     }
+
+    public String getValueStr() {
+        return valueStr;
+    }
+
 }

@@ -1,38 +1,34 @@
 package fr.bouyguestelecom.tv.bboxiot.events.enums;
 
 /**
+ * Property event type enum
+ *
  * @author Bertrand Martel
  */
 public enum PropertyEventType {
 
-    NONE(0),
-    PULL(1),
-    PUSH(2),
-    PROPERTY(3),
-    INCOMING(4);
+    NONE("none"),
+    PULL("pull"),
+    PUSH("push"),
+    PROPERTY("property"),
+    INCOMING("incoming");
 
-    private int value;
+    private String valueStr = "";
 
-    private PropertyEventType(int value) {
-        this.value = value;
+    private PropertyEventType(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public static PropertyEventType getPropertyEventType(int value) {
+    public static PropertyEventType getPropertyEventTypeStr(String value) {
 
-        switch (value) {
-            case 0:
-                return NONE;
-            case 1:
-                return PULL;
-            case 2:
-                return PUSH;
-            case 3:
-                return PROPERTY;
-            case 4:
-                return INCOMING;
-            default:
-                return NONE;
+        for (PropertyEventType propertyEventType : PropertyEventType.values()) {
+            if (value.equals(propertyEventType.valueStr))
+                return propertyEventType;
         }
+        return NONE;
     }
 
+    public String getValueStr() {
+        return valueStr;
+    }
 }

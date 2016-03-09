@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.SmartProperty;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.ActionStatus;
 import fr.bouyguestelecom.tv.bboxiot.events.GenericEventAbstr;
-import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.PropertiesEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
@@ -45,11 +44,11 @@ public class PropertyResponseEvent extends GenericEventAbstr implements IPropert
 
                 deviceUuid = data.getString(BluetoothConst.BLUETOOTH_DEVICE_UUID);
 
-                status = ActionStatus.getStatus(data.getJSONObject(PropertiesEventConstant.PROPERTIES_ACTION_STATUS).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                status = ActionStatus.getActionStatusStr(data.getString(PropertiesEventConstant.PROPERTIES_ACTION_STATUS));
 
                 actionId = data.getString(PropertiesEventConstant.PROPERTIES_ACTION_ID);
 
-                eventType = PropertyEventType.getPropertyEventType(data.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_TYPE).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                eventType = PropertyEventType.getPropertyEventTypeStr(data.getString(PropertiesEventConstant.PROPERTIES_EVENT_TYPE));
 
                 JSONObject propertyJson = data.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY);
 

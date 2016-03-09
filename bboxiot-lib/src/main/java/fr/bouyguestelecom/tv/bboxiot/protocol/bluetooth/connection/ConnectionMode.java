@@ -24,31 +24,34 @@
 package fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection;
 
 /**
+ * Connection Mode enum
+ * <p/>
+ * list of all connection mode available in Bluetooth
+ *
  * @author Bertrand Martel
  */
 public enum ConnectionMode {
 
-    MODE_NONE(0),
-    MODE_CONNECTION(1),
-    MODE_ADVERTIZING(2),;
+    MODE_NONE("mode_none"),
+    MODE_CONNECTION("mode_connection"),
+    MODE_ADVERTIZING("mode_advertizing");
 
-    private int value = 0;
+    private String valueStr = "";
 
-    private ConnectionMode(int value) {
-        this.value = value;
+    private ConnectionMode(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public static ConnectionMode getMode(int value) {
+    public static ConnectionMode getConnectionModeStr(String value) {
 
-        switch (value) {
-            case 0:
-                return MODE_NONE;
-            case 1:
-                return MODE_CONNECTION;
-            case 2:
-                return MODE_ADVERTIZING;
+        for (ConnectionMode connectionMode : ConnectionMode.values()) {
+            if (value.equals(connectionMode.valueStr))
+                return connectionMode;
         }
         return MODE_NONE;
     }
 
+    public String getValueStr() {
+        return valueStr;
+    }
 }

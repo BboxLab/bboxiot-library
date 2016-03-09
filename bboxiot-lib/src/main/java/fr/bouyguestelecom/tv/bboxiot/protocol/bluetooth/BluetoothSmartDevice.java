@@ -36,8 +36,6 @@ import java.util.List;
 
 import fr.bouyguestelecom.tv.bboxiot.config.GenericDevice;
 import fr.bouyguestelecom.tv.bboxiot.config.GenericDeviceConst;
-import fr.bouyguestelecom.tv.bboxiot.events.EventBuilder;
-import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.ConnectionMode;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 
@@ -163,7 +161,7 @@ public class BluetoothSmartDevice {
                 deviceNameArray.put(deviceNameList.get(i));
             }
             result.put(BluetoothConst.JSON_CONFIG_DEVICE_NAME, deviceNameArray);
-            result.put(BluetoothConst.JSON_CONFIG_DEVICE_MODE, EventBuilder.buildPair(deviceMode));
+            result.put(BluetoothConst.JSON_CONFIG_DEVICE_MODE, deviceMode.getValueStr());
             result.put(BluetoothConst.DEVICE_ADDRESS, address);
 
         } catch (JSONException e) {
@@ -223,7 +221,7 @@ public class BluetoothSmartDevice {
                     return null;
                 }
 
-                ConnectionMode deviceMode = ConnectionMode.getMode(item.getJSONObject(BluetoothConst.JSON_CONFIG_DEVICE_MODE).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                ConnectionMode deviceMode = ConnectionMode.getConnectionModeStr(item.getString(BluetoothConst.JSON_CONFIG_DEVICE_MODE));
 
                 boolean deviceUp = item.getBoolean(BluetoothConst.DEVICE_UP);
 
@@ -245,19 +243,38 @@ public class BluetoothSmartDevice {
         return null;
     }
 
+    /**
+     * retrieve bluetooth address
+     *
+     * @return
+     */
     public String getDeviceAddress() {
         return address;
     }
 
+    /**
+     * set device as visible or unvisible on Bluetooth network
+     *
+     * @param deviceUp
+     */
     public void setDeviceUp(boolean deviceUp) {
         this.deviceUp = deviceUp;
     }
 
-
+    /**
+     * set Android Bluetooth device object
+     *
+     * @param device
+     */
     public void setDevice(BluetoothDevice device) {
         this.device = device;
     }
 
+    /**
+     * Retrieve Android Bluetooth device object
+     *
+     * @return
+     */
     public BluetoothDevice getDevice() {
         return device;
     }

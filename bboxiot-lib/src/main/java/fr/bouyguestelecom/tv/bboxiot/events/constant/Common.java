@@ -24,16 +24,17 @@
 package fr.bouyguestelecom.tv.bboxiot.events.constant;
 
 /**
+ * common constants
+ *
  * @author Bertrand Martel
  */
 public class Common {
 
+    //define event identifier string length
     public final static int EVENT_ID_LENGTH = 20;
+
     public final static String CONSTANT_COMMON_VALUE = "value";
     public final static String CONSTANT_COMMON_TYPE = "type";
     public final static String CONSTANT_COMMON_DATA = "data";
 
-    public final static String CONSTANT_COMMON_PAIR_CODE = "code";
-    public final static String CONSTANT_COMMON_PAIR_NAME = "name";
-    
 }

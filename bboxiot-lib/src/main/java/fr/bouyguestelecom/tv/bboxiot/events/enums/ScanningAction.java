@@ -24,37 +24,34 @@
 package fr.bouyguestelecom.tv.bboxiot.events.enums;
 
 /**
+ * Scanning action enum
+ *
  * @author Bertrand Martel
  */
 public enum ScanningAction {
 
-    SCANNING_ACTION_UNDEFINED(0),
-    SCANNING_ACTION_START(1),
-    SCANNING_ACTION_STOP(2),
-    SCANNING_ACTION_EXTERNAL_START(3),
-    SCANNING_ACTION_EXTERNAL_STOP(4);
+    SCANNING_ACTION_UNDEFINED("scanning_action_undefined"),
+    SCANNING_ACTION_START("scanning_action_start"),
+    SCANNING_ACTION_STOP("scanning_action_stop"),
+    SCANNING_ACTION_EXTERNAL_START("scanning_action_external_start"),
+    SCANNING_ACTION_EXTERNAL_STOP("scanning_action_external_stop");
 
-    private int value;
+    private String valueStr = "";
 
-    private ScanningAction(int value) {
-        this.value = value;
+    private ScanningAction(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public static ScanningAction getAction(int value) {
+    public static ScanningAction getScanningActionStr(String value) {
 
-        switch (value) {
-            case 0:
-                return SCANNING_ACTION_UNDEFINED;
-            case 1:
-                return SCANNING_ACTION_START;
-            case 2:
-                return SCANNING_ACTION_STOP;
-            case 3:
-                return SCANNING_ACTION_EXTERNAL_START;
-            case 4:
-                return SCANNING_ACTION_EXTERNAL_STOP;
-            default:
-                return SCANNING_ACTION_UNDEFINED;
+        for (ScanningAction scanningAction : ScanningAction.values()) {
+            if (value.equals(scanningAction.valueStr))
+                return scanningAction;
         }
+        return SCANNING_ACTION_UNDEFINED;
+    }
+
+    public String getValueStr() {
+        return valueStr;
     }
 }

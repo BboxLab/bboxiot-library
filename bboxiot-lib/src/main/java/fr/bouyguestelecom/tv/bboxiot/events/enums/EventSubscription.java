@@ -24,37 +24,34 @@
 package fr.bouyguestelecom.tv.bboxiot.events.enums;
 
 /**
+ * Event subscription enum
+ *
  * @author Bertrand Martel
  */
 public enum EventSubscription {
 
-    NONE(0),
-    SCANNING(1),
-    CONNECTION(2),
-    PROPERTIES(3),
-    BLUETOOTH_STATE(4);
+    NONE("none"),
+    SCANNING("scanning"),
+    CONNECTION("connection"),
+    PROPERTIES("properties"),
+    BLUETOOTH_STATE("bluetooth_state");
 
-    private int value;
+    private String valueStr = "";
 
-    private EventSubscription(int value) {
-        this.value = value;
+    private EventSubscription(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public static EventSubscription getRegistration(int value) {
+    public static EventSubscription getEventSubscriptionStr(String value) {
 
-        switch (value) {
-            case 0:
-                return NONE;
-            case 1:
-                return SCANNING;
-            case 2:
-                return CONNECTION;
-            case 3:
-                return PROPERTIES;
-            case 4:
-                return BLUETOOTH_STATE;
-            default:
-                return NONE;
+        for (EventSubscription eventSubscription : EventSubscription.values()) {
+            if (value.equals(eventSubscription.valueStr))
+                return eventSubscription;
         }
+        return NONE;
+    }
+
+    public String getValueStr() {
+        return valueStr;
     }
 }

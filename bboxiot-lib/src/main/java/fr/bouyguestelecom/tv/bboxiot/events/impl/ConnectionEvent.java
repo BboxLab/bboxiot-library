@@ -30,23 +30,29 @@ import org.json.JSONObject;
 
 import fr.bouyguestelecom.tv.bboxiot.events.GenericEventAbstr;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.AssociationEventConstant;
-import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.ConnectionState;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.events.inter.IAssociationEvent;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedItem;
 
 /**
+ * Connection event type
+ * <p/>
+ * for connection state change
+ *
  * @author Bertrand Martel
  */
 public class ConnectionEvent extends GenericEventAbstr implements IAssociationEvent {
 
     private static String TAG = ConnectionEvent.class.getSimpleName();
 
+    /**
+     * connection state
+     */
     private ConnectionState state = ConnectionState.UNDEFINED;
 
-    private BtConnection connection = null;
+    private BtAssociatedItem connection = null;
 
     public ConnectionEvent(EventTopic topic, EventType type, String eventId, JSONObject data) {
         super(topic, type, eventId, data);
@@ -55,10 +61,10 @@ public class ConnectionEvent extends GenericEventAbstr implements IAssociationEv
 
             if (data.has(AssociationEventConstant.ASSOCIATION_EVENT_STATE)) {
 
-                state = ConnectionState.getState(data.getJSONObject(AssociationEventConstant.ASSOCIATION_EVENT_STATE).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                state = ConnectionState.getConnectionStateStr(data.getString(AssociationEventConstant.ASSOCIATION_EVENT_STATE));
 
                 if (data.has(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION))
-                    connection = BtConnection.parse(data.getJSONObject(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION));
+                    connection = BtAssociatedItem.parse(data.getJSONObject(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION));
             } else {
                 Log.e(TAG, "Error bad format for association event");
             }
@@ -74,7 +80,7 @@ public class ConnectionEvent extends GenericEventAbstr implements IAssociationEv
     }
 
     @Override
-    public BtConnection getConnection() {
+    public BtAssociatedItem getConnection() {
         return connection;
     }
 }

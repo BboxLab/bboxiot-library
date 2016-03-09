@@ -27,18 +27,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import fr.bouyguestelecom.tv.bboxiot.events.GenericEventAbstr;
-import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.ScanningEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.ScanningAction;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.ScanningType;
-import fr.bouyguestelecom.tv.bboxiot.events.inter.IScanningEvent;
+import fr.bouyguestelecom.tv.bboxiot.events.inter.IScanningActionEvent;
 
 /**
+ * Scan status event
+ * <p/>
+ * for scan status change event
+ *
  * @author Bertrand Martel
  */
-public class ScanStatusEvent extends GenericEventAbstr implements IScanningEvent {
+public class ScanStatusEvent extends GenericEventAbstr implements IScanningActionEvent {
 
     private final static String TAG = ScanStatusEvent.class.getSimpleName();
 
@@ -58,10 +61,10 @@ public class ScanStatusEvent extends GenericEventAbstr implements IScanningEvent
         try {
 
             if (data.has(ScanningEventConstant.SCANNING_EVENT_ACTION)) {
-                action = ScanningAction.getAction(data.getJSONObject(ScanningEventConstant.SCANNING_EVENT_ACTION).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                action = ScanningAction.getScanningActionStr(data.getString(ScanningEventConstant.SCANNING_EVENT_ACTION));
             }
             if (data.has(ScanningEventConstant.SCANNING_EVENT_TYPE)) {
-                scanType = ScanningType.getType(data.getJSONObject(ScanningEventConstant.SCANNING_EVENT_TYPE).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                scanType = ScanningType.getScanningTypeStr(data.getString(ScanningEventConstant.SCANNING_EVENT_TYPE));
             }
             if (data.has(ScanningEventConstant.SCANNING_EVENT_TARGET_DEVICE_UID)) {
                 targetDeviceUid = data.getString(ScanningEventConstant.SCANNING_EVENT_TARGET_DEVICE_UID);

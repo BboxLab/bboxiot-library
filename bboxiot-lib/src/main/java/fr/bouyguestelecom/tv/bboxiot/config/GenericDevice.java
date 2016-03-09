@@ -70,8 +70,8 @@ public class GenericDevice {
 
         JSONObject result = new JSONObject();
         try {
-            result.put(GenericDeviceConst.JSON_CONFIG_SUPPORTED_DEVICE, supportedDevice.ordinal());
-            result.put(GenericDeviceConst.JSON_CONFIG_PROTOCOL, protocol.ordinal());
+            result.put(GenericDeviceConst.JSON_CONFIG_SUPPORTED_DEVICE, supportedDevice.getValueStr());
+            result.put(GenericDeviceConst.JSON_CONFIG_PROTOCOL, protocol.getValueStr());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -84,8 +84,8 @@ public class GenericDevice {
             if (item.has(GenericDeviceConst.JSON_CONFIG_SUPPORTED_DEVICE) &&
                     item.has(GenericDeviceConst.JSON_CONFIG_PROTOCOL)) {
 
-                SupportedDevices supportedDevice = SupportedDevices.getDevice(item.getInt(GenericDeviceConst.JSON_CONFIG_SUPPORTED_DEVICE));
-                Protocols btProtocol = Protocols.getProtocol(item.getInt(GenericDeviceConst.JSON_CONFIG_PROTOCOL));
+                SupportedDevices supportedDevice = SupportedDevices.getSupportedDeviceStr(item.getString(GenericDeviceConst.JSON_CONFIG_SUPPORTED_DEVICE));
+                Protocols btProtocol = Protocols.getProtocolStr(item.getString(GenericDeviceConst.JSON_CONFIG_PROTOCOL));
 
                 return new GenericDevice(btProtocol, supportedDevice);
 

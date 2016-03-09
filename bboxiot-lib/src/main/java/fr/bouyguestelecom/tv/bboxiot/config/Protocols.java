@@ -24,31 +24,32 @@
 package fr.bouyguestelecom.tv.bboxiot.config;
 
 /**
+ * Protocol list
+ *
  * @author Bertrand Martel
  */
 public enum Protocols {
 
-    UNDEFINED(0),
-    BLUETOOTH(1),
-    WIFI(2);
+    UNDEFINED("undefined"),
+    BLUETOOTH("bluetooth"),
+    WIFI("wifi");
 
-    private int value;
+    private String valueStr;
 
-    private Protocols(int value) {
-        this.value = value;
+    private Protocols(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public static Protocols getProtocol(int value) {
+    public static Protocols getProtocolStr(String value) {
 
-        switch (value) {
-            case 0:
-                return UNDEFINED;
-            case 1:
-                return BLUETOOTH;
-            case 2:
-                return WIFI;
-            default:
-                return UNDEFINED;
+        for (Protocols action : Protocols.values()) {
+            if (value.equals(action.valueStr))
+                return action;
         }
+        return UNDEFINED;
+    }
+
+    public String getValueStr() {
+        return valueStr;
     }
 }

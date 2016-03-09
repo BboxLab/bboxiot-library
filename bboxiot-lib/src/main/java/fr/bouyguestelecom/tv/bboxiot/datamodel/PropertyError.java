@@ -30,51 +30,44 @@ package fr.bouyguestelecom.tv.bboxiot.datamodel;
  */
 public enum PropertyError {
 
-    NONE(0),
-    
+    NONE("none"),
+
     /**
      * PUSH call has timeout
      */
-    PUSH_TIMEOUT_ERROR(1),
+    PUSH_TIMEOUT_ERROR("push_timeout_error"),
 
     /**
      * PULL call has timeout
      */
-    PULL_TIMEOUT_ERROR(2),
+    PULL_TIMEOUT_ERROR("pull_timeout_error"),
 
     /**
      * a gatt error occured. This is likely to be a connection issue
      */
-    GATT_ERROR(3),
+    GATT_ERROR("gatt_error"),
 
     /**
      * called when error is triggered by bluetooth workflow issue or other overflow issue (eg task list full)
      */
-    PROCESS_ERROR(4), ;
+    PROCESS_ERROR("process_error"),;
 
-    private final int value;
+    private String valueStr = "";
 
-    private PropertyError(int value) {
-        this.value = value;
+    private PropertyError(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public int getValue() {
-        return value;
-    }
+    public static PropertyError getPropertyError(String value) {
 
-    public PropertyError getErrorId(int value) {
-
-        switch (value) {
-            case 1:
-                return PUSH_TIMEOUT_ERROR;
-            case 2:
-                return PULL_TIMEOUT_ERROR;
-            case 3:
-                return GATT_ERROR;
-            case 4:
-                return PROCESS_ERROR;
-
+        for (PropertyError propertyError : PropertyError.values()) {
+            if (value.equals(propertyError.valueStr))
+                return propertyError;
         }
         return NONE;
+    }
+
+    public String getValueStr() {
+        return valueStr;
     }
 }

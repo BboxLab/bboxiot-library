@@ -24,32 +24,32 @@
 package fr.bouyguestelecom.tv.bboxiot.events.enums;
 
 /**
+ * Scan registration type enum
+ *
  * @author Bertrand Martel
  */
 public enum ScanRegistrationType {
 
-    SCAN_EVENT_UNDEFINED(0),
-    SCAN_EVENT_NEW_DEVICE_DISCOVERED(1),
-    SCAN_EVENT_STATUS_CHANGE(2);
+    SCAN_EVENT_UNDEFINED("scan_event_undefined"),
+    SCAN_EVENT_NEW_DEVICE_DISCOVERED("scan_event_new_device_discovered"),
+    SCAN_EVENT_STATUS_CHANGE("scan_event_status_change");
 
-    private int value;
+    private String valueStr = "";
 
-    private ScanRegistrationType(int value) {
-        this.value = value;
+    private ScanRegistrationType(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public static ScanRegistrationType getType(int value) {
+    public static ScanRegistrationType getScanRegistrationTypeStr(String value) {
 
-        switch (value) {
-            case 0:
-                return SCAN_EVENT_UNDEFINED;
-            case 1:
-                return SCAN_EVENT_NEW_DEVICE_DISCOVERED;
-            case 2:
-                return SCAN_EVENT_STATUS_CHANGE;
-            default:
-                return SCAN_EVENT_UNDEFINED;
+        for (ScanRegistrationType scanRegistrationType : ScanRegistrationType.values()) {
+            if (value.equals(scanRegistrationType.valueStr))
+                return scanRegistrationType;
         }
+        return SCAN_EVENT_UNDEFINED;
     }
 
+    public String getValueStr() {
+        return valueStr;
+    }
 }

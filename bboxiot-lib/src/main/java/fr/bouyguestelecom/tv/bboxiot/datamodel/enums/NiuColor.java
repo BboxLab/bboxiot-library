@@ -1,44 +1,36 @@
 package fr.bouyguestelecom.tv.bboxiot.datamodel.enums;
 
 /**
+ * Color enum for Niu device
+ * <p/>
  * Created by akinaru on 27/01/16.
  */
 public enum NiuColor {
 
-    NONE(0),
-    WHITE(1),
-    TECH_BLUE(2),
-    COZY_GREY(3),
-    WAZABI(4),
-    LAGOON(5),
-    SOFTBERRY(6);
+    NONE("none"),
+    WHITE("white"),
+    TECH_BLUE("tech_blue"),
+    COZY_GREY("cozy_grey"),
+    WAZABI("wazabi"),
+    LAGOON("lagoon"),
+    SOFTBERRY("softberry");
 
-    private final int value;
+    private String valueStr = "";
 
-    private NiuColor(int value) {
-        this.value = value;
+    private NiuColor(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public int getValue() {
-        return value;
-    }
+    public static NiuColor getNiuColorStr(String value) {
 
-    public static NiuColor getColor(int value) {
-
-        switch (value) {
-            case 1:
-                return WHITE;
-            case 2:
-                return TECH_BLUE;
-            case 3:
-                return COZY_GREY;
-            case 4:
-                return WAZABI;
-            case 5:
-                return LAGOON;
-            case 6:
-                return SOFTBERRY;
+        for (NiuColor niuColor : NiuColor.values()) {
+            if (value.equals(niuColor.valueStr))
+                return niuColor;
         }
         return NONE;
+    }
+
+    public String getValueStr() {
+        return valueStr;
     }
 }

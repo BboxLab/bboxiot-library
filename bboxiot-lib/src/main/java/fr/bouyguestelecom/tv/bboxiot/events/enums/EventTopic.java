@@ -24,37 +24,34 @@
 package fr.bouyguestelecom.tv.bboxiot.events.enums;
 
 /**
+ * Event topic enum
+ *
  * @author Bertrand Martel
  */
 public enum EventTopic {
 
-    TOPIC_NONE(0),
-    TOPIC_SCAN(1),
-    TOPIC_CONNECTION(2),
-    TOPIC_PROPERTIES(3),
-    TOPIC_BLUETOOTH_STATE(4);
+    TOPIC_NONE("topic_none"),
+    TOPIC_SCAN("topic_scan"),
+    TOPIC_CONNECTION("topic_connection"),
+    TOPIC_PROPERTIES("topic_properties"),
+    TOPIC_BLUETOOTH_STATE("topic_bluetooth_state");
 
-    private int value;
+    private String valueStr = "";
 
-    private EventTopic(int value) {
-        this.value = value;
+    private EventTopic(String valueStr) {
+        this.valueStr = valueStr;
     }
 
-    public static EventTopic getTopic(int value) {
+    public static EventTopic getEventTopicStr(String value) {
 
-        switch (value) {
-            case 0:
-                return TOPIC_NONE;
-            case 1:
-                return TOPIC_SCAN;
-            case 2:
-                return TOPIC_CONNECTION;
-            case 3:
-                return TOPIC_PROPERTIES;
-            case 4:
-                return TOPIC_BLUETOOTH_STATE;
-            default:
-                return TOPIC_NONE;
+        for (EventTopic eventTopic : EventTopic.values()) {
+            if (value.equals(eventTopic.valueStr))
+                return eventTopic;
         }
+        return TOPIC_NONE;
+    }
+
+    public String getValueStr() {
+        return valueStr;
     }
 }
