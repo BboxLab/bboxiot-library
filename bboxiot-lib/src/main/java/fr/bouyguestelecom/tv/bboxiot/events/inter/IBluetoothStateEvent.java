@@ -24,10 +24,17 @@
 package fr.bouyguestelecom.tv.bboxiot.events.inter;
 
 /**
+ * Bluetooth state Event interface
+ *
  * @author Bertrand Martel
  */
 public interface IBluetoothStateEvent {
 
-    public boolean getBluetoothState();
+    /**
+     * retrieve bluetooth state
+     *
+     * @return
+     */
+    boolean getBluetoothState();
 
 }

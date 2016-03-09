@@ -26,10 +26,17 @@ package fr.bouyguestelecom.tv.bboxiot.events.inter;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
 
 /**
+ * Scan item event
+ *
  * @author Bertrand Martel
  */
 public interface IScanItemEvent {
 
-    public BluetoothSmartDevice getItem();
+    /**
+     * get the bluetooth discovered device
+     *
+     * @return
+     */
+    BluetoothSmartDevice getItem();
 
 }

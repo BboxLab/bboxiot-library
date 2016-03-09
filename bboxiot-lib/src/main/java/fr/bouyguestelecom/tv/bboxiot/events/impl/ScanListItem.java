@@ -32,14 +32,18 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
 import fr.bouyguestelecom.tv.bboxiot.events.GenericEventAbstr;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.ScanningEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.events.inter.IScanList;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
 
 /**
+ * Scan list item object
+ * <p/>
+ * for parsing the whole scanning list
+ *
  * @author Bertrand Martel
  */
 public class ScanListItem extends GenericEventAbstr implements IScanList {

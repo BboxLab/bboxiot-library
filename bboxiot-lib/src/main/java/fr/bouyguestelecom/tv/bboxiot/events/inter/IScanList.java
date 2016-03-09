@@ -30,12 +30,24 @@ import java.util.Map;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
 
 /**
+ * Scan list
+ *
  * @author Bertrand Martel
  */
 public interface IScanList {
 
-    public Map<String, BluetoothSmartDevice> getList();
+    /**
+     * map of device aleady scanned
+     *
+     * @return
+     */
+    Map<String, BluetoothSmartDevice> getList();
 
-    public JSONArray toJsonArray();
+    /**
+     * list of device already scanned in json array format
+     *
+     * @return
+     */
+    JSONArray toJsonArray();
 
 }

@@ -6,14 +6,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import fr.bouyguestelecom.tv.bboxiot.datamodel.SmartProperty;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 import fr.bouyguestelecom.tv.bboxiot.events.GenericEventAbstr;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.PropertiesEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.events.inter.IPropertyIncomingEvent;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 
 /**
+ * Property incoming event type
+ * <p/>
+ * for incoming change of properties
+ *
  * @author Bertrand Martel
  */
 public class PropertyIncomingEvent extends GenericEventAbstr implements IPropertyIncomingEvent {

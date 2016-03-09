@@ -5,18 +5,45 @@ import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.ActionStatus;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.PropertyEventType;
 
 /**
+ * Property response event
+ *
  * @author Bertrand Martel
  */
 public interface IPropertyResponseEvent {
 
-    public SmartProperty getProperty();
+    /**
+     * get smart property object
+     *
+     * @return
+     */
+    SmartProperty getProperty();
 
-    public String getDeviceUid();
+    /**
+     * get device uid
+     *
+     * @return
+     */
+    String getDeviceUid();
 
-    public ActionStatus getStatus();
+    /**
+     * get action status for this event
+     *
+     * @return
+     */
+    ActionStatus getStatus();
 
-    public PropertyEventType getActionType();
+    /**
+     * get property event type
+     *
+     * @return
+     */
+    PropertyEventType getActionType();
 
-    public String getActionId();
+    /**
+     * get action id for this event
+     *
+     * @return
+     */
+    String getActionId();
 
 }

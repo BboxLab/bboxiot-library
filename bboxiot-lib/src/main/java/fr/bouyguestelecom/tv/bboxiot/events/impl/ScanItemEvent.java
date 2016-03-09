@@ -28,14 +28,18 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
 import fr.bouyguestelecom.tv.bboxiot.events.GenericEventAbstr;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.ScanningEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.events.inter.IScanItemEvent;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
 
 /**
+ * Scan item event type
+ * <p/>
+ * for discovered device over the fly
+ *
  * @author Bertrand Martel
  */
 public class ScanItemEvent extends GenericEventAbstr implements IScanItemEvent {

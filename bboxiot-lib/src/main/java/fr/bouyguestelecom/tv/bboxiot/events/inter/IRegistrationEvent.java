@@ -28,9 +28,18 @@ import java.util.Set;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventSubscription;
 
 /**
+ * Registration event
+ * <p/>
+ * manage subscription to event types
+ *
  * @author Bertrand Martel
  */
 public interface IRegistrationEvent {
 
-    public Set<EventSubscription> getRegistrationType();
+    /**
+     * get rsgistration type
+     *
+     * @return
+     */
+    Set<EventSubscription> getRegistrationType();
 }

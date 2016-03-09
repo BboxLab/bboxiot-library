@@ -29,21 +29,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
 import fr.bouyguestelecom.tv.bboxiot.events.GenericEventAbstr;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.AssociationEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.events.inter.IConnectionItem;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedItem;
 
 /**
+ * Connection item
+ * <p/>
+ * for connection object parsing
+ *
  * @author Bertrand Martel
  */
 public class ConnectionItem extends GenericEventAbstr implements IConnectionItem {
 
     private static String TAG = ScanItemEvent.class.getSimpleName();
 
-    private BtConnection btConnection = null;
+    private BtAssociatedItem btConnection = null;
 
     public ConnectionItem(EventTopic topic, EventType type, String eventId, JSONObject data) {
         super(topic, type, eventId, data);
@@ -53,8 +57,8 @@ public class ConnectionItem extends GenericEventAbstr implements IConnectionItem
 
                 JSONObject connectionJson = data.getJSONObject(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION);
 
-                btConnection = BtConnection.parse(connectionJson);
-                
+                btConnection = BtAssociatedItem.parse(connectionJson);
+
             } else {
                 Log.e(TAG, "Error in association item event format");
             }
@@ -64,7 +68,7 @@ public class ConnectionItem extends GenericEventAbstr implements IConnectionItem
     }
 
     @Override
-    public BtConnection getItem() {
+    public BtAssociatedItem getItem() {
         return btConnection;
     }
 

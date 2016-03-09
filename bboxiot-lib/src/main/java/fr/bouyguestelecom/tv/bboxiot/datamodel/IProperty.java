@@ -30,18 +30,51 @@ package fr.bouyguestelecom.tv.bboxiot.datamodel;
 
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Unit;
 
+/**
+ * Generic interface for properties
+ */
 public interface IProperty {
 
-    public boolean isPushAble();
+    /**
+     * define if property has PUSH capability
+     *
+     * @return
+     */
+    boolean isPushAble();
 
-    public boolean isPullAble();
+    /**
+     * define if property has PULL capability
+     *
+     * @return
+     */
+    boolean isPullAble();
 
-    public int getIntValue();
+    /**
+     * retrieve property integer value
+     *
+     * @return
+     */
+    int getIntValue();
 
-    public boolean getBoolValue();
+    /**
+     * retrieve property boolean value
+     *
+     * @return
+     */
+    boolean getBoolValue();
 
-    public float getFloatValue();
+    /**
+     * retrieve property float value
+     *
+     * @return
+     */
+    float getFloatValue();
 
-    public Unit getUnit();
+    /**
+     * retrieve property unit
+     *
+     * @return
+     */
+    Unit getUnit();
 
 }

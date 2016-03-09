@@ -26,10 +26,17 @@ package fr.bouyguestelecom.tv.bboxiot.events.inter;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.ScanningAction;
 
 /**
+ * Scan status change event
+ *
  * @author Bertrand Martel
  */
 public interface IScanStatusChangeEvent {
 
-    public ScanningAction getAction();
+    /**
+     * get scan status event
+     *
+     * @return
+     */
+    ScanningAction getAction();
 
 }

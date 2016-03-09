@@ -24,6 +24,8 @@
 package fr.bouyguestelecom.tv.bboxiot.events.constant;
 
 /**
+ * Constants used for Association events
+ *
  * @author Bertrand Martel
  */
 public class AssociationEventConstant {

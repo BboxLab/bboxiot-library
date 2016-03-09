@@ -27,14 +27,26 @@ import org.json.JSONArray;
 
 import java.util.Map;
 
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedItem;
 
 /**
+ * Association list interface
+ *
  * @author Bertrand Martel
  */
 public interface IAssociationList {
 
-    public Map<String, BtConnection> getList();
+    /**
+     * retreive map of associated devices with deviceUid as key
+     *
+     * @return
+     */
+    Map<String, BtAssociatedItem> getList();
 
-    public JSONArray toJsonArray();
+    /**
+     * retrieve list of associated devices in json array format
+     *
+     * @return
+     */
+    JSONArray toJsonArray();
 }

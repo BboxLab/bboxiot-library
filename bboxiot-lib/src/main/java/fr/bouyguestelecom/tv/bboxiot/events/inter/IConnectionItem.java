@@ -25,15 +25,27 @@ package fr.bouyguestelecom.tv.bboxiot.events.inter;
 
 import org.json.JSONArray;
 
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedItem;
 
 /**
+ * Connection object interface
+ *
  * @author Bertrand Martel
  */
 public interface IConnectionItem {
 
-    public BtConnection getItem();
+    /**
+     * retrieve connection object
+     *
+     * @return
+     */
+    BtAssociatedItem getItem();
 
-    public JSONArray getJsonArrayFunctionList();
+    /**
+     * retrieve all function/properties of connection object
+     *
+     * @return
+     */
+    JSONArray getJsonArrayFunctionList();
 
 }

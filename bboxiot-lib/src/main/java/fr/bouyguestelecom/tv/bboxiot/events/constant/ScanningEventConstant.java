@@ -24,6 +24,8 @@
 package fr.bouyguestelecom.tv.bboxiot.events.constant;
 
 /**
+ * Constants defined for all scanning events
+ *
  * @author Bertrand Martel
  */
 public class ScanningEventConstant {

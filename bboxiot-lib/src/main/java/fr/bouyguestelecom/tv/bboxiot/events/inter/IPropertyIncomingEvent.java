@@ -3,11 +3,23 @@ package fr.bouyguestelecom.tv.bboxiot.events.inter;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.SmartProperty;
 
 /**
+ * Incoming property change event
+ *
  * @author Bertrand Martel
  */
 public interface IPropertyIncomingEvent {
 
-    public SmartProperty getProperty();
+    /**
+     * retrieve Smart property object
+     *
+     * @return
+     */
+    SmartProperty getProperty();
 
-    public String getDeviceUid();
+    /**
+     * retrieve device uid
+     *
+     * @return
+     */
+    String getDeviceUid();
 }

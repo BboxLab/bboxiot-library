@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Functions;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Properties;
 import fr.bouyguestelecom.tv.bboxiot.events.GenericEventAbstr;
-import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.PropertiesEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
@@ -17,18 +16,34 @@ import fr.bouyguestelecom.tv.bboxiot.events.inter.IPropertyRequestEvent;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 
 /**
+ * Property request event type
+ * <p/>
+ * for requesting an action on a specific property/function
+ *
  * @author Bertrand Martel
  */
 public class PropertyRequestEvent extends GenericEventAbstr implements IPropertyRequestEvent {
 
     private static String TAG = PropertyRequestEvent.class.getSimpleName();
 
+    /**
+     * property enum
+     */
     private Properties property = Properties.NONE;
 
+    /**
+     * function enum
+     */
     private Functions function = Functions.NONE;
 
+    /**
+     * device uid which own the property
+     */
     private String deviceUuid = "";
 
+    /**
+     * value to be sent
+     */
     private Object value = null;
 
     private PropertyEventType eventType = PropertyEventType.NONE;
@@ -44,11 +59,11 @@ public class PropertyRequestEvent extends GenericEventAbstr implements IProperty
 
                 deviceUuid = data.getString(BluetoothConst.BLUETOOTH_DEVICE_UUID);
 
-                property = Properties.getPropertyValue(data.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                property = Properties.getPropertyStr(data.getString(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY));
 
-                eventType = PropertyEventType.getPropertyEventType(data.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_TYPE).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                eventType = PropertyEventType.getPropertyEventTypeStr(data.getString(PropertiesEventConstant.PROPERTIES_EVENT_TYPE));
 
-                function = Functions.getFunctionValue(data.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                function = Functions.getFunctionStr(data.getString(PropertiesEventConstant.PROPERTIES_EVENT_FUNCTION));
 
                 if (eventType == PropertyEventType.PUSH) {
 

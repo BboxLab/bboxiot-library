@@ -5,18 +5,45 @@ import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Properties;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.PropertyEventType;
 
 /**
+ * Property request event
+ *
  * @author Bertrand Martel
  */
 public interface IPropertyRequestEvent {
 
-    public Properties getProperty();
+    /**
+     * retrieve Property enum value
+     *
+     * @return
+     */
+    Properties getProperty();
 
-    public Functions getFunction();
+    /**
+     * retrieve Function enum value
+     *
+     * @return
+     */
+    Functions getFunction();
 
-    public PropertyEventType getEventType();
+    /**
+     * retrieve property type
+     *
+     * @return
+     */
+    PropertyEventType getEventType();
 
-    public String getDeviceUid();
+    /**
+     * retrieve device uid
+     *
+     * @return
+     */
+    String getDeviceUid();
 
-    public Object getValue();
+    /**
+     * retrieve property value
+     *
+     * @return
+     */
+    Object getValue();
 
 }

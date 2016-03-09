@@ -35,6 +35,10 @@ import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.events.inter.IBluetoothStateEvent;
 
 /**
+ * Bluetooth state event
+ * <p/>
+ * for Bluetooth state changes
+ *
  * @author Bertrand Martel
  */
 public class BluetoothStateEvent extends GenericEventAbstr implements IBluetoothStateEvent {

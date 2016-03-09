@@ -26,26 +26,47 @@ package fr.bouyguestelecom.tv.bboxiot.events;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.GenericEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
 
 /**
+ * Abstract for all kind of events
+ *
  * @author Bertrand Martel
  */
 public abstract class GenericEventAbstr implements IGenericEvent {
 
     private static String TAG = GenericEventAbstr.class.getSimpleName();
 
+    /**
+     * event topic
+     */
     protected EventTopic topic = EventTopic.TOPIC_NONE;
 
+    /**
+     * event type
+     */
     protected EventType type = EventType.EVENT_UNKNOWN;
 
+    /**
+     * data sent in event
+     */
     protected JSONObject data = null;
 
+    /**
+     * event identifier
+     */
     protected String eventId = "";
 
+    /**
+     * Build generic event
+     *
+     * @param topic   event topic
+     * @param type    event type
+     * @param eventId event identifier
+     * @param data    event data
+     */
     public GenericEventAbstr(EventTopic topic, EventType type, String eventId, JSONObject data) {
         this.topic = topic;
         this.type = type;
@@ -78,9 +99,9 @@ public abstract class GenericEventAbstr implements IGenericEvent {
 
         JSONObject event = new JSONObject();
         try {
-            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC, EventBuilder.buildPair(topic));
-            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE, EventBuilder.buildPair(type));
-            
+            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_TOPIC, topic.getValueStr());
+            event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_TYPE, type.getValueStr());
+
             event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_EVENT_ID, eventId);
             event.put(GenericEventConstant.GENERIC_EVENT_CONSTANT_DATA, data);
         } catch (JSONException e) {

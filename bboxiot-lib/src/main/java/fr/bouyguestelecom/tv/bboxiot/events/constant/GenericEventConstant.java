@@ -24,6 +24,8 @@
 package fr.bouyguestelecom.tv.bboxiot.events.constant;
 
 /**
+ * Constants defined for all type of events
+ *
  * @author Bertrand Martel
  */
 public class GenericEventConstant {

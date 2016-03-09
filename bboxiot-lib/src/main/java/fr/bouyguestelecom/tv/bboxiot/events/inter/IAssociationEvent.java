@@ -23,15 +23,27 @@
  */
 package fr.bouyguestelecom.tv.bboxiot.events.inter;
 
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.ConnectionState;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedItem;
 
 /**
+ * Association event interface
+ *
  * @author Bertrand Martel
  */
 public interface IAssociationEvent {
 
-    public ConnectionState getState();
+    /**
+     * retrieve connection state
+     *
+     * @return
+     */
+    ConnectionState getState();
 
-    public BtConnection getConnection();
+    /**
+     * retrieve connection object
+     *
+     * @return
+     */
+    BtAssociatedItem getConnection();
 }

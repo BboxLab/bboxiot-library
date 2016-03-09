@@ -27,17 +27,44 @@ import fr.bouyguestelecom.tv.bboxiot.events.enums.ScanningAction;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.ScanningType;
 
 /**
+ * Scanning event
+ *
  * @author Bertrand Martel
  */
-public interface IScanningEvent {
+public interface IScanningActionEvent {
 
-    public ScanningAction getAction();
+    /**
+     * retrieve scan action
+     *
+     * @return
+     */
+    ScanningAction getAction();
 
-    public ScanningType getScanType();
+    /**
+     * retrieve scan type
+     *
+     * @return
+     */
+    ScanningType getScanType();
 
-    public String getTargetDeviceUid();
+    /**
+     * retrieve device to be tracked (scan is stop when this device is found if specified)
+     *
+     * @return
+     */
+    String getTargetDeviceUid();
 
-    public int getPeriod();
+    /**
+     * get scan period (in seconds)
+     *
+     * @return
+     */
+    int getPeriod();
 
-    public int getDutyCycle();
+    /**
+     * get duty cycle value (in seconds)
+     *
+     * @return
+     */
+    int getDutyCycle();
 }
