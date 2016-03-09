@@ -32,21 +32,23 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtConnection;
 import fr.bouyguestelecom.tv.bboxiot.events.GenericEventAbstr;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.AssociationEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.events.inter.IAssociationList;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedItem;
 
 /**
+ * features an association list
+ *
  * @author Bertrand Martel
  */
 public class AssociationList extends GenericEventAbstr implements IAssociationList {
 
     private static String TAG = ConnectionEvent.class.getSimpleName();
 
-    private Map<String, BtConnection> connectionList = new HashMap<>();
+    private Map<String, BtAssociatedItem> connectionList = new HashMap<>();
 
     private JSONArray connectionItems = new JSONArray();
 
@@ -60,7 +62,7 @@ public class AssociationList extends GenericEventAbstr implements IAssociationLi
 
                 for (int i = 0; i < connectionItems.length(); i++) {
 
-                    BtConnection connection = BtConnection.parse((JSONObject) connectionItems.get(i));
+                    BtAssociatedItem connection = BtAssociatedItem.parse((JSONObject) connectionItems.get(i));
 
                     if (connection != null) {
                         connectionList.put(connection.getDeviceUuid(), connection);
@@ -77,7 +79,7 @@ public class AssociationList extends GenericEventAbstr implements IAssociationLi
     }
 
     @Override
-    public Map<String, BtConnection> getList() {
+    public Map<String, BtAssociatedItem> getList() {
         return connectionList;
     }
 

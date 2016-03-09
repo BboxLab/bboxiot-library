@@ -42,27 +42,28 @@ import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Functions;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Properties;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.PropertyTypes;
 import fr.bouyguestelecom.tv.bboxiot.datamodel.enums.Unit;
-import fr.bouyguestelecom.tv.bboxiot.events.EventBuilder;
-import fr.bouyguestelecom.tv.bboxiot.events.constant.Common;
 import fr.bouyguestelecom.tv.bboxiot.events.constant.PropertiesEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 
 /**
- * Bluetooth connection
+ * Bluetooth associated item
  *
  * @author Bertrand Martel Bouygues Telecom
  */
-public class BtConnection {
+public class BtAssociatedItem {
 
     /**
      * Bluetooth devivce object
      */
     protected BluetoothSmartDevice btSmartDevice = null;
 
+    /**
+     * list of device functions
+     */
     protected HashMap<Functions, HashMap<Properties, SmartProperty>> deviceFunctions = new HashMap<>();
 
-    private static String TAG = BtConnection.class.getSimpleName();
+    private static String TAG = BtAssociatedItem.class.getSimpleName();
 
     /**
      * define if device has already been connected before
@@ -84,7 +85,17 @@ public class BtConnection {
      */
     protected boolean connected = false;
 
-    public BtConnection(String deviceUuid, boolean connected, boolean isFirstConnection, boolean busy, BluetoothSmartDevice device, HashMap<Functions, HashMap<Properties, SmartProperty>> deviceFunctions) {
+    /**
+     * Build Bluetooth association item
+     *
+     * @param deviceUuid        device uid
+     * @param connected         connection state
+     * @param isFirstConnection define if the device is connected for the first time
+     * @param busy              define if the device is busy at this time
+     * @param device            bluetooth device object
+     * @param deviceFunctions   map of functions/property for this item
+     */
+    public BtAssociatedItem(String deviceUuid, boolean connected, boolean isFirstConnection, boolean busy, BluetoothSmartDevice device, HashMap<Functions, HashMap<Properties, SmartProperty>> deviceFunctions) {
         this.deviceUuid = deviceUuid;
         this.connected = connected;
         this.firstConnection = isFirstConnection;
@@ -93,6 +104,11 @@ public class BtConnection {
         this.deviceFunctions = deviceFunctions;
     }
 
+    /**
+     * retrieve device functions
+     *
+     * @return
+     */
     public HashMap<Functions, HashMap<Properties, SmartProperty>> getDeviceFunctions() {
         return deviceFunctions;
     }
@@ -122,7 +138,7 @@ public class BtConnection {
                 HashMap<Properties, SmartProperty> entries = pair.getValue();
 
                 JSONObject functionItem = new JSONObject();
-                functionItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, EventBuilder.buildPair(pair.getKey()));
+                functionItem.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION, pair.getKey().getValueStr());
 
                 JSONArray propertiesArray = new JSONArray();
 
@@ -133,25 +149,25 @@ public class BtConnection {
                     Map.Entry<Properties, SmartProperty> pair2 = (Map.Entry) it2.next();
 
                     JSONObject propertyItem = new JSONObject();
-                    propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, EventBuilder.buildPair(pair2.getKey()));
-                    propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION, EventBuilder.buildPair(pair.getKey()));
-                    propertyItem.put(PropertiesEventConstant.PROPERTIES_UNIT, EventBuilder.buildPair(pair2.getValue().getUnit()));
+                    propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, pair2.getKey().getValueStr());
+                    propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION, pair.getKey().getValueStr());
+                    propertyItem.put(PropertiesEventConstant.PROPERTIES_UNIT, pair2.getValue().getUnit().getValueStr());
 
                     Iterator<Capability> it3 = pair2.getValue().getCapabilities().iterator();
 
                     JSONArray capabilitiesArray = new JSONArray();
                     while (it3.hasNext()) {
-                        capabilitiesArray.put(EventBuilder.buildPair(it3.next()));
+                        capabilitiesArray.put(it3.next().getValueStr());
                     }
 
                     propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES, capabilitiesArray);
 
                     propertyItem.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
 
-                    propertyItem.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE, EventBuilder.buildPair(pair2.getValue().getType()));
+                    propertyItem.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE, pair2.getValue().getType().getValueStr());
 
                     if (pair2.getValue().getType() == PropertyTypes.BUTTON_STATE) {
-                        propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_VALUE, EventBuilder.buildPair((ButtonState) pair2.getValue().getValue()));
+                        propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_VALUE, ((ButtonState) pair2.getValue().getValue()).getValueStr());
                     } else {
                         propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_VALUE, pair2.getValue().getValue());
                     }
@@ -172,27 +188,58 @@ public class BtConnection {
         return result;
     }
 
+    /**
+     * to know if device is connected or not
+     *
+     * @return
+     */
     public boolean isConnected() {
         return connected;
     }
 
+    /**
+     * to know if device is busy (eg if is connecting or disconnecting)
+     *
+     * @return
+     */
     public boolean isBusy() {
         return busy;
     }
 
+    /**
+     * to know if it is the first connection of this device
+     *
+     * @return
+     */
     public boolean isFirstConnection() {
         return firstConnection;
     }
 
+    /**
+     * retrieve device uid
+     *
+     * @return
+     */
     public String getDeviceUuid() {
         return deviceUuid;
     }
 
+    /**
+     * retrieve smart device object
+     *
+     * @return
+     */
     public BluetoothSmartDevice getBtSmartDevice() {
         return btSmartDevice;
     }
 
-    public static BtConnection parse(JSONObject item) {
+    /**
+     * parse Association item from json format
+     *
+     * @param item association item in json format
+     * @return
+     */
+    public static BtAssociatedItem parse(JSONObject item) {
 
         try {
             if (item.has(BluetoothConst.BLUETOOTH_DEVICE_UUID) &&
@@ -215,10 +262,10 @@ public class BtConnection {
 
                     JSONObject function = smartFunctionArray.getJSONObject(i);
 
-                    if (function.has(BluetoothConst.BT_CONNECTION_SMART_NAME) &&
+                    if (function.has(BluetoothConst.BT_CONNECTION_SMART_FUNCTION) &&
                             function.has(BluetoothConst.BT_CONNECTION_SMART_PROPERTY_ARRAY)) {
 
-                        Functions type = Functions.getFunctionValue(function.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_NAME).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                        Functions type = Functions.getFunctionStr(function.getString(BluetoothConst.BT_CONNECTION_SMART_FUNCTION));
 
                         JSONArray propertiesArray = function.getJSONArray(BluetoothConst.BT_CONNECTION_SMART_PROPERTY_ARRAY);
 
@@ -236,27 +283,27 @@ public class BtConnection {
                                     property.has(BluetoothConst.BLUETOOTH_DEVICE_UUID) &&
                                     property.has(PropertiesEventConstant.PROPERTIES_UNIT)) {
 
-                                Properties propertyVal = Properties.getPropertyValue(property.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_NAME).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
-                                Functions functionVal = Functions.getFunctionValue(property.getJSONObject(BluetoothConst.BT_CONNECTION_SMART_FUNCTION).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
-                                Unit unit = Unit.getUnit(property.getJSONObject(PropertiesEventConstant.PROPERTIES_UNIT).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                                Properties propertyVal = Properties.getPropertyStr(property.getString(BluetoothConst.BT_CONNECTION_SMART_NAME));
+                                Functions functionVal = Functions.getFunctionStr(property.getString(BluetoothConst.BT_CONNECTION_SMART_FUNCTION));
+                                Unit unit = Unit.getUnitStr(property.getString(PropertiesEventConstant.PROPERTIES_UNIT));
 
                                 JSONArray capabilitiesArray = property.getJSONArray(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES);
 
                                 List<Capability> capabilities = new ArrayList<>();
                                 for (int k = 0; k < capabilitiesArray.length(); k++) {
-                                    capabilities.add(Capability.getCapability(capabilitiesArray.getJSONObject(k).getInt(Common.CONSTANT_COMMON_PAIR_CODE)));
+                                    capabilities.add(Capability.getCapabilityStr(capabilitiesArray.getString(k)));
                                 }
 
                                 Object value = property.get(BluetoothConst.BT_CONNECTION_SMART_VALUE);
 
-                                PropertyTypes propertyType = PropertyTypes.getPropertyType(property.getJSONObject(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                                PropertyTypes propertyType = PropertyTypes.getPropertyTypesStr(property.getString(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE));
 
                                 String deviceUid = property.getString(BluetoothConst.BLUETOOTH_DEVICE_UUID);
 
                                 SmartProperty smartProperty = null;
 
                                 if (propertyType == PropertyTypes.BUTTON_STATE) {
-                                    ButtonState buttonState = ButtonState.getState(((JSONObject) value).getInt(Common.CONSTANT_COMMON_PAIR_CODE));
+                                    ButtonState buttonState = ButtonState.getButtonStateStr(value.toString());
                                     smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, unit, capabilities, propertyType, buttonState);
                                 } else {
                                     smartProperty = new SmartProperty(deviceUid, functionVal, propertyVal, unit, capabilities, propertyType, value);
@@ -281,10 +328,10 @@ public class BtConnection {
                     return null;
                 }
 
-                return new BtConnection(deviceUuid, connected, isFirstConnection, busy, smartDevice, smartFunctions);
+                return new BtAssociatedItem(deviceUuid, connected, isFirstConnection, busy, smartDevice, smartFunctions);
 
             } else {
-                Log.e(TAG, "Error wrong formatted BtConnection json Object");
+                Log.e(TAG, "Error wrong formatted BtAssociatedItem json Object");
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -292,6 +339,11 @@ public class BtConnection {
         return null;
     }
 
+    /**
+     * Retrieve list of property in json format
+     *
+     * @return
+     */
     public JSONArray getJsonArrayFunctionList() {
 
         try {
@@ -305,7 +357,7 @@ public class BtConnection {
                 HashMap<Properties, SmartProperty> entries = pair.getValue();
 
                 JSONObject functionItem = new JSONObject();
-                functionItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, EventBuilder.buildPair(pair.getKey()));
+                functionItem.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION, pair.getKey().getValueStr());
 
                 JSONArray propertiesArray = new JSONArray();
 
@@ -316,25 +368,25 @@ public class BtConnection {
                     Map.Entry<Properties, SmartProperty> pair2 = (Map.Entry) it2.next();
 
                     JSONObject propertyItem = new JSONObject();
-                    propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, EventBuilder.buildPair(pair2.getKey()));
-                    propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION, EventBuilder.buildPair(pair.getKey()));
-                    propertyItem.put(PropertiesEventConstant.PROPERTIES_UNIT, EventBuilder.buildPair(pair2.getValue().getUnit()));
+                    propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_NAME, pair2.getKey().getValueStr());
+                    propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_FUNCTION, pair.getKey().getValueStr());
+                    propertyItem.put(PropertiesEventConstant.PROPERTIES_UNIT, pair2.getValue().getUnit().getValueStr());
 
                     Iterator<Capability> it3 = pair2.getValue().getCapabilities().iterator();
 
                     JSONArray capabilitiesArray = new JSONArray();
                     while (it3.hasNext()) {
-                        capabilitiesArray.put(EventBuilder.buildPair(it3.next()));
+                        capabilitiesArray.put(it3.next().getValueStr());
                     }
 
                     propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_CAPABILITIES, capabilitiesArray);
 
                     propertyItem.put(BluetoothConst.BLUETOOTH_DEVICE_UUID, deviceUuid);
 
-                    propertyItem.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE, EventBuilder.buildPair(pair2.getValue().getType()));
+                    propertyItem.put(PropertiesEventConstant.PROPERTIES_EVENT_PROPERTY_TYPE, pair2.getValue().getType().getValueStr());
 
                     if (pair2.getValue().getType() == PropertyTypes.BUTTON_STATE) {
-                        propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_VALUE, EventBuilder.buildPair((ButtonState) pair2.getValue().getValue()));
+                        propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_VALUE, ((ButtonState) pair2.getValue().getValue()).getValueStr());
                     } else {
                         propertyItem.put(BluetoothConst.BT_CONNECTION_SMART_VALUE, pair2.getValue().getValue());
                     }
