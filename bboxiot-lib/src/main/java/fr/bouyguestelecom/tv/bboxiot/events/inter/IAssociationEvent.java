@@ -24,7 +24,7 @@
 package fr.bouyguestelecom.tv.bboxiot.events.inter;
 
 import fr.bouyguestelecom.tv.bboxiot.events.enums.ConnectionState;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedItem;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedDevice;
 
 /**
  * Association event interface
@@ -45,5 +45,5 @@ public interface IAssociationEvent {
      *
      * @return
      */
-    BtAssociatedItem getConnection();
+    BtAssociatedDevice getConnection();
 }

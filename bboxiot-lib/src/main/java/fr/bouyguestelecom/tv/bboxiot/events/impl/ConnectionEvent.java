@@ -34,7 +34,7 @@ import fr.bouyguestelecom.tv.bboxiot.events.enums.ConnectionState;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.events.inter.IAssociationEvent;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedItem;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedDevice;
 
 /**
  * Connection event type
@@ -52,7 +52,7 @@ public class ConnectionEvent extends GenericEventAbstr implements IAssociationEv
      */
     private ConnectionState state = ConnectionState.UNDEFINED;
 
-    private BtAssociatedItem connection = null;
+    private BtAssociatedDevice connection = null;
 
     public ConnectionEvent(EventTopic topic, EventType type, String eventId, JSONObject data) {
         super(topic, type, eventId, data);
@@ -64,7 +64,7 @@ public class ConnectionEvent extends GenericEventAbstr implements IAssociationEv
                 state = ConnectionState.getConnectionStateStr(data.getString(AssociationEventConstant.ASSOCIATION_EVENT_STATE));
 
                 if (data.has(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION))
-                    connection = BtAssociatedItem.parse(data.getJSONObject(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION));
+                    connection = BtAssociatedDevice.parse(data.getJSONObject(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION));
             } else {
                 Log.e(TAG, "Error bad format for association event");
             }
@@ -80,7 +80,7 @@ public class ConnectionEvent extends GenericEventAbstr implements IAssociationEv
     }
 
     @Override
-    public BtAssociatedItem getConnection() {
+    public BtAssociatedDevice getConnection() {
         return connection;
     }
 }

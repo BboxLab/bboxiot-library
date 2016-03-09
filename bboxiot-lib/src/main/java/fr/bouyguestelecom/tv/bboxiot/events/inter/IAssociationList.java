@@ -27,7 +27,7 @@ import org.json.JSONArray;
 
 import java.util.Map;
 
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedItem;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedDevice;
 
 /**
  * Association list interface
@@ -41,7 +41,7 @@ public interface IAssociationList {
      *
      * @return
      */
-    Map<String, BtAssociatedItem> getList();
+    Map<String, BtAssociatedDevice> getList();
 
     /**
      * retrieve list of associated devices in json array format

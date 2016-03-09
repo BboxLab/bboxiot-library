@@ -51,7 +51,7 @@ import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
  *
  * @author Bertrand Martel Bouygues Telecom
  */
-public class BtAssociatedItem {
+public class BtAssociatedDevice {
 
     /**
      * Bluetooth devivce object
@@ -63,7 +63,7 @@ public class BtAssociatedItem {
      */
     protected HashMap<Functions, HashMap<Properties, SmartProperty>> deviceFunctions = new HashMap<>();
 
-    private static String TAG = BtAssociatedItem.class.getSimpleName();
+    private static String TAG = BtAssociatedDevice.class.getSimpleName();
 
     /**
      * define if device has already been connected before
@@ -95,7 +95,7 @@ public class BtAssociatedItem {
      * @param device            bluetooth device object
      * @param deviceFunctions   map of functions/property for this item
      */
-    public BtAssociatedItem(String deviceUuid, boolean connected, boolean isFirstConnection, boolean busy, BluetoothSmartDevice device, HashMap<Functions, HashMap<Properties, SmartProperty>> deviceFunctions) {
+    public BtAssociatedDevice(String deviceUuid, boolean connected, boolean isFirstConnection, boolean busy, BluetoothSmartDevice device, HashMap<Functions, HashMap<Properties, SmartProperty>> deviceFunctions) {
         this.deviceUuid = deviceUuid;
         this.connected = connected;
         this.firstConnection = isFirstConnection;
@@ -239,7 +239,7 @@ public class BtAssociatedItem {
      * @param item association item in json format
      * @return
      */
-    public static BtAssociatedItem parse(JSONObject item) {
+    public static BtAssociatedDevice parse(JSONObject item) {
 
         try {
             if (item.has(BluetoothConst.BLUETOOTH_DEVICE_UUID) &&
@@ -328,10 +328,10 @@ public class BtAssociatedItem {
                     return null;
                 }
 
-                return new BtAssociatedItem(deviceUuid, connected, isFirstConnection, busy, smartDevice, smartFunctions);
+                return new BtAssociatedDevice(deviceUuid, connected, isFirstConnection, busy, smartDevice, smartFunctions);
 
             } else {
-                Log.e(TAG, "Error wrong formatted BtAssociatedItem json Object");
+                Log.e(TAG, "Error wrong formatted BtAssociatedDevice json Object");
             }
         } catch (JSONException e) {
             e.printStackTrace();

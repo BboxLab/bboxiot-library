@@ -25,7 +25,7 @@ package fr.bouyguestelecom.tv.bboxiot.events.inter;
 
 import org.json.JSONArray;
 
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedItem;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedDevice;
 
 /**
  * Connection object interface
@@ -39,7 +39,7 @@ public interface IConnectionItem {
      *
      * @return
      */
-    BtAssociatedItem getItem();
+    BtAssociatedDevice getItem();
 
     /**
      * retrieve all function/properties of connection object

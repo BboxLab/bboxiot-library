@@ -49,7 +49,7 @@ import fr.bouyguestelecom.tv.bboxiot.events.enums.ScanRegistrationType;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.ScanningAction;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.ScanningType;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.BluetoothSmartDevice;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedItem;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedDevice;
 import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant.BluetoothConst;
 import fr.bouyguestelecom.tv.bboxiot.utils.RandomGen;
 
@@ -68,7 +68,7 @@ public class EventBuilder {
      * @param connection connection object
      * @return
      */
-    public static GenericEventAbstr buildConnectionItem(BtAssociatedItem connection) {
+    public static GenericEventAbstr buildConnectionItem(BtAssociatedDevice connection) {
 
         JSONObject data = new JSONObject();
 
@@ -89,7 +89,7 @@ public class EventBuilder {
      * @param connectionList associated item list
      * @return
      */
-    public static GenericEventAbstr buildConnectionList(List<BtAssociatedItem> connectionList) {
+    public static GenericEventAbstr buildConnectionList(List<BtAssociatedDevice> connectionList) {
 
         JSONObject data = new JSONObject();
         JSONArray items = new JSONArray();
@@ -118,7 +118,7 @@ public class EventBuilder {
      * @param connection association item
      * @return
      */
-    public static GenericEventAbstr buildAssociationEvent(ConnectionState state, BtAssociatedItem connection) {
+    public static GenericEventAbstr buildAssociationEvent(ConnectionState state, BtAssociatedDevice connection) {
 
         JSONObject data = new JSONObject();
 

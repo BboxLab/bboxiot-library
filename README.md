@@ -23,21 +23,8 @@ Specific features are :
 ## Including in your project
 
 ```
-compile 'bboxlab:bboxiot-library:0.75'
+compile 'bboxlab:bboxiot-library:0.76'
 ```
-
-## Version History
-
-Current release : <a href="https://github.com/BboxLab/bboxiot-library/releases/tag/0.75">version 0.75</a>
-
-| version                                                                |    comment                 |
-|------------------------------------------------------------------------|----------------------------|
-| 0.75                                                                   | bugs fix / more verbose JSON protocol / string alias for properties-functions |
-| 0.73                                                                   | unit support for properties |
-| 0.72                                                                   | SmarLite / Oblo / Notti devices support  |
-| 0.71                                                                   | fewer API with JSON input for usability  |
-| 0.7                                                                    | API refactoring            |
-| 0.6                                                                    | witti devices support      |
 
 ## Requirements
 

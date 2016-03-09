@@ -34,7 +34,7 @@ import fr.bouyguestelecom.tv.bboxiot.events.constant.AssociationEventConstant;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventTopic;
 import fr.bouyguestelecom.tv.bboxiot.events.enums.EventType;
 import fr.bouyguestelecom.tv.bboxiot.events.inter.IConnectionItem;
-import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedItem;
+import fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection.BtAssociatedDevice;
 
 /**
  * Connection item
@@ -47,7 +47,7 @@ public class ConnectionItem extends GenericEventAbstr implements IConnectionItem
 
     private static String TAG = ScanItemEvent.class.getSimpleName();
 
-    private BtAssociatedItem btConnection = null;
+    private BtAssociatedDevice btConnection = null;
 
     public ConnectionItem(EventTopic topic, EventType type, String eventId, JSONObject data) {
         super(topic, type, eventId, data);
@@ -57,7 +57,7 @@ public class ConnectionItem extends GenericEventAbstr implements IConnectionItem
 
                 JSONObject connectionJson = data.getJSONObject(AssociationEventConstant.ASSOCIATION_EVENT_CONNECTION);
 
-                btConnection = BtAssociatedItem.parse(connectionJson);
+                btConnection = BtAssociatedDevice.parse(connectionJson);
 
             } else {
                 Log.e(TAG, "Error in association item event format");
@@ -68,7 +68,7 @@ public class ConnectionItem extends GenericEventAbstr implements IConnectionItem
     }
 
     @Override
-    public BtAssociatedItem getItem() {
+    public BtAssociatedDevice getItem() {
         return btConnection;
     }
 
