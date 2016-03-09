@@ -40,6 +40,6 @@ interface IBluetoothEventListener {
      * @event
      *      json string event data
      */
-    void onEventReceived(int type,int topic,String event);
+    void onEventReceived(String type,String topic,String event);
 
 }

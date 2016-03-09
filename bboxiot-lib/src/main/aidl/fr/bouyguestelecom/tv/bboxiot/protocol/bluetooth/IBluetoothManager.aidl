@@ -92,7 +92,7 @@ interface IBluetoothManager {
     /**
      * connect to device with given uid
      */
-    int connect(String deviceUuid);
+    String connect(String deviceUuid);
 
     /**
      * disconnect from device with given uid
@@ -137,17 +137,17 @@ interface IBluetoothManager {
     /**
      * check if device with given device uid features function name
      */
-    boolean hasDeviceFunction(String deviceUid,int function);
+    boolean hasDeviceFunction(String deviceUid,String function);
 
     /**
      * check if device with given device uid features property name for given function name
      */
-    boolean hasDeviceProperty(String deviceUid,int function,int property);
+    boolean hasDeviceProperty(String deviceUid,String function,String property);
 
     /**
      * get device property object in json format
      */
-    String getDeviceProperty(String deviceUid,int function,int property);
+    String getDeviceProperty(String deviceUid,String function,String property);
 
     /**
      * push a value to a property according to JSON input request
