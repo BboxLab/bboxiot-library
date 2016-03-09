@@ -13,7 +13,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 22
         versionCode 1
-        versionName "V0_75"
+        versionName "0.76"
         testApplicationId "fr.bouyguestelecom.tv.bboxiot.test"
         testInstrumentationRunner "fr.bouyguestelecom.tv.bboxiot.test.TestRunner"
     }
@@ -27,6 +27,27 @@ android {
         release {
             minifyEnabled false
         }
+    }
+    libraryVariants.all { variant ->
+
+        variant.outputs.each { output ->
+            def file = output.outputFile
+            output.outputFile = new File(file.parent, file.name.replace(".apk", "-" + defaultConfig.versionName + "-" + getDateTime() + ".apk"))
+        }
+
+    }
+
+    libraryVariants.all{
+        variant ->
+            task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
+                description "Generates Javadoc for $variant.name."
+                source = variant.javaCompile.source
+                ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+                classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+                options.links("http://docs.oracle.com/javase/7/docs/api/");
+                options.links("http://d.android.com/reference/");
+                title = "bboxiot-lib " +defaultConfig.versionName;
+            }
     }
 }
 
@@ -43,7 +64,16 @@ publish {
     userOrg = 'bboxlab'
     groupId = 'bboxlab'
     artifactId = 'bboxiot-library'
-    publishVersion = '0.75'
+    publishVersion = '0.76'
     desc = 'BboxIoT Pre Release'
     website = 'https://github.com/BboxLab/bboxiot-library'
+}
+
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
+def getDateTime() {
+    DateFormat df = new SimpleDateFormat("ddMMYYYY");
+
+    return df.format(new Date());
 }
