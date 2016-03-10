@@ -1,0 +1,14 @@
+fr.bouyguestelecom.tv.bboxiot
+fr.bouyguestelecom.tv.bboxiot.config
+fr.bouyguestelecom.tv.bboxiot.datamodel
+fr.bouyguestelecom.tv.bboxiot.datamodel.enums
+fr.bouyguestelecom.tv.bboxiot.events
+fr.bouyguestelecom.tv.bboxiot.events.constant
+fr.bouyguestelecom.tv.bboxiot.events.enums
+fr.bouyguestelecom.tv.bboxiot.events.impl
+fr.bouyguestelecom.tv.bboxiot.events.inter
+fr.bouyguestelecom.tv.bboxiot.listener
+fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth
+fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.connection
+fr.bouyguestelecom.tv.bboxiot.protocol.bluetooth.constant
+fr.bouyguestelecom.tv.bboxiot.utils
