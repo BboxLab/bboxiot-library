@@ -1,9 +1,11 @@
 # Bbox IoT library
 
 [![Build Status](https://travis-ci.org/BboxLab/bboxiot-library.svg)](https://travis-ci.org/BboxLab/bboxiot-library)
-[![Download](https://api.bintray.com/packages/bboxlab/maven/bboxiot-library/images/download.svg)](https://bintray.com/bboxlab/maven/bboxiot-library/_latestVersion)
+[![Bintray](https://img.shields.io/bintray/v/bboxlab/maven/bboxiot-library.svg)]()
 [![Coverage Status](https://coveralls.io/repos/BboxLab/bboxiot-library/badge.svg?branch=master&service=github)](https://coveralls.io/github/BboxLab/bboxiot-library?branch=master)
 [![License](http://img.shields.io/:license-mit-blue.svg)](LICENSE.md)
+[![Javadoc](http://javadoc-badge.appspot.com/bboxlab/bboxiot-library.svg?label=javadoc)](http://bboxlab.github.io/bboxiot-library)
+[![GitHub release](https://img.shields.io/github/release/bboxlab/bboxiot-library.svg)]()
 
 Android wrapper for BboxIoT
 
@@ -24,7 +26,7 @@ Look at the Change Log <a href="CHANGELOG.md">here</a>
 
 ## Including in your project
 
-from jcenter :
+From jcenter :
 
 ```
 compile 'bboxlab:bboxiot-library:0.76'
