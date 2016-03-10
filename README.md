@@ -20,7 +20,11 @@ Specific features are :
 * high level APIs for controlling BLE workflow and devices
 * flexible architecture and datamodel for multi-protocol implementation
 
+Look at the Change Log <a href="CHANGELOG.md">here</a>
+
 ## Including in your project
+
+from jcenter :
 
 ```
 compile 'bboxlab:bboxiot-library:0.76'
@@ -48,7 +52,7 @@ To be able to use this library, you must have a Miami Box Android TV with BboxIo
 
 ![architecture](img/architecture.png)
 
-The project you are watching is only the interface between your client and BboxIoT Service (in the middle)
+The project you are watching is the interface between your client and BboxIoT Service (in the middle)
 
 ## Supported devices
 
@@ -66,6 +70,10 @@ List of currently supported devices :
 |   Oblo                       |     RtRk          |    ![good](img/status_good.png) |     actuator / sensor  | state / tension / current / power factor / active power / reactive power     |
 |   Notti                      |     Witty         |    ![good](img/status_good.png) |     actuator           | state / color     |
 
+## JavaDoc
+
+http://bboxlab.github.io/bboxiot-library
+
 ## Support
 
 * BboxLab developper portal IoT section: https://dev.bouyguestelecom.fr/forum/viewforum.php?f=45
@@ -73,4 +81,4 @@ List of currently supported devices :
 
 ## License
 
-The MIT License (MIT) Copyright (c) 2015-2016 InnovationLab BboxLab
+The MIT License (MIT) Copyright (c) 2016 InnovationLab BboxLab
