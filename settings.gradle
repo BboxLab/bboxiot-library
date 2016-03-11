@@ -1,1 +1,1 @@
-include ':bboxiot-lib'
+include ':bboxiot-library'

@@ -1,0 +1,170 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    lintOptions {
+        abortOnError false
+    }
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 22
+        versionCode 1
+        versionName "0.76"
+        testApplicationId "fr.bouyguestelecom.tv.bboxiot.test"
+        testInstrumentationRunner "fr.bouyguestelecom.tv.bboxiot.test.TestRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    libraryVariants.all { variant ->
+
+        variant.outputs.each { output ->
+            def file = output.outputFile
+            output.outputFile = new File(file.parent, file.name.replace(".apk", "-" + defaultConfig.versionName + "-" + getDateTime() + ".apk"))
+        }
+
+    }
+
+    libraryVariants.all {
+        variant ->
+            task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
+                description "Generates Javadoc for $variant.name."
+                source = variant.javaCompile.source
+                ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+                classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+                options.links("http://docs.oracle.com/javase/7/docs/api/");
+                options.links("http://d.android.com/reference/");
+                title = "bboxiot-lib " + defaultConfig.versionName;
+            }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+}
+
+def siteUrl = 'https://github.com/BboxLab/bboxiot-library'
+def gitUrl = 'https://github.com/BboxLab/bboxiot-library.git'
+
+
+group = 'fr.bouyguestelecom.dev'
+version = android.defaultConfig.versionName
+
+bintray {
+    user = "$System.env.BINTRAY_USER"
+    key = "$System.env.BINTRAY_KEY"
+
+    configurations = ['archives'] //When uploading configuration files
+
+    dryRun = false //Whether to run this as dry-run, without deploying
+    publish = true //If version should be auto published after an upload
+
+    pkg {
+        repo = 'maven'
+        name = 'bboxiot-library'
+        userOrg = 'bboxlab'
+        desc = 'API interface / wrapper for BboxIoT'
+        websiteUrl = siteUrl
+        issueTrackerUrl = 'https://github.com/bintray/bintray-examples/issues'
+        vcsUrl = gitUrl
+        licenses = ['MIT']
+        labels = ['bboxiot']
+        publicDownloadNumbers = true
+
+        version {
+            name = android.defaultConfig.versionName //Bintray logical version name
+            vcsTag = android.defaultConfig.versionName
+
+            gpg {
+                sign = true
+                passphrase = "$System.env.GPG_PASSPHRASE"
+            }
+
+            mavenCentralSync {
+                sync = true
+                //Optional (true by default). Determines whether to sync the version to Maven Central.
+                user = "$System.env.MAVEN_CENTRAL_USER_TOKEN" //OSS user token
+                password = "$System.env.MAVEN_CENTRAL_PASSWORD" //OSS user password
+                close = '1'
+                //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
+            }
+        }
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                description 'API interface / wrapper for BboxIoT'
+                packaging 'aar'
+                name 'bboxiot-library'
+                url siteUrl
+                licenses {
+                    license {
+                        name 'The MIT License'
+                        url 'https://github.com/BboxLab/bboxiot-library/blob/master/LICENSE.md'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'akinaru'
+                        name 'Bertrand Martel'
+                        email 'kiruazoldik92@gmail.com'
+                    }
+                }
+                scm {
+                    connection 'https://github.com/BboxLab/bboxiot-library.git'
+                    developerConnection 'https://github.com/BboxLab/bboxiot-library.git'
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
+def getDateTime() {
+    DateFormat df = new SimpleDateFormat("ddMMYYYY");
+
+    return df.format(new Date());
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+task findConventions << {
+    println project.getConvention()
+}
