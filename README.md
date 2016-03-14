@@ -4,7 +4,7 @@
 [ ![Download](https://api.bintray.com/packages/bboxlab/maven/bboxiot-library/images/download.svg) ](https://bintray.com/bboxlab/maven/bboxiot-library/_latestVersion)
 [![Coverage Status](https://coveralls.io/repos/BboxLab/bboxiot-library/badge.svg?branch=master&service=github)](https://coveralls.io/github/BboxLab/bboxiot-library?branch=master)
 [![License](http://img.shields.io/:license-mit-blue.svg)](LICENSE.md)
-[![Javadoc](http://javadoc-badge.appspot.com/bboxlab/bboxiot-library.svg?label=javadoc)](http://bboxlab.github.io/bboxiot-library)
+[![Javadoc](http://javadoc-badge.appspot.com/fr.bouyguestelecom.dev/bboxiot-library.svg?label=javadoc)](http://javadoc-badge.appspot.com/fr.bouyguestelecom.dev/bboxiot-library)
 
 Android wrapper for BboxIoT
 
