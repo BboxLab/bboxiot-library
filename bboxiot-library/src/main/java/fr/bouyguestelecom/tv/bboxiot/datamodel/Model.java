@@ -68,6 +68,7 @@ public class Model {
         properties.put(Properties.SOIL_TEMPERATURE, new SmartProperty<Float>(Functions.PLANT_MONITOR, Properties.SOIL_TEMPERATURE, PropertyTypes.FLOAT, Unit.CELSIUS, 0F));
         properties.put(Properties.SOIL_ELECTRODUCTIVITY, new SmartProperty<Float>(Functions.PLANT_MONITOR, Properties.SOIL_ELECTRODUCTIVITY, PropertyTypes.FLOAT, Unit.NONE, 0F));
         properties.put(Properties.WATER_CONTENT, new SmartProperty<Float>(Functions.PLANT_MONITOR, Properties.WATER_CONTENT, PropertyTypes.FLOAT, Unit.PURCENT, 0F));
+        properties.put(Properties.FREQUENCY_MEASUREMENT, new SmartProperty<Integer>(Functions.PLANT_MONITOR, Properties.FREQUENCY_MEASUREMENT, PropertyTypes.INTEGER, Unit.SECOND, 0));
         dataMap.put(Functions.PLANT_MONITOR, properties);
 
         properties = new HashMap<>();
