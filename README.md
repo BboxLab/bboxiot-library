@@ -65,8 +65,7 @@ List of currently supported devices :
 |   SmartClim                  |     Beewi         |  ![good](img/status_good.png)   |   sensor               | temperature / humidity         |
 |   SmartTrack                 |     Beewi         |  ![good](img/status_good.png)   |    sensor              | button single/double push (advertizing)         |
 |   Aroma Light                |     AwoX          | ![good](img/status_good.png)     |    actuator / sensor   | state / color / intensity / odor         |
-|   SmartPlug                  |     AwoX          |   ![good](img/status_bad.png)   |    actuator / sensor   | state / active power         |
-|   Flower Power               |     Parrot        |    ![good](img/status_bad.png)  |    sensor              | air temperature / soil temperature / soil electroductivity / water content / luminosity         |
+|   Flower Power               |     Parrot        |    ![good](img/status_good.png)  |    sensor              | air temperature / soil temperature / soil electroductivity / water content / luminosity         |
 |   NIU                        |     Altyor        |  ![good](img/status_good.png)   |     sensor             | button single push (advertizing)         |
 |   Oblo                       |     RtRk          |    ![good](img/status_good.png) |     actuator / sensor  | state / tension / current / power factor / active power / reactive power     |
 |   Notti                      |     Witty         |    ![good](img/status_good.png) |     actuator           | state / color     |
