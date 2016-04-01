@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.0](https://github.com/BboxLab/bboxiot-library/tree/1.0) (2016-04-01)
+[Full Changelog](https://github.com/BboxLab/bboxiot-library/compare/0.76...1.0)
+
 ## [0.76](https://github.com/BboxLab/bboxiot-library/tree/0.76) (2016-03-09)
 [Full Changelog](https://github.com/BboxLab/bboxiot-library/compare/0.75...0.76)
 
