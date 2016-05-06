@@ -28,7 +28,7 @@ Look at the Change Log <a href="CHANGELOG.md">here</a>
 From jcenter :
 
 ```
-compile 'fr.bouyguestelecom.dev:bboxiot-library:1.0'
+compile 'fr.bouyguestelecom.dev:bboxiot-library:1.01'
 ```
 
 ## Requirements

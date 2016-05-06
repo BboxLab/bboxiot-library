@@ -14,7 +14,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0"
+        versionName "1.01"
         testApplicationId "fr.bouyguestelecom.tv.bboxiot.test"
         testInstrumentationRunner "fr.bouyguestelecom.tv.bboxiot.test.TestRunner"
     }
