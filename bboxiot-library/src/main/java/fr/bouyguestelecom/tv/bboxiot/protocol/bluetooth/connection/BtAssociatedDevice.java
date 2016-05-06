@@ -94,14 +94,22 @@ public class BtAssociatedDevice {
      * @param busy              define if the device is busy at this time
      * @param device            bluetooth device object
      * @param deviceFunctions   map of functions/property for this item
+     * @param lastActivityTs    last activity time
      */
-    public BtAssociatedDevice(String deviceUuid, boolean connected, boolean isFirstConnection, boolean busy, BluetoothSmartDevice device, HashMap<Functions, HashMap<Properties, SmartProperty>> deviceFunctions) {
+    public BtAssociatedDevice(String deviceUuid,
+                              boolean connected,
+                              boolean isFirstConnection,
+                              boolean busy,
+                              BluetoothSmartDevice device,
+                              HashMap<Functions, HashMap<Properties, SmartProperty>> deviceFunctions,
+                              long lastActivityTs) {
         this.deviceUuid = deviceUuid;
         this.connected = connected;
         this.firstConnection = isFirstConnection;
         this.busy = busy;
         this.btSmartDevice = device;
         this.deviceFunctions = deviceFunctions;
+        this.btSmartDevice.setLastActivityTimeStamp(lastActivityTs);
     }
 
     /**
@@ -328,7 +336,7 @@ public class BtAssociatedDevice {
                     return null;
                 }
 
-                return new BtAssociatedDevice(deviceUuid, connected, isFirstConnection, busy, smartDevice, smartFunctions);
+                return new BtAssociatedDevice(deviceUuid, connected, isFirstConnection, busy, smartDevice, smartFunctions, smartDevice.getLastActivityTime());
 
             } else {
                 Log.e(TAG, "Error wrong formatted BtAssociatedDevice json Object");

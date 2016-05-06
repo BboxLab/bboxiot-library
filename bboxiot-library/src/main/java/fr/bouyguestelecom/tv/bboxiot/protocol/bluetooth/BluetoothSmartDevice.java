@@ -181,6 +181,10 @@ public class BluetoothSmartDevice {
         return lastActivityTimeStamp;
     }
 
+    public void setLastActivityTimeStamp(long lastActivity) {
+        lastActivityTimeStamp = lastActivity;
+    }
+
     public static BluetoothSmartDevice parse(JSONObject item) {
 
         try {
